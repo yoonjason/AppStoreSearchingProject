@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct RootClass : Codable {
+struct Apps : Codable {
 
     let resultCount : Int?
-    let results : [Result]?
+    let results : [AppList]?
 
 
     enum CodingKeys: String, CodingKey {
@@ -21,14 +21,14 @@ struct RootClass : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         resultCount = try values.decodeIfPresent(Int.self, forKey: .resultCount)
-        results = try values.decodeIfPresent([Result].self, forKey: .results)
+        results = try values.decodeIfPresent([AppList].self, forKey: .results)
     }
 
 
 }
 
 
-struct Result : Codable {
+struct AppList : Codable {
 
     let advisories : [String]?
     let appletvScreenshotUrls : [String]?

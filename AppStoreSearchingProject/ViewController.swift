@@ -10,7 +10,8 @@ import UIKit
 import Foundation
 import CoreData
 
-let MEMBER_LIST_URL = "https://itunes.apple.com/search?country=KR&"
+//let MEMBER_LIST_URL = "https://itunes.apple.com/search?country=KR&"
+let MEMBER_LIST_URL = "https://itunes.apple.com/search?country=KR&media=software&term=kakao&entity=software"
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
@@ -18,12 +19,12 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func updateSearchResults(for searchController: UISearchController) {
         //searchController.searchBar.text  -> 텍스트 검색될 때 나오는 text optional
-        
+//        searchController.searchResultsController.
         print()
         
     }
     var searchWords = [String]()
-    
+    var appList = [AppList]()
     lazy var searchBar : UISearchBar = UISearchBar(frame: .zero)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,8 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
 //        let json = String(data: data, encoding: .utf8)
 //        print(json)
 //
-        setCoreData()
+//        setCoreData()
+        fetchBookList()
         setView()
     }
     //https://itunes.apple.com/search?country=KR&media=software&term=kakao&entity=software
@@ -45,10 +47,11 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
         search.searchBar.placeholder = "App Store"
+        search.searchBar.delegate = self
         self.navigationItem.searchController = search
         definesPresentationContext = true
-        recentTableView.delegate = self
-        recentTableView.dataSource = self
+//        recentTableView.delegate = self
+//        recentTableView.dataSource = self
     }
     
     func setCoreData() {
@@ -70,6 +73,12 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         })
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print(searchBar.text)
+    }
+     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+    }
 
     func fetchBookList() {
        DispatchQueue.main.async {
@@ -111,13 +120,12 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
           
           do {
              let decoder = JSONDecoder()
-//             let bookList = try decoder.decode(BookList.self, from: data)
+             let appsList = try decoder.decode(Apps.self, from: data)
              
-//             if bookList.code == 200 {
-//                self?.list = bookList.list
-//             } else {
-//                self?.list = [Book]()
-//             }
+            if let appList = appsList.results {
+                print("appsList", appsList)
+                self?.appList = appList
+            }
           } catch {
              print(error)
           }

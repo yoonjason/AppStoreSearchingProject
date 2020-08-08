@@ -12,6 +12,7 @@ import CoreData
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
+    @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
     var url = "https://itunes.apple.com/search?country=KR&media=software&term=라인&entity=software"
     
@@ -24,6 +25,8 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     var searchWords = [String]()
     var appList = [AppList]()
+    var isSearched = false
+    
     lazy var searchBar : UISearchBar = UISearchBar(frame: .zero)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +54,11 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         definesPresentationContext = true
         recentTableView.delegate = self
         recentTableView.dataSource = self
+        searchedTableView.dataSource = self
+        searchedTableView.delegate = self
+        searchedTableView.isHidden = true
+        searchedTableView.estimatedRowHeight = 349
+        searchedTableView.rowHeight = UITableView.automaticDimension
     }
     
     func setCoreData() {
@@ -79,9 +87,17 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         print(searchBar.text)
         fetchSearchList(searchWord: searchBar.text!)
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("Cancel")
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
+        if searchText == "" {
+            searchedTableView.isHidden = true
+        }
     }
+    
     
     func fetchSearchList(searchWord : String) {
         //https://itunes.apple.com/search?term=카카오톡&country=kr&media=software
@@ -127,14 +143,28 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             do {
                 let decoder = JSONDecoder()
                 let appsList = try decoder.decode(Apps.self, from: data)
-                self!.saveNewWords(id: 1, word: searchWord)
+                
+                
                 self!.requestGetAllWords()
                 DispatchQueue.main.async { [weak self] in
                     self?.recentTableView.reloadData()
                 }
                 if let appList = appsList.results {
+                    if appList.count > 0 {
+                        self!.saveNewWords(id: 1, word: searchWord)
+                        self?.appList = appList
+                        
+                    }
+                    appList.forEach{
+                        print($0.trackName)
+                    }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.searchedTableView.scrollsToTop = true
+                        self?.searchedTableView.isHidden = false
+                        self?.searchedTableView.reloadData()
+                    }
+                    
                     print("appsList", appsList)
-                    self?.appList = appList
                 }
             } catch {
                 print(error)
@@ -148,16 +178,37 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == recentTableView {
             return searchWords.count
+        }else if tableView == searchedTableView {
+            return appList.count
         }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell  = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
-        let data = searchWords[indexPath.row]
-        cell?.titleBtn.setTitle(data, for: .normal)
         
-        return cell!
+        if tableView == recentTableView {
+            let cell  = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
+            let data = searchWords[indexPath.row]
+            cell?.titleBtn.setTitle(data, for: .normal)
+            
+            return cell!
+        }else if tableView == searchedTableView {
+            let cell  = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell
+            let appData = appList[indexPath.row]
+            cell?.setData(appData: appData)
+            return cell!
+        }
+
+        
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == searchedTableView {
+            return UITableView.automaticDimension
+        }
+        return 30
     }
     
     

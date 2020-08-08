@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class RecentSearchCell : UITableViewCell {
+class TableViewCell : UITableViewCell {
     
     @IBOutlet weak var titleBtn: UIButton!
     
@@ -19,5 +19,9 @@ class RecentSearchCell : UITableViewCell {
         
     }
     
+    
+}
+ 
+class SearchResultCell : UITableViewCell {
     
 }

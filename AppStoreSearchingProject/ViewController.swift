@@ -17,6 +17,9 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     @IBOutlet weak var recentTableView: UITableView!
     
     func updateSearchResults(for searchController: UISearchController) {
+        //searchController.searchBar.text  -> 텍스트 검색될 때 나오는 text optional
+        
+        print()
         
     }
     var searchWords = [String]()
@@ -49,7 +52,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func setCoreData() {
-//        saveNewWords(id: 1, word: "카카ㅇ")
+//        saveNewWords(id: 1, word: "카카오")
         
         requestGetAllWords()
     }

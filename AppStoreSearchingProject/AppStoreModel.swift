@@ -11,7 +11,7 @@ import Foundation
 struct Apps : Codable {
 
     let resultCount : Int?
-    let results : [AppList]?
+    let results : [AppData]?
 
 
     enum CodingKeys: String, CodingKey {
@@ -21,14 +21,14 @@ struct Apps : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         resultCount = try values.decodeIfPresent(Int.self, forKey: .resultCount)
-        results = try values.decodeIfPresent([AppList].self, forKey: .results)
+        results = try values.decodeIfPresent([AppData].self, forKey: .results)
     }
 
 
 }
 
 
-struct AppList : Codable {
+struct AppData : Codable {
 
     let advisories : [String]?
     let appletvScreenshotUrls : [String]?

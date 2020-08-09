@@ -15,14 +15,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
-    var url = "https://itunes.apple.com/search?country=KR&media=software&term=라인&entity=software"
+    var url = "https://itunes.apple.com/search?country=KR&media=software&term=카카오뱅크&entity=software&attribute=softwareDeveloper"
     
     let searchController = UISearchController(searchResultsController: nil)
     
     private var searchWords = [String]()
     
    
-    var appList = [AppList]()
+    var appList = [AppData]()
     
     var searchedTerm = String(){
         didSet {
@@ -112,6 +112,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         fetchSearchList(searchWord: searchBar.text!)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        recentTableView.isHidden = false
         searchedTableView.isHidden = true
         suggestTableView.isHidden = true
     }
@@ -130,7 +131,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func fetchSearchList(searchWord : String) {
         //https://itunes.apple.com/search?term=카카오톡&country=kr&media=software
-        let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software"
+        let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
         DispatchQueue.main.async {
             //          UIApplication.shared.isNetworkActivityIndicatorVisible = true
         }
@@ -186,8 +187,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
                         self?.searchedTableView.reloadData()
                         self?.suggestTableView.isHidden = true
                     }
-                    
-                    print("appsList", appsList)
                 }
                 self!.requestGetAllWords()
                 DispatchQueue.main.async { [weak self] in
@@ -209,6 +208,17 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         }
         searchedTerm = text
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FromMainToDetail" {
+            if let destinationVC = segue.destination as? DetailViewController {
+                if let data = sender as? AppData {
+                    destinationVC.data = data
+                    print(data)
+                }
+            }
+        }
     }
     
 }
@@ -263,9 +273,15 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
             searchController.searchBar.text = searchWords[indexPath.row]
             navigationItem.hidesSearchBarWhenScrolling = true
         }
+        
         if tableView == suggestTableView {
             didSelect(currentWords[indexPath.row])
-            print(currentWords[indexPath.row])
+            self.fetchSearchList(searchWord: currentWords[indexPath.row])
+            searchController.searchBar.text = currentWords[indexPath.row]
+        }
+        
+        if tableView == searchedTableView {
+            performSegue(withIdentifier: "FromMainToDetail", sender: appList[indexPath.row])
         }
     }
     

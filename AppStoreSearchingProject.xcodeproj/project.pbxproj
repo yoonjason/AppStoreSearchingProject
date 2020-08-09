@@ -15,6 +15,7 @@
 		0642835324DADE5D004BA0E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */; };
 		0685811D24DE8ABB00130E0B /* AppStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685811C24DE8ABB00130E0B /* AppStoreModel.swift */; };
 		0685811F24DEAD6900130E0B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685811E24DEAD6900130E0B /* Extensions.swift */; };
+		068617D224E007D200971037 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068617D124E007D200971037 /* DetailViewController.swift */; };
 		4C31AF06C1BB613B72F88F75 /* Pods_AppStoreSearchingProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */; };
 		6755BB2624DD26C8004BAAB9 /* Words+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */; };
 		6755BB2724DD26C8004BAAB9 /* Words+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2524DD26C8004BAAB9 /* Words+CoreDataProperties.swift */; };
@@ -34,6 +35,7 @@
 		0642835424DADE5D004BA0E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0685811C24DE8ABB00130E0B /* AppStoreModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreModel.swift; sourceTree = "<group>"; };
 		0685811E24DEAD6900130E0B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		068617D124E007D200971037 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		06E6FE1F82A7780B2FED5B43 /* Pods-AppStoreSearchingProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreSearchingProject.release.xcconfig"; path = "Target Support Files/Pods-AppStoreSearchingProject/Pods-AppStoreSearchingProject.release.xcconfig"; sourceTree = "<group>"; };
 		30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreSearchingProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Words+CoreDataClass.swift"; path = "AppStoreSearchingProject/Words+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
 				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
 				0685811E24DEAD6900130E0B /* Extensions.swift */,
+				068617D124E007D200971037 /* DetailViewController.swift */,
 			);
 			path = AppStoreSearchingProject;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				068617D224E007D200971037 /* DetailViewController.swift in Sources */,
 				6755BB2E24DD4EB6004BAAB9 /* ItemCell.swift in Sources */,
 				6755BB2924DD2BAD004BAAB9 /* WordDataManager.swift in Sources */,
 				6755BB2724DD26C8004BAAB9 /* Words+CoreDataProperties.swift in Sources */,

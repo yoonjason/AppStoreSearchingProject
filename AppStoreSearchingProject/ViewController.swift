@@ -39,18 +39,16 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         setCoreData()
         
         setView()
+        setSearchController()
     }
     //https://itunes.apple.com/search?country=KR&media=software&term=kakao&entity=software
     
     func setView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
-        let search = UISearchController(searchResultsController: nil)
-        search.searchResultsUpdater = self
-        search.obscuresBackgroundDuringPresentation = false
-        search.searchBar.placeholder = "App Store"
-        search.searchBar.delegate = self
-        self.navigationItem.searchController = search
+
+//        search.searchBar.autocapitalizationType = .none
+        
         definesPresentationContext = true
         recentTableView.delegate = self
         recentTableView.dataSource = self
@@ -59,6 +57,17 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         searchedTableView.isHidden = true
         searchedTableView.estimatedRowHeight = 349
         searchedTableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    func setSearchController(){
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "App Store"
+        searchController.searchBar.delegate = self
+        searchController.isActive = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     func setCoreData() {
@@ -190,17 +199,15 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
             let data = searchWords[indexPath.row]
             cell?.titleBtn.setTitle(data, for: .normal)
-            
+            cell?.selectionStyle = .none
             return cell!
         }else if tableView == searchedTableView {
             let cell  = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell
             let appData = appList[indexPath.row]
             cell?.setData(appData: appData)
+            cell?.selectionStyle = .none
             return cell!
         }
-
-        
-        
         return UITableViewCell()
     }
     

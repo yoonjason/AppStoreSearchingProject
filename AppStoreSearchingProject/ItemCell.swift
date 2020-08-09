@@ -338,8 +338,6 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
         if let imageUrlStrings = data.screenshotUrls {
             self.imageUrlStrings = imageUrlStrings
         }
-        print(self.imageUrlStrings.count)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -361,6 +359,7 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 225, height: 449)
     }
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
         {
             
@@ -417,6 +416,131 @@ class AppDescriptionCell : UITableViewCell {
         if let description = data.descriptionField {
             descriptionLabel.text = description
         }
+    }
+}
+
+class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    var data = [Entry]()
+    
+    func requestReviews(_ appId : Int) {
+        let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
+        let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        guard let url = URL(string: encodedUrl!) else {
+            fatalError("Invalid URL")
+        }
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: url) { [weak self] (data, response, error) in
+            defer {
+                DispatchQueue.main.async { [weak self] in
+                    //                self?.listTableView.reloadData()
+                    //                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                }
+            }
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid Response")
+                return
+            }
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print(httpResponse.statusCode)
+                return
+            }
+            
+            guard let data = data else {
+                fatalError("Invalid Data")
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let resultData = try decoder.decode(Review.self, from: data)
+                self?.data = resultData.feed.entry
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.collectionView.reloadData()
+                }
+                
+                
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    func setData(_ appId :Int) {
+        print(appId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        let cellWidth = screen.width - 100
+        let cellHeight = screen.height - 100
+        
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+        layout.scrollDirection = .horizontal
+        collectionView.isPagingEnabled = true
+        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 20
+        
+        requestReviews(appId)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AppReviewCollectionViewCell", for: indexPath) as? AppReviewCollectionViewCell
+        let data = self.data[indexPath.row]
+        cell?.setData(data)
+        return cell!
+//        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (screen.width - 40)/2, height: 220)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+    {
+        
+        let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+        
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        
+        var roundedIndex = round(index)
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else {
+            roundedIndex = ceil(index)
+        }
+        
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+    }
+    
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+}
+
+class AppReviewCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var reviewDescriptionLabel: UILabel!
+    func setData(_ data : Entry) {
+        reviewDescriptionLabel.text = data.content.label
+        print(data.content.label)
     }
 }
 

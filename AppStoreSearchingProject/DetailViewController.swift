@@ -29,13 +29,14 @@ class DetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 280.0
+        self.appId = data?.trackId as! Int
     }
     
 
 }
 extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,6 +69,10 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.descriptionLabel.numberOfLines = 2
             }
             cell.selectionStyle = .none
+            return cell
+        case 4:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AppReviewCell", for: indexPath) as! AppReviewCell
+            cell.setData(appId)
             return cell
         default:
             return UITableViewCell()
@@ -109,6 +114,8 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 2:
             return 534
         case 3:
+            return UITableView.automaticDimension
+        case 4:
             return UITableView.automaticDimension
         default:
             return 0

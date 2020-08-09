@@ -200,3 +200,227 @@ struct AppInfo : Codable {
         sellerUrl = try values.decodeIfPresent(String.self, forKey: .sellerUrl)
     }
 }
+
+struct Review: Decodable {
+  let feed: ReviewFeed
+}
+
+struct ReviewFeed: Decodable {
+  let entry: [Entry]
+}
+
+struct Entry: Decodable {
+  let author: Author
+  let title: Label
+  let content: Label
+  let rating: Label
+  
+  private enum CodingKeys: String, CodingKey {
+    case author
+    case title
+    case content
+    case rating = "im:rating"
+  }
+}
+
+struct Author: Decodable {
+  let name: Label
+}
+
+struct Label: Decodable {
+  let label: String
+}
+
+//struct Reviews : Codable {
+//
+//    let feed : Feed?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case feed
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        feed = try Feed(from: decoder)
+//    }
+//
+//}
+//
+//struct Feed : Codable {
+//
+//    let author : Author?
+//    let entry : [Entry]?
+//    let icon : Name?
+//    let id : Name?
+//    let link : [ContentTypes]?
+//    let rights : Name?
+//    let title : Name?
+//    let updated : Name?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case author
+//        case entry = "entry"
+//        case icon
+//        case id
+//        case link = "link"
+//        case rights
+//        case title
+//        case updated
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        author = try Author(from: decoder)
+//        entry = try values.decodeIfPresent([Entry].self, forKey: .entry)
+//        icon = try Name(from: decoder)
+//        id = try Name(from: decoder)
+//        link = try values.decodeIfPresent([ContentTypes].self, forKey: .link)
+//        rights = try Name(from: decoder)
+//        title = try Name(from: decoder)
+//        updated = try Name(from: decoder)
+//    }
+//
+//
+//}
+//
+//struct Entry : Codable {
+//
+//    let author : Author?
+//    let content : Content?
+//    let id : Name?
+//    let imcontentType : ContentTypes?
+//    let imrating : Name?
+//    let imversion : Name?
+//    let imvoteCount : Name?
+//    let imvoteSum : Name?
+//    let link : ContentTypes?
+//    let title : Name?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case author
+//        case content
+//        case id
+//        case imcontentType
+//        case imrating
+//        case imversion
+//        case imvoteCount
+//        case imvoteSum
+//        case link
+//        case title
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        author = try Author(from: decoder)
+//        content = try Content(from: decoder)
+//        id = try Name(from: decoder)
+//        imcontentType = try ContentTypes(from: decoder)
+//        imrating = try Name(from: decoder)
+//        imversion = try Name(from: decoder)
+//        imvoteCount = try Name(from: decoder)
+//        imvoteSum = try Name(from: decoder)
+//        link = try ContentTypes(from: decoder)
+//        title = try Name(from: decoder)
+//    }
+//
+//
+//}
+//struct ContentTypes : Codable {
+//
+//    let attributes : Attribute?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case attributes
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        attributes = try Attribute(from: decoder)
+//    }
+//}
+//
+//struct Content : Codable {
+//
+//    let attributes : Attribute?
+//    let label : String?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case attributes
+//        case label = "label"
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        attributes = try Attribute(from: decoder)
+//        label = try values.decodeIfPresent(String.self, forKey: .label)
+//    }
+//
+//
+//
+//}
+//
+//struct Attribute : Codable {
+//
+//    let type : String?
+//    let label : String?
+//    let term : String?
+//    let href : String?
+//    let rel : String?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case type = "type"
+//        case label = "label"
+//        case term = "term"
+//        case href = "href"
+//        case rel = "rel"
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        type = try values.decodeIfPresent(String.self, forKey: .type)
+//        label = try values.decodeIfPresent(String.self, forKey: .label)
+//        term = try values.decodeIfPresent(String.self, forKey: .term)
+//        href = try values.decodeIfPresent(String.self, forKey: .href)
+//        rel = try values.decodeIfPresent(String.self, forKey: .rel)
+//    }
+//
+//
+//}
+//struct Author : Codable {
+//
+//    let name : Name?
+//    let uri : Name?
+//    let label : String?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case name
+//        case uri
+//        case label = "label"
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        name = try Name(from: decoder)
+//        uri = try Name(from: decoder)
+//        label = try values.decodeIfPresent(String.self, forKey: .label)
+//    }
+//
+//
+//}
+//
+//
+//struct Name : Codable {
+//
+//    let label : String?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case label = "label"
+//    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        label = try values.decodeIfPresent(String.self, forKey: .label)
+//    }
+//
+//
+//}

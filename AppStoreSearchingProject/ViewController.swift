@@ -69,6 +69,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         suggestTableView.rowHeight = UITableView.automaticDimension
         suggestTableView.estimatedRowHeight = 43.5
         
+        if #available(iOS 13.0, *) {
+            UIApplication.shared.statusBarStyle = .darkContent
+        } else {
+            // Fallback on earlier versions
+            UIApplication.shared.statusBarStyle = .default
+        }
+        setNeedsStatusBarAppearanceUpdate()
+        
     }
     
     

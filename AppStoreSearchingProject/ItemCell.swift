@@ -402,3 +402,72 @@ class IPhoneScreenShotCell : UICollectionViewCell {
 //        imageView.layer.cornerRadius = 36
     }
 }
+
+class AppDescriptionCell : UITableViewCell {
+    
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var moreBtn: UIButton!
+    @IBOutlet weak var developerBtn: UIButton!
+    @IBOutlet weak var developerLabel: UILabel!
+    
+    func setData(_ data: AppData) {
+        if let group = data.sellerName {
+            developerBtn.setTitle(group, for: .normal)
+        }
+        if let description = data.descriptionField {
+            descriptionLabel.text = description
+        }
+    }
+}
+
+class AppInfomationCell : UITableViewCell, UITableViewDelegate, UITableViewDataSource {
+   
+    var appData : AppData?
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    func setData(_ data : AppData) {
+        appData = data
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           return 6
+       }
+       
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "", for: indexPath) as? AppInfomationCell
+        switch indexPath.row {
+        case 0:
+            cell?.textLabel?.text = "0"
+        case 1:
+            cell?.textLabel?.text = "1"
+        case 2:
+            cell?.textLabel?.text = "2"
+        case 3:
+            cell?.textLabel?.text = "3"
+        case 4:
+            cell?.textLabel?.text = "4"
+        case 5:
+            cell?.textLabel?.text = "5"
+        default:
+            return UITableViewCell()
+        }
+        
+        
+        return cell!
+       }
+}
+
+class AppInfomationDetailCell: UITableViewCell {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
+    
+    
+    func setData(_ data : AppData){
+        
+    }
+}

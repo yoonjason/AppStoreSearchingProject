@@ -172,3 +172,31 @@ struct AppData : Codable {
 
 
 }
+
+
+struct AppInfo : Codable {
+    let seller : String?
+    let fileSizeBytes : String?
+    let genres : [String]?
+    let minimumOsVersion : String?
+    let languageCodesISO2A : [String]?
+    let sellerUrl : String?
+    
+    enum CodingKeys: String, CodingKey {
+        case seller = "seller"
+        case fileSizeBytes = "fileSizeBytes"
+        case genres = "genres"
+        case minimumOsVersion = "minimumOsVersion"
+        case languageCodesISO2A = "languageCodesISO2A"
+        case sellerUrl = "sellerUrl"
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        seller = try values.decodeIfPresent(String.self, forKey: .seller)
+        fileSizeBytes = try values.decodeIfPresent(String.self, forKey: .fileSizeBytes)
+        genres = try values.decodeIfPresent([String].self, forKey: .genres)
+        minimumOsVersion = try values.decodeIfPresent(String.self, forKey: .minimumOsVersion)
+        languageCodesISO2A = try values.decodeIfPresent([String].self, forKey: .languageCodesISO2A)
+        sellerUrl = try values.decodeIfPresent(String.self, forKey: .sellerUrl)
+    }
+}

@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
 
     var data : AppData?
     var expandedIndexSet : IndexSet = []
+    var appId : Int = 0
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,7 +35,7 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,7 +60,15 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         case 3:
-            break
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AppDescriptionCell", for: indexPath) as! AppDescriptionCell
+            cell.setData(data!)
+            if expandedIndexSet.contains(3) {
+                cell.descriptionLabel.numberOfLines = 0
+            } else {
+                cell.descriptionLabel.numberOfLines = 2
+            }
+            cell.selectionStyle = .none
+            return cell
         default:
             return UITableViewCell()
         }
@@ -69,6 +78,16 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 1{
+            tableView.deselectRow(at: indexPath, animated: false)
+            
+            if(expandedIndexSet.contains(indexPath.row)){
+                expandedIndexSet.remove(indexPath.row)
+            } else {
+                expandedIndexSet.insert(indexPath.row)
+            }
+
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }else if indexPath.row == 3 {
             tableView.deselectRow(at: indexPath, animated: false)
             
             if(expandedIndexSet.contains(indexPath.row)){
@@ -88,9 +107,9 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 1:
             return UITableView.automaticDimension
         case 2:
-            return 513
+            return 534
         case 3:
-            return 520
+            return UITableView.automaticDimension
         default:
             return 0
         }

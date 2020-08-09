@@ -56,6 +56,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PreViewTableViewCell", for: indexPath) as! PreViewTableViewCell
             cell.setData(data!)
+            cell.selectionStyle = .none
             return cell
         case 3:
             break
@@ -87,7 +88,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 1:
             return UITableView.automaticDimension
         case 2:
-            return 440
+            return 513
         case 3:
             return 520
         default:

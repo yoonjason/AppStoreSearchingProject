@@ -359,7 +359,7 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.size.width/2, height: 400)
+        return CGSize(width: 225, height: 449)
     }
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
         {
@@ -399,6 +399,6 @@ class IPhoneScreenShotCell : UICollectionViewCell {
                 self.imageView.image = UIImage(data: data!)
             }
         }
-        imageView.layer.cornerRadius = 26
+//        imageView.layer.cornerRadius = 36
     }
 }

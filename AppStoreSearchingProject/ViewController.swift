@@ -12,37 +12,43 @@ import CoreData
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
+    @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
     var url = "https://itunes.apple.com/search?country=KR&media=software&term=라인&entity=software"
     
+    let searchController = UISearchController(searchResultsController: nil)
     
-    func updateSearchResults(for searchController: UISearchController) {
-        //searchController.searchBar.text  -> 텍스트 검색될 때 나오는 text optional
-        //        searchController.searchResultsController.
-        //        print()
-        
-    }
-    var searchWords = [String]()
+    private var searchWords = [String]()
+    
+   
     var appList = [AppList]()
-    var isSearched = false
     
-    lazy var searchBar : UISearchBar = UISearchBar(frame: .zero)
+    var searchedTerm = String(){
+        didSet {
+            currentWords = wordsSearch(prefix: searchedTerm)
+            suggestTableView.reloadOnMainThread()
+        }
+    }
+    private var currentWords = [String]()
+    private var words :[Words] = WordDataManager.shared.getWords()
+    var didSelect: (String) -> Void = { _ in }
+//    lazy var searchBar : UISearchBar = UISearchBar(frame: .zero)
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //        let url = URL(string: MEMBER_LIST_URL + "&media=software&term=kakao&entity=software")!
-        //        let data = try! Data(contentsOf: url)
-        //        let json = String(data: data, encoding: .utf8)
-        //        print(json)
-        //
         setCoreData()
         
         setView()
         setSearchController()
     }
-    //https://itunes.apple.com/search?country=KR&media=software&term=kakao&entity=software
     
+    func wordsSearch(prefix: String) -> [String] {
+        return words
+            .map{ $0.word! }
+            .filter { $0.hasCaseInsensitivePrefix(prefix) }
+            .sorted{$0 > $1}
+            .map    { $0 }
+    }
     func setView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -57,10 +63,19 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         searchedTableView.isHidden = true
         searchedTableView.estimatedRowHeight = 349
         searchedTableView.rowHeight = UITableView.automaticDimension
+        suggestTableView.isHidden = true
+        suggestTableView.delegate = self
+        suggestTableView.dataSource = self
+        suggestTableView.rowHeight = UITableView.automaticDimension
+        suggestTableView.estimatedRowHeight = 43.5
+        
     }
     
+    
+    
+    
     func setSearchController(){
-        let searchController = UISearchController(searchResultsController: nil)
+
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "App Store"
@@ -78,6 +93,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     fileprivate func requestGetAllWords() {
         let words : [Words] = WordDataManager.shared.getWords()
+        self.words = words
         let wordName :[String] = words.map{$0.word!}
         searchWords = words.map{$0.word!}
         print("All Searching words...\(wordName)")
@@ -93,17 +109,21 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(searchBar.text)
         fetchSearchList(searchWord: searchBar.text!)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("Cancel")
+        searchedTableView.isHidden = true
+        suggestTableView.isHidden = true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        suggestTableView.isHidden = false
+        searchedTableView.isHidden = true
+        recentTableView.isHidden = true
         if searchText == "" {
             searchedTableView.isHidden = true
+            suggestTableView.isHidden = true
+            recentTableView.isHidden = false
         }
     }
     
@@ -152,34 +172,43 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             do {
                 let decoder = JSONDecoder()
                 let appsList = try decoder.decode(Apps.self, from: data)
-                
-                
-                self!.requestGetAllWords()
-                DispatchQueue.main.async { [weak self] in
-                    self?.recentTableView.reloadData()
-                }
+
                 if let appList = appsList.results {
                     if appList.count > 0 {
                         self!.saveNewWords(id: 1, word: searchWord)
                         self?.appList = appList
                         
                     }
-                    appList.forEach{
-                        print($0.trackName)
-                    }
                     DispatchQueue.main.async { [weak self] in
-                        self?.searchedTableView.scrollsToTop = true
+                        let indexPath = NSIndexPath(row: NSNotFound, section: 0)
+                        self!.searchedTableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
                         self?.searchedTableView.isHidden = false
                         self?.searchedTableView.reloadData()
+                        self?.suggestTableView.isHidden = true
                     }
                     
                     print("appsList", appsList)
                 }
+                self!.requestGetAllWords()
+                DispatchQueue.main.async { [weak self] in
+                    self?.recentTableView.reloadData()
+                }
+                
             } catch {
                 print(error)
             }
         }
         task.resume()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        //searchController.searchBar.text  -> 텍스트 검색될 때 나오는 text optional
+        guard let text = searchController.searchBar.text,
+            !text.isEmpty else {
+                return
+        }
+        searchedTerm = text
+        
     }
     
 }
@@ -189,6 +218,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
             return searchWords.count
         }else if tableView == searchedTableView {
             return appList.count
+        }else if tableView == suggestTableView {
+            return currentWords.count
         }
         return 1
     }
@@ -196,9 +227,9 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == recentTableView {
-            let cell  = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
+            let cell  = tableView.dequeueReusableCell(withIdentifier: "RecentSearchTableViewCell", for: indexPath) as? RecentSearchTableViewCell
             let data = searchWords[indexPath.row]
-            cell?.titleBtn.setTitle(data, for: .normal)
+            cell?.setData(data)
             cell?.selectionStyle = .none
             return cell!
         }else if tableView == searchedTableView {
@@ -207,6 +238,13 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
             cell?.setData(appData: appData)
             cell?.selectionStyle = .none
             return cell!
+        }else if tableView == suggestTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedTableViewCell", for: indexPath) as! SuggestedTableViewCell
+            cell.set(term: currentWords[indexPath.row],
+                     searchedTerm: searchedTerm)
+            cell.selectionStyle = .none
+            return cell
+            
         }
         return UITableViewCell()
     }
@@ -214,8 +252,21 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == searchedTableView {
             return UITableView.automaticDimension
+        }else if tableView == suggestTableView {
+            return UITableView.automaticDimension
         }
-        return 30
+        return UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == recentTableView {
+            self.fetchSearchList(searchWord: searchWords[indexPath.row])
+            searchController.searchBar.text = searchWords[indexPath.row]
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        if tableView == suggestTableView {
+            didSelect(currentWords[indexPath.row])
+            print(currentWords[indexPath.row])
+        }
     }
     
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZEO-tb-erW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A7M-A9-Iez">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -18,14 +18,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0D-tK-GMj">
                                 <rect key="frame" x="0.0" y="88" width="414" height="775"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RcV-We-tw0">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RcV-We-tw0">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="775"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <view key="tableHeaderView" contentMode="scaleToFill" id="G1Q-qL-Txc">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="인기 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1S-Z9-3Qe">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최근 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1S-Z9-3Qe">
                                                     <rect key="frame" x="8" y="12" width="114" height="49"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="49" id="Dgb-qG-bhb"/>
@@ -35,7 +35,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="S1S-Z9-3Qe" secondAttribute="bottom" constant="12" id="3m7-LG-nZB"/>
                                                 <constraint firstItem="S1S-Z9-3Qe" firstAttribute="leading" secondItem="G1Q-qL-Txc" secondAttribute="leading" constant="8" id="JLb-iR-qLu"/>
@@ -43,43 +43,43 @@
                                             </constraints>
                                         </view>
                                         <view key="tableFooterView" contentMode="scaleToFill" id="EgB-mq-q3h">
-                                            <rect key="frame" x="0.0" y="180" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="169" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         </view>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell" rowHeight="51" id="Z1d-vR-8nj" customClass="TableViewCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="101" width="414" height="51"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="RecentSearchTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecentSearchTableViewCell" id="Z1d-vR-8nj" customClass="RecentSearchTableViewCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="101" width="414" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z1d-vR-8nj" id="wmp-K3-hbl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5tm-qg-OW6">
-                                                            <rect key="frame" x="20" y="6" width="374" height="39"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hS-gI-TQw">
+                                                            <rect key="frame" x="20" y="16" width="52.5" height="8"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="39" id="yqZ-sC-jmJ"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <connections>
-                                                                <action selector="onActionTitle:" destination="Z1d-vR-8nj" eventType="touchUpInside" id="zVy-3y-ogo"/>
-                                                            </connections>
-                                                        </button>
+                                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="5tm-qg-OW6" firstAttribute="leading" secondItem="wmp-K3-hbl" secondAttribute="leading" constant="20" id="3kN-40-ePb"/>
-                                                        <constraint firstAttribute="bottom" secondItem="5tm-qg-OW6" secondAttribute="bottom" constant="6" id="MMv-jr-2Q2"/>
-                                                        <constraint firstItem="5tm-qg-OW6" firstAttribute="top" secondItem="wmp-K3-hbl" secondAttribute="top" constant="6" id="UPj-uL-vHK"/>
-                                                        <constraint firstAttribute="trailing" secondItem="5tm-qg-OW6" secondAttribute="trailing" constant="20" id="sK7-W4-fvQ"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="8hS-gI-TQw" secondAttribute="bottom" constant="5" id="0q4-R6-9YT"/>
+                                                        <constraint firstItem="8hS-gI-TQw" firstAttribute="leading" secondItem="wmp-K3-hbl" secondAttribute="leadingMargin" id="bed-O8-hZz"/>
+                                                        <constraint firstItem="8hS-gI-TQw" firstAttribute="top" secondItem="wmp-K3-hbl" secondAttribute="topMargin" constant="5" id="cBV-Bo-AQq"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="titleBtn" destination="5tm-qg-OW6" id="DNx-bK-Pia"/>
+                                                    <outlet property="titleLabel" destination="8hS-gI-TQw" id="lo4-ob-ZLs"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GrV-Kr-SAg">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="775"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SearchResultCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultCell" rowHeight="339" id="HXF-iB-0Ra" customClass="SearchResultCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="339"/>
@@ -263,6 +263,53 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="49" sectionHeaderHeight="28" sectionFooterHeight="28" id="SGf-cx-D8m">
+                                        <rect key="frame" x="19" y="54" width="375" height="667"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <view key="tableHeaderView" contentMode="scaleToFill" id="gmm-uZ-WiO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                        <view key="tableFooterView" contentMode="scaleToFill" id="wmx-fu-MVD">
+                                            <rect key="frame" x="0.0" y="121" width="375" height="215"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SuggestedTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SuggestedTableViewCell" id="jQm-AF-vJj" customClass="SuggestedTableViewCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="44" width="375" height="49"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jQm-AF-vJj" id="Ihl-h5-h1X">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_term_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Q8a-Lv-flm">
+                                                            <rect key="frame" x="0.0" y="17.5" width="14" height="14"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJM-FK-Sfh">
+                                                            <rect key="frame" x="22" y="11.5" width="54" height="26.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                            <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="BJM-FK-Sfh" firstAttribute="leading" secondItem="Q8a-Lv-flm" secondAttribute="trailing" constant="8" id="7xe-xL-l8W"/>
+                                                        <constraint firstItem="Q8a-Lv-flm" firstAttribute="leading" secondItem="Ihl-h5-h1X" secondAttribute="leading" id="Pe1-Hs-A7o"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BJM-FK-Sfh" secondAttribute="trailing" constant="20" symbolic="YES" id="dOs-wB-RRo"/>
+                                                        <constraint firstItem="BJM-FK-Sfh" firstAttribute="centerY" secondItem="Ihl-h5-h1X" secondAttribute="centerY" id="l8B-hV-8Rb"/>
+                                                        <constraint firstItem="Q8a-Lv-flm" firstAttribute="centerY" secondItem="Ihl-h5-h1X" secondAttribute="centerY" id="sAO-x2-rn2"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <connections>
+                                                    <outlet property="label" destination="BJM-FK-Sfh" id="rb7-ea-1zu"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -290,17 +337,18 @@
                     <connections>
                         <outlet property="recentTableView" destination="RcV-We-tw0" id="lNA-8i-bql"/>
                         <outlet property="searchedTableView" destination="GrV-Kr-SAg" id="yBf-Yf-aNc"/>
+                        <outlet property="suggestTableView" destination="SGf-cx-D8m" id="uRT-AQ-gDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1952.1739130434785" y="98.4375"/>
+            <point key="canvasLocation" x="2862.3188405797105" y="98.4375"/>
         </scene>
         <!--검색-->
         <scene sceneID="ORL-V9-18V">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZEO-tb-erW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="검색" id="C6w-kD-WPR"/>
+                    <tabBarItem key="tabBarItem" title="검색" selectedImage="search_tab_bar_icon" id="C6w-kD-WPR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="t2w-IJ-ehk">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -317,7 +365,29 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuG-H8-IhG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1952.1739130434785" y="98.4375"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="p9l-YZ-6Hz">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="A7M-A9-Iez" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" shadowImage="search_tab_bar_icon" id="gnE-y0-hdT">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ZEO-tb-erW" kind="relationship" relationship="viewControllers" id="DZq-DY-ll0"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vw5-jF-Nti" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="98.4375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="search_tab_bar_icon" width="48" height="32"/>
+        <image name="search_term_icon" width="14" height="14"/>
+    </resources>
 </document>

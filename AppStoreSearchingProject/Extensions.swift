@@ -46,3 +46,44 @@ extension UIView {
       }
     }
 }
+
+extension Int {
+  var toDecimalFormat: String? {
+      let numberFormatter = NumberFormatter()
+      numberFormatter.numberStyle = NumberFormatter.Style.decimal
+      numberFormatter.locale = .current
+      let formattedNumber = numberFormatter.string(from: NSNumber(value: self))
+      return formattedNumber
+  }
+}
+
+extension NSMutableAttributedString {
+    
+    public func setBold(text: String) {
+        let foundRange = mutableString.range(of: text)
+        if foundRange.location != NSNotFound {
+            addAttribute(
+                NSAttributedString.Key.foregroundColor,
+                value: UIColor.black,
+                range: foundRange
+            )
+        }
+    }
+}
+extension UITableView {
+
+    func reloadOnMainThread() {
+        print("reloadOnMainThread")
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
+    }
+}
+
+extension String {
+
+    func hasCaseInsensitivePrefix(_ s: String) -> Bool {
+//        print("prefix === ", s)
+        return prefix(s.count).caseInsensitiveCompare(s) == .orderedSame
+    }
+}

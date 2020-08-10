@@ -8,6 +8,16 @@
 
 import UIKit
 
+protocol TableCellProtocol : class {
+    func pageMove() -> Void
+}
+
+extension DetailViewController : TableCellProtocol {
+    func pageMove() {
+        performSegue(withIdentifier: "FromMainToScreenShotDetail", sender: data)
+    }
+}
+
 class DetailViewController: UIViewController {
 
     var data : AppData?
@@ -43,6 +53,17 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FromMainToScreenShotDetail" {
+            if let destinationVC = segue.destination as? ScreenShotDetailViewController {
+                destinationVC.data = data
+                if let imageUrls = data?.screenshotUrls {
+                    destinationVC.imagesUrl = imageUrls
+                }
+            }
+        }
+    }
 
 }
 
@@ -70,6 +91,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PreViewTableViewCell", for: indexPath) as! PreViewTableViewCell
             cell.setData(data!)
+            cell.delegate = self
             cell.selectionStyle = .none
             return cell
         case 3:
@@ -115,7 +137,12 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
             }
 
             tableView.reloadRows(at: [indexPath], with: .automatic)
-        }else if indexPath.row == 3 {
+        }
+        else if indexPath.row == 2 {
+            print("SELECT")
+            performSegue(withIdentifier: "FromMainToScreenShotDetail", sender: nil)
+        }
+        else if indexPath.row == 3 {
             tableView.deselectRow(at: indexPath, animated: false)
             
             if(expandedIdxSet.contains(indexPath.row)){

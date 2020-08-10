@@ -12,6 +12,7 @@ import CoreData
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
+    @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
@@ -107,12 +108,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        emptyLabel.isHidden = true
         recentTableView.isHidden = false
         searchedTableView.isHidden = true
         suggestTableView.isHidden = true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        emptyLabel.isHidden = true
         suggestTableView.isHidden = false
         searchedTableView.isHidden = true
         recentTableView.isHidden = true
@@ -124,6 +127,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func fetchSearchList(searchWord : String ){
+        self.emptyLabel.isHidden = true
         APIService.shared.fetchAppsSearch(searchWord : searchWord) { [weak self] (apps, error) in
             if let error = error {
                 print("Failed to search apps: ", error)
@@ -131,17 +135,27 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             }
             
             if let appList = apps?.results {
+                self?.appList.removeAll()
                 if appList.count > 0 {
                     self!.saveNewWords(id: 1, word: searchWord)
                     self?.appList = appList
                 }
+
                 DispatchQueue.main.async { [weak self] in
+                    if appList.count < 1 {
+                        print("검색결과없음")
+                        self!.emptyLabel.isHidden = false
+                        self?.searchedTableView.isHidden = true
+                        self?.recentTableView.isHidden = true
+                        self?.suggestTableView.isHidden = true
+                    }
                     let indexPath = NSIndexPath(row: NSNotFound, section: 0)
                     self!.searchedTableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
                     self?.searchedTableView.isHidden = false
                     self?.searchedTableView.reloadData()
                     self?.suggestTableView.isHidden = true
                 }
+                
             }
             self!.requestGetAllWords()
             DispatchQueue.main.async { [weak self] in

@@ -320,7 +320,7 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
 
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    var delegate : TableCellProtocol?
     func setData(_ data : AppData) {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -352,8 +352,10 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        
+
+        if let delegate = delegate {            
+            delegate.pageMove()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -398,7 +400,6 @@ class IPhoneScreenShotCell : UICollectionViewCell {
                 self.imageView.image = UIImage(data: data!)
             }
         }
-//        imageView.layer.cornerRadius = 36
     }
 }
 
@@ -609,3 +610,21 @@ class AppInfomationCell : UITableViewCell {
     
 }
 
+class ScreenShotDetailCell : UICollectionViewCell {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
+    
+    func setView(_ imageUrl:String){
+        let url = URL(string: imageUrl)
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: url!)
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data!)
+            }
+        }
+    }
+}

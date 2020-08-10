@@ -426,64 +426,29 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
     @IBOutlet weak var emptyLabel: UILabel!
     
     
-    func requestReviews(_ appId : Int) {
+    func getFetchAppReviewCountInfo(_ appId : Int){
         let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
-        let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        guard let url = URL(string: encodedUrl!) else {
-            fatalError("Invalid URL")
-        }
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: url) { [weak self] (data, response, error) in
-            defer {
-                DispatchQueue.main.async { [weak self] in
-                    //                self?.listTableView.reloadData()
-                    //                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                }
-            }
-            
+        APIService.shared.fetchGenericJSONData(urlString: urlString) { [weak self] (reviews: Review?, error) in
             if let error = error {
-                print(error)
+                print("Failed to fetch reviews: ", error)
                 return
             }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("Invalid Response")
-                return
-            }
-            
-            guard (200...299).contains(httpResponse.statusCode) else {
-                print(httpResponse.statusCode)
-                return
-            }
-            
-            guard let data = data else {
-                fatalError("Invalid Data")
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let resultData = try decoder.decode(Review.self, from: data)
-                if resultData.feed.entry.count > 0 {
-                    self?.data = resultData.feed.entry
-                    print(self!.data)
-                    
+
+            if let entry = reviews?.feed.entry {
+                if entry.count > 0 {
+                    self?.data = entry
                     DispatchQueue.main.async { [weak self] in
                         self?.collectionView.reloadData()
                         self?.emptyLabel.isHidden = false
                     }
-                    
                 }else {
                     self!.collectionView.isHidden = true
                     self?.emptyLabel.isHidden = false
                 }
-            } catch {
-                print(error)
             }
         }
-        task.resume()
     }
+    
     
     func setData(_ appId :Int) {
         
@@ -493,21 +458,17 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
         let insetY = (collectionView.bounds.height - cellHeight) / 2
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 16
+        layout.minimumLineSpacing = 10
         layout.scrollDirection = .horizontal
-        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+//        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
-        
-        
-        requestReviews(appId)
+        getFetchAppReviewCountInfo(appId)
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 1
         return data.count
     }
     
@@ -516,7 +477,6 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
         let data = self.data[indexPath.row]
         cell?.setData(data)
         return cell!
-//        return UICollectionViewCell()
     }
     
     

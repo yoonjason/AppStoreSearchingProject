@@ -421,6 +421,9 @@ class AppDescriptionCell : UITableViewCell {
 
 class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     var data = [Entry]()
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var emptyLabel: UILabel!
+    
     
     func requestReviews(_ appId : Int) {
         let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
@@ -461,13 +464,19 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
             do {
                 let decoder = JSONDecoder()
                 let resultData = try decoder.decode(Review.self, from: data)
-                self?.data = resultData.feed.entry
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.collectionView.reloadData()
+                if resultData.feed.entry.count > 0 {
+                    self?.data = resultData.feed.entry
+                    print(self!.data)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.collectionView.reloadData()
+                        self?.emptyLabel.isHidden = false
+                    }
+                    
+                }else {
+                    self!.collectionView.isHidden = true
+                    self?.emptyLabel.isHidden = false
                 }
-                
-                
             } catch {
                 print(error)
             }
@@ -476,25 +485,28 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
     }
     
     func setData(_ appId :Int) {
-        print(appId)
+        
+        let cellWidth = collectionView.frame.width - 40
+        let cellHeight = collectionView.frame.height
+        let insetX = (collectionView.bounds.width - cellWidth) / 2
+        let insetY = (collectionView.bounds.height - cellHeight) / 2
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        layout.minimumLineSpacing = 16
+        layout.scrollDirection = .horizontal
+        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         collectionView.delegate = self
         collectionView.dataSource = self
-        let cellWidth = screen.width - 100
-        let cellHeight = screen.height - 100
+        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        
-        layout.scrollDirection = .horizontal
-        collectionView.isPagingEnabled = true
-        layout.minimumInteritemSpacing = 20
-        layout.minimumLineSpacing = 20
         
         requestReviews(appId)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 1
         return data.count
     }
     
@@ -506,92 +518,94 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
 //        return UICollectionViewCell()
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (screen.width - 40)/2, height: 220)
+        return CGSize(width: collectionView.frame.width - 40, height: collectionView.frame.height)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
     {
-        
+
         let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        
+
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-        
+
         var roundedIndex = round(index)
-        
+
         if scrollView.contentOffset.x > targetContentOffset.pointee.x {
             roundedIndex = floor(index)
         } else {
             roundedIndex = ceil(index)
         }
-        
+
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }
     
     
-    @IBOutlet weak var collectionView: UICollectionView!
+
     
 }
 
 class AppReviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var reviewDescriptionLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var rateView: CosmosView!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    
     func setData(_ data : Entry) {
         reviewDescriptionLabel.text = data.content.label
-        print(data.content.label)
+        reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
+//        self.widthAnchor.constraint(equalToConstant: self.frame.size.width - 40).isActive = true
+        titleLabel.text = data.title.label
+        nameLabel.text = data.author.name.label
+        rateView.rating = Double(Int(data.rating.label)!)
     }
+    
+    override func prepareForReuse() {
+        reviewDescriptionLabel.text = nil
+        titleLabel.text = nil
+        nameLabel.text = nil
+//        reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
+    }
+    
+    
 }
 
-class AppInfomationCell : UITableViewCell, UITableViewDelegate, UITableViewDataSource {
+class AppInfomationCell : UITableViewCell {
    
+    @IBOutlet weak var sellerLabel: UILabel!
+    @IBOutlet weak var sizeLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var minimalVersion: UILabel!
+    @IBOutlet weak var languageLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
     var appData : AppData?
-    
-    @IBOutlet weak var tableView: UITableView!
-    
+        
     func setData(_ data : AppData) {
         appData = data
-        tableView.delegate = self
-        tableView.dataSource = self
+        if let sellerName = data.sellerName, let size = data.fileSizeBytes, let category = data.genres, let version = data.minimumOsVersion, let age = data.trackContentRating, let languages = data.languageCodesISO2A {
+            sellerLabel.text = sellerName
+           let bcf = ByteCountFormatter()
+            bcf.allowedUnits = [.useMB]
+            self.sizeLabel.text = bcf.string(fromByteCount: Int64(size)!)
+            categoryLabel.text = category[0]
+            ageLabel.text = age
+            minimalVersion.text = "iOS " + version + " 이상"
+            if languages.contains("KO") {
+                languageLabel.text = "한국어 외 \(languages.count - 1)개"
+            }
+        }
+
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return 6
-       }
-       
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "", for: indexPath) as? AppInfomationCell
-        switch indexPath.row {
-        case 0:
-            cell?.textLabel?.text = "0"
-        case 1:
-            cell?.textLabel?.text = "1"
-        case 2:
-            cell?.textLabel?.text = "2"
-        case 3:
-            cell?.textLabel?.text = "3"
-        case 4:
-            cell?.textLabel?.text = "4"
-        case 5:
-            cell?.textLabel?.text = "5"
-        default:
-            return UITableViewCell()
-        }
-        
-        
-        return cell!
-       }
+    
 }
 
-class AppInfomationDetailCell: UITableViewCell {
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    
-    
-    
-    func setData(_ data : AppData){
-        
-    }
-}

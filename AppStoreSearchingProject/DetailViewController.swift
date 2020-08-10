@@ -36,7 +36,7 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,7 +72,14 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
             return cell
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppReviewCell", for: indexPath) as! AppReviewCell
+
             cell.setData(appId)
+            cell.selectionStyle = .none
+            return cell
+        case 5:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AppInfomationCell", for: indexPath) as! AppInfomationCell
+            cell.setData(data!)
+            cell.selectionStyle = .none
             return cell
         default:
             return UITableViewCell()
@@ -116,7 +123,9 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 3:
             return UITableView.automaticDimension
         case 4:
-            return UITableView.automaticDimension
+            return 282
+        case 5:
+            return 251
         default:
             return 0
         }

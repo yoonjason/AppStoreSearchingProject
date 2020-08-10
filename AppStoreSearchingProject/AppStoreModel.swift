@@ -174,32 +174,6 @@ struct AppData : Codable {
 }
 
 
-struct AppInfo : Codable {
-    let seller : String?
-    let fileSizeBytes : String?
-    let genres : [String]?
-    let minimumOsVersion : String?
-    let languageCodesISO2A : [String]?
-    let sellerUrl : String?
-    
-    enum CodingKeys: String, CodingKey {
-        case seller = "seller"
-        case fileSizeBytes = "fileSizeBytes"
-        case genres = "genres"
-        case minimumOsVersion = "minimumOsVersion"
-        case languageCodesISO2A = "languageCodesISO2A"
-        case sellerUrl = "sellerUrl"
-    }
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        seller = try values.decodeIfPresent(String.self, forKey: .seller)
-        fileSizeBytes = try values.decodeIfPresent(String.self, forKey: .fileSizeBytes)
-        genres = try values.decodeIfPresent([String].self, forKey: .genres)
-        minimumOsVersion = try values.decodeIfPresent(String.self, forKey: .minimumOsVersion)
-        languageCodesISO2A = try values.decodeIfPresent([String].self, forKey: .languageCodesISO2A)
-        sellerUrl = try values.decodeIfPresent(String.self, forKey: .sellerUrl)
-    }
-}
 
 struct Review: Decodable {
   let feed: ReviewFeed
@@ -231,101 +205,7 @@ struct Label: Decodable {
   let label: String
 }
 
-//struct Reviews : Codable {
-//
-//    let feed : Feed?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case feed
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        feed = try Feed(from: decoder)
-//    }
-//
-//}
-//
-//struct Feed : Codable {
-//
-//    let author : Author?
-//    let entry : [Entry]?
-//    let icon : Name?
-//    let id : Name?
-//    let link : [ContentTypes]?
-//    let rights : Name?
-//    let title : Name?
-//    let updated : Name?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case author
-//        case entry = "entry"
-//        case icon
-//        case id
-//        case link = "link"
-//        case rights
-//        case title
-//        case updated
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        author = try Author(from: decoder)
-//        entry = try values.decodeIfPresent([Entry].self, forKey: .entry)
-//        icon = try Name(from: decoder)
-//        id = try Name(from: decoder)
-//        link = try values.decodeIfPresent([ContentTypes].self, forKey: .link)
-//        rights = try Name(from: decoder)
-//        title = try Name(from: decoder)
-//        updated = try Name(from: decoder)
-//    }
-//
-//
-//}
-//
-//struct Entry : Codable {
-//
-//    let author : Author?
-//    let content : Content?
-//    let id : Name?
-//    let imcontentType : ContentTypes?
-//    let imrating : Name?
-//    let imversion : Name?
-//    let imvoteCount : Name?
-//    let imvoteSum : Name?
-//    let link : ContentTypes?
-//    let title : Name?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case author
-//        case content
-//        case id
-//        case imcontentType
-//        case imrating
-//        case imversion
-//        case imvoteCount
-//        case imvoteSum
-//        case link
-//        case title
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        author = try Author(from: decoder)
-//        content = try Content(from: decoder)
-//        id = try Name(from: decoder)
-//        imcontentType = try ContentTypes(from: decoder)
-//        imrating = try Name(from: decoder)
-//        imversion = try Name(from: decoder)
-//        imvoteCount = try Name(from: decoder)
-//        imvoteSum = try Name(from: decoder)
-//        link = try ContentTypes(from: decoder)
-//        title = try Name(from: decoder)
-//    }
-//
-//
-//}
-//struct ContentTypes : Codable {
+//struct Im_contentType : Codable{
 //
 //    let attributes : Attribute?
 //
@@ -337,6 +217,8 @@ struct Label: Decodable {
 //        let values = try decoder.container(keyedBy: CodingKeys.self)
 //        attributes = try Attribute(from: decoder)
 //    }
+//
+//
 //}
 //
 //struct Content : Codable {
@@ -354,7 +236,6 @@ struct Label: Decodable {
 //        attributes = try Attribute(from: decoder)
 //        label = try values.decodeIfPresent(String.self, forKey: .label)
 //    }
-//
 //
 //
 //}
@@ -386,6 +267,7 @@ struct Label: Decodable {
 //
 //
 //}
+//
 //struct Author : Codable {
 //
 //    let name : Name?

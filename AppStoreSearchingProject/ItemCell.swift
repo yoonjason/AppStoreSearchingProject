@@ -232,6 +232,7 @@ class NewFeatureInfoCell :  UITableViewCell {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var moreBtn: UIButton!
     @IBOutlet weak var descLabel: UILabel!
+    var delegate : TableCellProtocol?
     
     
     func setData(_ data : AppData) {
@@ -262,11 +263,8 @@ class NewFeatureInfoCell :  UITableViewCell {
     }
     
     func getNow() -> Date {
-        // current day & time
         let now                                            = Date()
-        // 데이터 포맷터
         let dateFormatter                                  = DateFormatter()
-        // Locale
         dateFormatter.locale                               = Locale(identifier: "ko_KR")
         dateFormatter.timeZone                             = TimeZone(abbreviation: "KST+9:00")
         dateFormatter.dateFormat                           = "yyyy-MM-dd HH:mm:ss"
@@ -324,13 +322,7 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
     func setData(_ data : AppData) {
         collectionView.delegate = self
         collectionView.dataSource = self
-        let cellWidth = screen.width - 100
-        let cellHeight = screen.height - 100
-
-        
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-//        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-
         layout.scrollDirection = .horizontal
         collectionView.isPagingEnabled = true
         layout.minimumInteritemSpacing = 20

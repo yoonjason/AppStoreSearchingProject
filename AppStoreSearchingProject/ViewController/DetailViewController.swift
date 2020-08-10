@@ -10,11 +10,15 @@ import UIKit
 
 protocol TableCellProtocol : class {
     func pageMove() -> Void
+    func showCell(index : Int) -> Void
 }
 
 extension DetailViewController : TableCellProtocol {
     func pageMove() {
         performSegue(withIdentifier: "FromMainToScreenShotDetail", sender: data)
+    }
+    func showCell(index : Int) {
+        print(index)
     }
 }
 
@@ -24,6 +28,7 @@ class DetailViewController: UIViewController {
     var expandedIdxSet : IndexSet = []
     var appId : Int = 0
     var entry : [Entry] = [Entry]()
+    var didSelect: (String) -> Void = { _ in }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -82,6 +87,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewFeatureInfoCell", for: indexPath) as! NewFeatureInfoCell
             cell.setData(data!)
+            cell.delegate = self
             if expandedIdxSet.contains(1) {
                 cell.descLabel.numberOfLines = 0
             } else {

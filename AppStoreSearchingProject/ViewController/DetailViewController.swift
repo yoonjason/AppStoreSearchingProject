@@ -11,16 +11,16 @@ import UIKit
 class DetailViewController: UIViewController {
 
     var data : AppData?
-    var expandedIndexSet : IndexSet = []
+    var expandedIdxSet : IndexSet = []
     var appId : Int = 0
+    var entry : [Entry] = [Entry]()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(data)
-        // Do any additional setup after loading the view.
         setView()
+        getFetchAppReviewCountInfo()
     }
     
     func setView(){
@@ -29,11 +29,23 @@ class DetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 280.0
-        self.appId = data?.trackId as! Int
     }
     
+    func getFetchAppReviewCountInfo(){
+        let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
+        APIService.shared.fetchGenericJSONData(urlString: urlString) { [weak self] (reviews: Review?, error) in
+            if let error = error {
+                print("Failed to fetch reviews: ", error)
+                return
+            }
+            if let entry = reviews?.feed.entry {
+                self?.entry = entry
+            }
+        }
+    }
 
 }
+
 extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
@@ -49,7 +61,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewFeatureInfoCell", for: indexPath) as! NewFeatureInfoCell
             cell.setData(data!)
-            if expandedIndexSet.contains(1) {
+            if expandedIdxSet.contains(1) {
                 cell.descLabel.numberOfLines = 0
             } else {
                 cell.descLabel.numberOfLines = 2
@@ -63,7 +75,7 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppDescriptionCell", for: indexPath) as! AppDescriptionCell
             cell.setData(data!)
-            if expandedIndexSet.contains(3) {
+            if expandedIdxSet.contains(3) {
                 cell.descriptionLabel.numberOfLines = 0
             } else {
                 cell.descriptionLabel.numberOfLines = 2
@@ -75,6 +87,10 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
 
             cell.setData(appId)
             cell.selectionStyle = .none
+            if entry.count < 1 {
+                cell.isHidden = true
+            }
+            
             return cell
         case 5:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppInfomationCell", for: indexPath) as! AppInfomationCell
@@ -92,20 +108,20 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 1{
             tableView.deselectRow(at: indexPath, animated: false)
             
-            if(expandedIndexSet.contains(indexPath.row)){
-                expandedIndexSet.remove(indexPath.row)
+            if(expandedIdxSet.contains(indexPath.row)){
+                expandedIdxSet.remove(indexPath.row)
             } else {
-                expandedIndexSet.insert(indexPath.row)
+                expandedIdxSet.insert(indexPath.row)
             }
 
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }else if indexPath.row == 3 {
             tableView.deselectRow(at: indexPath, animated: false)
             
-            if(expandedIndexSet.contains(indexPath.row)){
-                expandedIndexSet.remove(indexPath.row)
+            if(expandedIdxSet.contains(indexPath.row)){
+                expandedIdxSet.remove(indexPath.row)
             } else {
-                expandedIndexSet.insert(indexPath.row)
+                expandedIdxSet.insert(indexPath.row)
             }
 
             tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -123,6 +139,9 @@ extension DetailViewController : UITableViewDelegate, UITableViewDataSource {
         case 3:
             return UITableView.automaticDimension
         case 4:
+            if entry.count < 1 {
+                return 0
+            }
             return 282
         case 5:
             return 251

@@ -22,6 +22,7 @@
 		6755BB2924DD2BAD004BAAB9 /* WordDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */; };
 		6755BB2C24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2A24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodeld */; };
 		6755BB2E24DD4EB6004BAAB9 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */; };
+		67AFB5D724E119D10030D830 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AFB5D624E119D10030D830 /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDataManager.swift; sourceTree = "<group>"; };
 		6755BB2B24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppStoreSearchingProject.xcdatamodel; sourceTree = "<group>"; };
 		6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		67AFB5D624E119D10030D830 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		F5A27D0F2886C8206C9C8C41 /* Pods-AppStoreSearchingProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreSearchingProject.debug.xcconfig"; path = "Target Support Files/Pods-AppStoreSearchingProject/Pods-AppStoreSearchingProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,18 +84,18 @@
 		0642834224DADE5C004BA0E1 /* AppStoreSearchingProject */ = {
 			isa = PBXGroup;
 			children = (
-				0685811C24DE8ABB00130E0B /* AppStoreModel.swift */,
 				0642834324DADE5C004BA0E1 /* AppDelegate.swift */,
 				0642834524DADE5C004BA0E1 /* SceneDelegate.swift */,
-				0642834724DADE5C004BA0E1 /* ViewController.swift */,
+				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
+				0685811E24DEAD6900130E0B /* Extensions.swift */,
+				67F1FE3B24E129A100A4B8D0 /* ViewController */,
+				67F1FE3A24E1299800A4B8D0 /* Model */,
+				67AFB5D524E119C20030D830 /* Service */,
 				0642834924DADE5C004BA0E1 /* Main.storyboard */,
 				0642834F24DADE5D004BA0E1 /* Assets.xcassets */,
 				0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */,
 				0642835424DADE5D004BA0E1 /* Info.plist */,
 				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
-				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
-				0685811E24DEAD6900130E0B /* Extensions.swift */,
-				068617D124E007D200971037 /* DetailViewController.swift */,
 			);
 			path = AppStoreSearchingProject;
 			sourceTree = "<group>";
@@ -105,6 +107,31 @@
 				06E6FE1F82A7780B2FED5B43 /* Pods-AppStoreSearchingProject.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		67AFB5D524E119C20030D830 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				67AFB5D624E119D10030D830 /* APIService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		67F1FE3A24E1299800A4B8D0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0685811C24DE8ABB00130E0B /* AppStoreModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		67F1FE3B24E129A100A4B8D0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0642834724DADE5C004BA0E1 /* ViewController.swift */,
+				068617D124E007D200971037 /* DetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		699B33F764315326E18003C4 /* Frameworks */ = {
@@ -235,6 +262,7 @@
 				6755BB2924DD2BAD004BAAB9 /* WordDataManager.swift in Sources */,
 				6755BB2724DD26C8004BAAB9 /* Words+CoreDataProperties.swift in Sources */,
 				0685811D24DE8ABB00130E0B /* AppStoreModel.swift in Sources */,
+				67AFB5D724E119D10030D830 /* APIService.swift in Sources */,
 				0642834824DADE5C004BA0E1 /* ViewController.swift in Sources */,
 				0685811F24DEAD6900130E0B /* Extensions.swift in Sources */,
 				0642834424DADE5C004BA0E1 /* AppDelegate.swift in Sources */,

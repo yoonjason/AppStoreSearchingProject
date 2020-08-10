@@ -15,29 +15,22 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
-    var url = "https://itunes.apple.com/search?country=KR&media=software&term=카카오뱅크&entity=software&attribute=softwareDeveloper"
     
     let searchController = UISearchController(searchResultsController: nil)
-    
-    private var searchWords = [String]()
-    
-   
     var appList = [AppData]()
-    
     var searchedTerm = String(){
         didSet {
             currentWords = wordsSearch(prefix: searchedTerm)
             suggestTableView.reloadOnMainThread()
         }
     }
+    private var searchWords = [String]()
     private var currentWords = [String]()
     private var words :[Words] = WordDataManager.shared.getWords()
-    var didSelect: (String) -> Void = { _ in }
-//    lazy var searchBar : UISearchBar = UISearchBar(frame: .zero)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setCoreData()
-        
         setView()
         setSearchController()
     }
@@ -49,12 +42,11 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             .sorted{$0 > $1}
             .map    { $0 }
     }
+    
     func setView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
-
 //        search.searchBar.autocapitalizationType = .none
-        
         definesPresentationContext = true
         recentTableView.delegate = self
         recentTableView.dataSource = self
@@ -72,18 +64,13 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         if #available(iOS 13.0, *) {
             UIApplication.shared.statusBarStyle = .darkContent
         } else {
-            // Fallback on earlier versions
             UIApplication.shared.statusBarStyle = .default
         }
         setNeedsStatusBarAppearanceUpdate()
         
     }
     
-    
-    
-    
     func setSearchController(){
-
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "App Store"
@@ -94,8 +81,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func setCoreData() {
-        //        saveNewWords(id: 1, word: "카카오")
-        
         requestGetAllWords()
     }
     
@@ -118,7 +103,9 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         fetchSearchList(searchWord: searchBar.text!)
+        
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         recentTableView.isHidden = false
         searchedTableView.isHidden = true
@@ -136,86 +123,39 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         }
     }
     
-    
-    func fetchSearchList(searchWord : String) {
-        //https://itunes.apple.com/search?term=카카오톡&country=kr&media=software
-        let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
-        DispatchQueue.main.async {
-            //          UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
-        let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        guard let url = URL(string: encodedUrl!) else {
-            fatalError("Invalid URL")
-        }
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: url) { [weak self] (data, response, error) in
-            defer {
-                DispatchQueue.main.async { [weak self] in
-                    //                self?.listTableView.reloadData()
-                    //                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                }
-            }
-            
+    func fetchSearchList(searchWord : String ){
+        APIService.shared.fetchAppsSearch(searchWord : searchWord) { [weak self] (apps, error) in
             if let error = error {
-                print(error)
+                print("Failed to search apps: ", error)
                 return
             }
             
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("Invalid Response")
-                return
-            }
-            
-            guard (200...299).contains(httpResponse.statusCode) else {
-                print(httpResponse.statusCode)
-                return
-            }
-            
-            guard let data = data else {
-                fatalError("Invalid Data")
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let appsList = try decoder.decode(Apps.self, from: data)
-
-                if let appList = appsList.results {
-                    if appList.count > 0 {
-                        self!.saveNewWords(id: 1, word: searchWord)
-                        self?.appList = appList
-                        
-                    }
-                    DispatchQueue.main.async { [weak self] in
-                        let indexPath = NSIndexPath(row: NSNotFound, section: 0)
-                        self!.searchedTableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
-                        self?.searchedTableView.isHidden = false
-                        self?.searchedTableView.reloadData()
-                        self?.suggestTableView.isHidden = true
-                    }
+            if let appList = apps?.results {
+                if appList.count > 0 {
+                    self!.saveNewWords(id: 1, word: searchWord)
+                    self?.appList = appList
                 }
-                self!.requestGetAllWords()
                 DispatchQueue.main.async { [weak self] in
-                    self?.recentTableView.reloadData()
+                    let indexPath = NSIndexPath(row: NSNotFound, section: 0)
+                    self!.searchedTableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
+                    self?.searchedTableView.isHidden = false
+                    self?.searchedTableView.reloadData()
+                    self?.suggestTableView.isHidden = true
                 }
-                
-            } catch {
-                print(error)
+            }
+            self!.requestGetAllWords()
+            DispatchQueue.main.async { [weak self] in
+                self?.recentTableView.reloadData()
             }
         }
-        task.resume()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        //searchController.searchBar.text  -> 텍스트 검색될 때 나오는 text optional
         guard let text = searchController.searchBar.text,
             !text.isEmpty else {
                 return
         }
         searchedTerm = text
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -223,13 +163,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             if let destinationVC = segue.destination as? DetailViewController {
                 if let data = sender as? AppData {
                     destinationVC.data = data
-                    print(data)
+                    destinationVC.appId = data.trackId!
                 }
             }
         }
     }
     
 }
+
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == recentTableView {
@@ -275,6 +216,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         return UITableView.automaticDimension
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == recentTableView {
             self.fetchSearchList(searchWord: searchWords[indexPath.row])
@@ -283,7 +225,6 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         
         if tableView == suggestTableView {
-            didSelect(currentWords[indexPath.row])
             self.fetchSearchList(searchWord: currentWords[indexPath.row])
             searchController.searchBar.text = currentWords[indexPath.row]
         }

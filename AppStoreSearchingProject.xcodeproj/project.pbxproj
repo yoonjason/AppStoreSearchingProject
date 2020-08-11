@@ -41,8 +41,8 @@
 		06E6FE1F82A7780B2FED5B43 /* Pods-AppStoreSearchingProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreSearchingProject.release.xcconfig"; path = "Target Support Files/Pods-AppStoreSearchingProject/Pods-AppStoreSearchingProject.release.xcconfig"; sourceTree = "<group>"; };
 		30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreSearchingProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		671BAF8A24E12F5F001F1BC8 /* ScreenShotDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotDetailViewController.swift; sourceTree = "<group>"; };
-		6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Words+CoreDataClass.swift"; path = "AppStoreSearchingProject/Words+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6755BB2524DD26C8004BAAB9 /* Words+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Words+CoreDataProperties.swift"; path = "AppStoreSearchingProject/Words+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Words+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6755BB2524DD26C8004BAAB9 /* Words+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Words+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDataManager.swift; sourceTree = "<group>"; };
 		6755BB2B24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppStoreSearchingProject.xcdatamodel; sourceTree = "<group>"; };
 		6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -65,9 +65,6 @@
 		0642833724DADE5C004BA0E1 = {
 			isa = PBXGroup;
 			children = (
-				6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */,
-				6755BB2524DD26C8004BAAB9 /* Words+CoreDataProperties.swift */,
-				6755BB2A24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodeld */,
 				0642834224DADE5C004BA0E1 /* AppStoreSearchingProject */,
 				0642834124DADE5C004BA0E1 /* Products */,
 				3BD1166A6E8651471F6FEB8F /* Pods */,
@@ -86,6 +83,7 @@
 		0642834224DADE5C004BA0E1 /* AppStoreSearchingProject */ = {
 			isa = PBXGroup;
 			children = (
+				67F5DAE224E22E0C00AB1AE1 /* CoreData */,
 				0642834324DADE5C004BA0E1 /* AppDelegate.swift */,
 				0642834524DADE5C004BA0E1 /* SceneDelegate.swift */,
 				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
@@ -97,7 +95,6 @@
 				0642834F24DADE5D004BA0E1 /* Assets.xcassets */,
 				0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */,
 				0642835424DADE5D004BA0E1 /* Info.plist */,
-				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
 			);
 			path = AppStoreSearchingProject;
 			sourceTree = "<group>";
@@ -135,6 +132,17 @@
 				671BAF8A24E12F5F001F1BC8 /* ScreenShotDetailViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		67F5DAE224E22E0C00AB1AE1 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */,
+				6755BB2524DD26C8004BAAB9 /* Words+CoreDataProperties.swift */,
+				6755BB2A24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodeld */,
+				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		699B33F764315326E18003C4 /* Frameworks */ = {
@@ -480,8 +488,7 @@
 				6755BB2B24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodel */,
 			);
 			currentVersion = 6755BB2B24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodel */;
-			name = AppStoreSearchingProject.xcdatamodeld;
-			path = AppStoreSearchingProject/AppStoreSearchingProject.xcdatamodeld;
+			path = AppStoreSearchingProject.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

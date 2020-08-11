@@ -38,4 +38,5 @@ RxSwift+MVVM 패턴을 적용시켜 프로젝트를 완성하였으면 더욱(�
 감사합니다! 카뱅!
 
 
-
+## P.S
+* TARGETS - Signing & Capabilities 탭에서. TEAM을 None으로 설정 후 PUSH 하였습니다.

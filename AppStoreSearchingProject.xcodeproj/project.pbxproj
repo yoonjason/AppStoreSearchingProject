@@ -88,14 +88,16 @@
 			children = (
 				0642834324DADE5C004BA0E1 /* AppDelegate.swift */,
 				0642834524DADE5C004BA0E1 /* SceneDelegate.swift */,
-				675B7C4024E22A280050FAAD /* Resources */,
+				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
+				0685811E24DEAD6900130E0B /* Extensions.swift */,
 				67F1FE3B24E129A100A4B8D0 /* ViewController */,
 				67F1FE3A24E1299800A4B8D0 /* Model */,
 				67AFB5D524E119C20030D830 /* Service */,
-				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
-				6755BB2D24DD4EB6004BAAB9 /* ItemCell.swift */,
-				0685811E24DEAD6900130E0B /* Extensions.swift */,
+				0642834924DADE5C004BA0E1 /* Main.storyboard */,
+				0642834F24DADE5D004BA0E1 /* Assets.xcassets */,
+				0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */,
 				0642835424DADE5D004BA0E1 /* Info.plist */,
+				6755BB2824DD2BAD004BAAB9 /* WordDataManager.swift */,
 			);
 			path = AppStoreSearchingProject;
 			sourceTree = "<group>";
@@ -107,16 +109,6 @@
 				06E6FE1F82A7780B2FED5B43 /* Pods-AppStoreSearchingProject.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		675B7C4024E22A280050FAAD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				0642834924DADE5C004BA0E1 /* Main.storyboard */,
-				0642834F24DADE5D004BA0E1 /* Assets.xcassets */,
-				0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		67AFB5D524E119C20030D830 /* Service */ = {

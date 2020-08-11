@@ -12,7 +12,8 @@ import CoreData
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
-    @IBOutlet weak var emptyLabel: UILabel!
+    @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var notSearchedLabel: UILabel!
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
@@ -61,7 +62,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         suggestTableView.dataSource = self
         suggestTableView.rowHeight = UITableView.automaticDimension
         suggestTableView.estimatedRowHeight = 43.5
-        
+        emptyView.isHidden = true
         if #available(iOS 13.0, *) {
             UIApplication.shared.statusBarStyle = .darkContent
         } else {
@@ -81,6 +82,10 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
     func setCoreData() {
         requestGetAllWords()
     }
@@ -104,18 +109,19 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         fetchSearchList(searchWord: searchBar.text!)
-        
+        searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        emptyLabel.isHidden = true
+        emptyView.isHidden = true
         recentTableView.isHidden = false
         searchedTableView.isHidden = true
         suggestTableView.isHidden = true
+        searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        emptyLabel.isHidden = true
+        emptyView.isHidden = true
         suggestTableView.isHidden = false
         searchedTableView.isHidden = true
         recentTableView.isHidden = true
@@ -127,7 +133,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     }
     
     func fetchSearchList(searchWord : String ){
-        self.emptyLabel.isHidden = true
+        self.emptyView.isHidden = true
         APIService.shared.fetchAppsSearch(searchWord : searchWord) { [weak self] (apps, error) in
             if let error = error {
                 print("Failed to search apps: ", error)
@@ -143,8 +149,8 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
 
                 DispatchQueue.main.async { [weak self] in
                     if appList.count < 1 {
-                        print("검색결과없음")
-                        self!.emptyLabel.isHidden = false
+                        self?.notSearchedLabel.text = "`\(self?.searchController.searchBar.text ?? "")`"
+                        self!.emptyView.isHidden = false
                         self?.searchedTableView.isHidden = true
                         self?.recentTableView.isHidden = true
                         self?.suggestTableView.isHidden = true
@@ -246,6 +252,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         if tableView == searchedTableView {
             performSegue(withIdentifier: "FromMainToDetail", sender: appList[indexPath.row])
         }
+        searchController.searchBar.resignFirstResponder()
     }
     
     

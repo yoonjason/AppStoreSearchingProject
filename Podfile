@@ -6,6 +6,12 @@ target 'AppStoreSearchingProject' do
   use_frameworks!
   pod 'IQKeyboardManagerSwift'
   pod 'Cosmos', '~> 21.0'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Action'
+  pod 'NSObject+Rx'
+  pod 'RxDataSources'
+  pod 'RxCoreData'
   # Pods for AppStoreSearchingProject
 
 end

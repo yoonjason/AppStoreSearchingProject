@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import NSObject_Rx
 
 class APIService {
     static let shared = APIService()
@@ -16,6 +18,38 @@ class APIService {
       fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
+//    func fetchSearch(searchWord : String, completion : @escaping ()
+    
+    func fetchfile<T:Codable>(_ searchWord : String) -> Observable<T?> {
+        return Observable.create{ emitter in
+             print("\(#function) 11")
+            let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
+            let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let url = URL(string: encodedUrl!)
+            print("\(#function)22")
+            let task = URLSession.shared.dataTask(with: url!) { data, _, error in
+
+                guard let data = data else { return }
+                do {
+                    let result = try JSONDecoder().decode(T.self, from: data)
+                    emitter.onNext(result)
+                    emitter.onCompleted()
+                }
+                catch let jsonError {
+                    emitter.onError(jsonError)
+                    print("Failed to fetch apps: ", jsonError)
+                }
+            }
+            task.resume()
+            return Disposables.create{
+                task.cancel()
+            }
+            
+        }
+    
+        
+        
+    }
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ()) {
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

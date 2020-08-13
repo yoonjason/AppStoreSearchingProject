@@ -9,6 +9,13 @@
 import UIKit
 import Foundation
 import CoreData
+import RxSwift
+import RxCocoa
+import NSObject_Rx
+
+class SearchResultViewModel {
+//    let appsData = BehaviorSubject<Apps>(value: Apps(from: <#T##Decoder#>))
+}
 
 class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
     
@@ -134,6 +141,20 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func fetchSearchList(searchWord : String ){
         self.emptyView.isHidden = true
+//        APIService.shared.fetchfile(searchWord)
+//            .subscribe(onNext : { apps in
+//                if let appList = apps?.results {
+//                    self.appList.removeAll()
+//                    self.appList = appList
+//
+//                }
+//            })
+//            .disposed(by: rx.disposeBag)
+        
+        
+            
+            
+        
         APIService.shared.fetchAppsSearch(searchWord : searchWord) { [weak self] (apps, error) in
             if let error = error {
                 print("Failed to search apps: ", error)

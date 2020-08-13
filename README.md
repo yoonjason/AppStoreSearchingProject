@@ -4,11 +4,22 @@
 ## 사용된 버전
 ### XCode 11.6, Swift 5
    
-## 사용된 오픈소스
+## 사용된 오픈소스 
 ### IQKeyboardManagerSwift
 * Link : <https://github.com/hackiftekhar/IQKeyboardManager>
 ### Cosmos
 * Link : <https://github.com/evgenyneu/Cosmos>
+
+###제출 후
+### RxSwift, RxCocoa
+* Link : <https://github.com/ReactiveX/RxSwift>
+
+### RxDataSources
+* Link : <https://github.com/RxSwiftCommunity/RxDataSources>
+
+### RxCoreData
+* Link : <https://github.com/RxSwiftCommunity/RxCoreData>
+
    
 ## 화면 스크린 샷
    

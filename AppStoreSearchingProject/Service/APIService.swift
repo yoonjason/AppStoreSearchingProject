@@ -20,7 +20,7 @@ class APIService {
     
 //    func fetchSearch(searchWord : String, completion : @escaping ()
     
-    func fetchfile<T:Codable>(_ searchWord : String) -> Observable<T?> {
+    func fetchfile(_ searchWord : String) -> Observable<Apps?> {
         return Observable.create{ emitter in
              print("\(#function) 11")
             let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
@@ -31,7 +31,7 @@ class APIService {
 
                 guard let data = data else { return }
                 do {
-                    let result = try JSONDecoder().decode(T.self, from: data)
+                    let result = try JSONDecoder().decode(Apps.self, from: data)
                     emitter.onNext(result)
                     emitter.onCompleted()
                 }

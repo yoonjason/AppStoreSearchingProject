@@ -17,13 +17,16 @@ class SearchResultViewModel {
 //    let appsData = BehaviorSubject<Apps>(value: Apps(from: <#T##Decoder#>))
 }
 
-class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating {
+class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
     
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var notSearchedLabel: UILabel!
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
+    
+    let searchedResultItems : BehaviorSubject<[AppData]> = BehaviorSubject<[AppData]>(value: [])
+    let recentSearchItems : BehaviorRelay<[Words]> = BehaviorRelay<[Words]>(value: [])
     
     let searchController = UISearchController(searchResultsController: nil)
     var appList = [AppData]()
@@ -42,6 +45,38 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         setCoreData()
         setView()
         setSearchController()
+        
+        searchedResultItems
+            .bind(to: searchedTableView.rx.items(cellIdentifier: "SearchResultCell", cellType: SearchResultCell.self)) { [weak self] index, item, cell in
+                cell.setData(appData: item)
+                cell.selectionStyle = .none
+        }
+        .disposed(by: rx.disposeBag)
+               
+        Observable
+            .zip(searchedTableView.rx.itemSelected, searchedTableView.rx.modelSelected(AppData.self))
+            .bind{ [weak self] (indexPath, item)  in
+                self?.performSegue(withIdentifier: "FromMainToDetail", sender: item)
+        }
+        .disposed(by: rx.disposeBag)
+        
+        searchedTableView
+            .rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
+        
+        
+        recentSearchItems
+            .bind(to: recentTableView.rx.items(cellIdentifier: "RecentSearchTableViewCell", cellType: RecentSearchTableViewCell.self)) { [weak self] (index, item, cell) in
+                cell.setData(item.word!)
+                cell.selectionStyle = .none
+        }
+        .disposed(by: rx.disposeBag)
+        
+        recentTableView
+            .rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
     }
     
     func wordsSearch(prefix: String) -> [String] {
@@ -57,16 +92,16 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
 //        search.searchBar.autocapitalizationType = .none
         definesPresentationContext = true
-        recentTableView.delegate = self
-        recentTableView.dataSource = self
-        searchedTableView.dataSource = self
-        searchedTableView.delegate = self
+//        recentTableView.delegate = self
+//        recentTableView.dataSource = self
+//        searchedTableView.dataSource = self
+//        searchedTableView.delegate = self
         searchedTableView.isHidden = true
         searchedTableView.estimatedRowHeight = 349
         searchedTableView.rowHeight = UITableView.automaticDimension
         suggestTableView.isHidden = true
-        suggestTableView.delegate = self
-        suggestTableView.dataSource = self
+//        suggestTableView.delegate = self
+//        suggestTableView.dataSource = self
         suggestTableView.rowHeight = UITableView.automaticDimension
         suggestTableView.estimatedRowHeight = 43.5
         emptyView.isHidden = true
@@ -99,10 +134,15 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     fileprivate func requestGetAllWords() {
         let words : [Words] = WordDataManager.shared.getWords()
+        recentSearchItems
+            .accept(words)
+       
+        
         self.words = words
         let wordName :[String] = words.map{$0.word!}
         searchWords = words.map{$0.word!}
-        print("All Searching words...\(wordName)")
+        
+//        print("All Searching words...\(wordName)")
     }
     
     fileprivate func saveNewWords(id : Int64, word : String){
@@ -141,17 +181,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     func fetchSearchList(searchWord : String ){
         self.emptyView.isHidden = true
-//        APIService.shared.fetchfile(searchWord)
-//            .subscribe(onNext : { apps in
-//                if let appList = apps?.results {
-//                    self.appList.removeAll()
-//                    self.appList = appList
-//
-//                }
-//            })
-//            .disposed(by: rx.disposeBag)
         
-        
+        searchedResultItems.onNext([])
+        APIService.shared.fetchfile(searchWord)
+            .map{ ($0?.results)!
+        }
+        .observeOn(MainScheduler.instance)
+        .bind(to: searchedResultItems)
+        .disposed(by: rx.disposeBag)
             
             
         
@@ -212,70 +249,70 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
 }
 
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == recentTableView {
-            return searchWords.count
-        }else if tableView == searchedTableView {
-            return appList.count
-        }else if tableView == suggestTableView {
-            return currentWords.count
-        }
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == recentTableView {
-            let cell  = tableView.dequeueReusableCell(withIdentifier: "RecentSearchTableViewCell", for: indexPath) as? RecentSearchTableViewCell
-            let data = searchWords[indexPath.row]
-            cell?.setData(data)
-            cell?.selectionStyle = .none
-            return cell!
-        }else if tableView == searchedTableView {
-            let cell  = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell
-            let appData = appList[indexPath.row]
-            cell?.setData(appData: appData)
-            cell?.selectionStyle = .none
-            return cell!
-        }else if tableView == suggestTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedTableViewCell", for: indexPath) as! SuggestedTableViewCell
-            cell.set(term: currentWords[indexPath.row],
-                     searchedTerm: searchedTerm)
-            cell.selectionStyle = .none
-            return cell
-            
-        }
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == searchedTableView {
-            return UITableView.automaticDimension
-        }else if tableView == suggestTableView {
-            return UITableView.automaticDimension
-        }
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == recentTableView {
-            self.fetchSearchList(searchWord: searchWords[indexPath.row])
-            searchController.searchBar.text = searchWords[indexPath.row]
-            navigationItem.hidesSearchBarWhenScrolling = true
-        }
-        
-        if tableView == suggestTableView {
-            self.fetchSearchList(searchWord: currentWords[indexPath.row])
-            searchController.searchBar.text = currentWords[indexPath.row]
-        }
-        
-        if tableView == searchedTableView {
-            performSegue(withIdentifier: "FromMainToDetail", sender: appList[indexPath.row])
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
-    
-}
+//extension ViewController : UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if tableView == recentTableView {
+//            return searchWords.count
+//        }else if tableView == searchedTableView {
+//            return appList.count
+//        }else if tableView == suggestTableView {
+//            return currentWords.count
+//        }
+//        return 1
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        if tableView == recentTableView {
+//            let cell  = tableView.dequeueReusableCell(withIdentifier: "RecentSearchTableViewCell", for: indexPath) as? RecentSearchTableViewCell
+//            let data = searchWords[indexPath.row]
+//            cell?.setData(data)
+//            cell?.selectionStyle = .none
+//            return cell!
+//        }else if tableView == searchedTableView {
+//            let cell  = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell
+//            let appData = appList[indexPath.row]
+//            cell?.setData(appData: appData)
+//            cell?.selectionStyle = .none
+//            return cell!
+//        }else if tableView == suggestTableView {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestedTableViewCell", for: indexPath) as! SuggestedTableViewCell
+//            cell.set(term: currentWords[indexPath.row],
+//                     searchedTerm: searchedTerm)
+//            cell.selectionStyle = .none
+//            return cell
+//
+//        }
+//        return UITableViewCell()
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if tableView == searchedTableView {
+//            return UITableView.automaticDimension
+//        }else if tableView == suggestTableView {
+//            return UITableView.automaticDimension
+//        }
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if tableView == recentTableView {
+//            self.fetchSearchList(searchWord: searchWords[indexPath.row])
+//            searchController.searchBar.text = searchWords[indexPath.row]
+//            navigationItem.hidesSearchBarWhenScrolling = true
+//        }
+//
+//        if tableView == suggestTableView {
+//            self.fetchSearchList(searchWord: currentWords[indexPath.row])
+//            searchController.searchBar.text = currentWords[indexPath.row]
+//        }
+//
+//        if tableView == searchedTableView {
+//            performSegue(withIdentifier: "FromMainToDetail", sender: appList[indexPath.row])
+//        }
+//        searchController.searchBar.resignFirstResponder()
+//    }
+//
+//
+//}
 

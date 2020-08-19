@@ -22,11 +22,9 @@ class APIService {
     
     func fetchfile(_ searchWord : String) -> Observable<Apps?> {
         return Observable.create{ emitter in
-             print("\(#function) 11")
             let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
             let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
             let url = URL(string: encodedUrl!)
-            print("\(#function)22")
             let task = URLSession.shared.dataTask(with: url!) { data, _, error in
 
                 guard let data = data else { return }

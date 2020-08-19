@@ -73,6 +73,14 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         }
         .disposed(by: rx.disposeBag)
         
+        Observable.zip(recentTableView.rx.itemSelected, recentTableView.rx.modelSelected(Words.self))
+            .bind{ [weak self] (index, item) in
+                self?.fetchSearchList(searchWord: item.word!)
+                self?.searchController.searchBar.text = item.word
+                self?.navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        .disposed(by: rx.disposeBag)
+        
         recentTableView
             .rx
             .setDelegate(self)

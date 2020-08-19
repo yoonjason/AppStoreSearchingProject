@@ -192,11 +192,10 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         
         searchedResultItems.onNext([])
         APIService.shared.fetchfile(searchWord)
-            .map{ ($0?.results)!
-        }
-        .observeOn(MainScheduler.instance)
-        .bind(to: searchedResultItems)
-        .disposed(by: rx.disposeBag)
+            .map{ ($0?.results)! }
+            .observeOn(MainScheduler.instance)
+            .bind(to: searchedResultItems)
+            .disposed(by: rx.disposeBag)
             
             
         

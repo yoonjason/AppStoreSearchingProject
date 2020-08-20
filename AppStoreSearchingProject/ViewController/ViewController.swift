@@ -34,6 +34,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     var appList = [AppData]()
     var searchedTerm = String(){
         didSet {
+            
             currentWords = wordsSearch(prefix: searchedTerm)
             suggestTableView.reloadOnMainThread()
         }
@@ -98,6 +99,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             .map    { $0 }
     }
     
+    
     func setView(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -147,6 +149,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         self.words = words
         let wordName :[String] = words.map{$0.word!}
         searchWords = words.map{$0.word!}
+        searchWords2.onNext(words.map{$0.word!})
         
 //        print("All Searching words...\(wordName)")
     }

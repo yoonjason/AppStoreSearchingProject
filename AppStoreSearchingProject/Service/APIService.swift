@@ -20,6 +20,40 @@ class APIService {
     
 //    func fetchSearch(searchWord : String, completion : @escaping ()
     
+    func getFetchAppReviewCountInfo(_ appId : Int){
+        let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
+        fetchGenericJSONData(urlString: urlString) { [weak self] (reviews: Review?, error) in
+            if let error = error {
+                print("Failed to fetch reviews: ", error)
+                return
+            }
+            
+        }
+    }
+    
+    func fetchReviews(_ appId : Int) -> Observable<Review?> {
+        return Observable.create{ emitter in
+            let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
+            let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let url = URL(string: encodedUrl!)
+            let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                guard let data = data else {return}
+                do {
+                    let result = try JSONDecoder().decode(Review.self, from: data)
+                    emitter.onNext(result)
+                    emitter.onCompleted()
+                }
+                catch let jsonError {
+                    emitter.onError(jsonError)
+                }
+            }
+            task.resume()
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+    
     func fetchfile(_ searchWord : String) -> Observable<Apps?> {
         return Observable.create{ emitter in
             let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
@@ -48,6 +82,7 @@ class APIService {
         
         
     }
+    
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> ()) {
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

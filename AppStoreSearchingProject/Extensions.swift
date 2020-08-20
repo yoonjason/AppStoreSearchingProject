@@ -114,6 +114,8 @@ extension String {
         return prefix(s.count).caseInsensitiveCompare(s) == .orderedSame
     }
 }
+
+
 extension Date {
     init(dateString:String) {
         self = Date.iso8601Formatter.date(from: dateString)!

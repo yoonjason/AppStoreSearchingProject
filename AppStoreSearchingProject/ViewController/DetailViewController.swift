@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol TableCellProtocol : class {
     func pageMove() -> Void
@@ -28,6 +30,7 @@ class DetailViewController: UIViewController {
     var expandedIdxSet : IndexSet = []
     var appId : Int = 0
     var entry : [Entry] = [Entry]()
+    var entryData : BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
     var didSelect: (String) -> Void = { _ in }
     
     @IBOutlet weak var tableView: UITableView!
@@ -57,6 +60,13 @@ class DetailViewController: UIViewController {
                 self?.entry = entry
             }
         }
+        APIService.shared.fetchReviews(appId)
+            .subscribe(onNext:{ [weak self] data in
+                if let entry = data?.feed.entry {
+                    self?.entryData.onNext(entry)
+                }
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

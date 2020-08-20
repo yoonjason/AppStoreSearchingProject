@@ -51,4 +51,11 @@ RxSwift+MVVM 패턴을 적용시켜 프로젝트를 완성하였으면 더욱(�
 
 
 ## P.S
-* TARGETS - Signing & Capabilities 탭에서. TEAM을 None으로 설정 후 PUSH 하였습니다.
+* TARGETS - Signing & Capabilities 탭에서. TEAM을 None으로 설정 후 Push 하였습니다.
+
+## 2020년 8월 20일 목요일
+* 최근 검색어 제안을 제외한 최근 검색어 및 앱 검색된 화면은 Rx로 구성하였습니다.
+* 맞게 구현한 것인지는 잘 모르겠습니다. 부족하거나, 사용하면 안되는 코드가 있다면 Issues에 올려주시면 열심히 피드백 해보겠습니다.
+* 최근 검색어 제안은 다시 한 번 해보려고 합니다.
+* README도 같이 수정해서 올려야하는 데, 자꾸 까먹네요. 항상 체크하고 Push하겠습니다.
+

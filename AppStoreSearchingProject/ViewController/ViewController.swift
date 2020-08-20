@@ -230,6 +230,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         if segue.identifier == "FromMainToDetail" {
             if let destinationVC = segue.destination as? DetailViewController {
                 if let data = sender as? AppData {
+//                    destinationVC.dataOb.onNext(data)
                     destinationVC.data = data
                     destinationVC.appId = data.trackId!
                 }

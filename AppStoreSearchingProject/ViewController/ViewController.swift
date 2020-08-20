@@ -200,6 +200,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
                     self.searchedTableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
                     self.searchedTableView.isHidden = false
                     self.suggestTableView.isHidden = true
+                    self.requestGetAllWords()
                 }else {
                     self.searchedResultItems.onNext([])
                     self.notSearchedLabel.text = "`\(self.searchController.searchBar.text ?? "")`"

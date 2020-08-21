@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 import Cosmos
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class RecentSearchTableViewCell : UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -412,33 +415,29 @@ class AppDescriptionCell : UITableViewCell {
     }
 }
 
-class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     var data = [Entry]()
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var emptyLabel: UILabel!
+    var entryData : BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
     
     
     func getFetchAppReviewCountInfo(_ appId : Int){
-        let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
-        APIService.shared.fetchGenericJSONData(urlString: urlString) { [weak self] (reviews: Review?, error) in
-            if let error = error {
-                print("Failed to fetch reviews: ", error)
-                return
-            }
 
-            if let entry = reviews?.feed.entry {
-                if entry.count > 0 {
-                    self?.data = entry
-                    DispatchQueue.main.async { [weak self] in
-                        self?.collectionView.reloadData()
-                        self?.emptyLabel.isHidden = false
+        APIService.shared.fetchReviews(appId)
+            .subscribe(onNext:{ [weak self] data in
+                if let entry = data?.feed.entry {
+                    if entry.count > 0 {
+                        self?.entryData.onNext(entry)
+                    }else {
+                        self?.entryData.onNext([])
                     }
-                }else {
-                    self!.collectionView.isHidden = true
-                    self?.emptyLabel.isHidden = false
                 }
-            }
-        }
+                }, onError: { error in
+                    print("errorerror", error)
+                    self.entryData.onNext([Entry(author: Author(name: Label(label: "")), title: Label(label: ""), content: Label(label: ""), rating: Label(label: ""))])
+            })
+            .disposed(by: rx.disposeBag)
     }
     
     
@@ -453,24 +452,24 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
         layout.minimumLineSpacing = 10
         layout.scrollDirection = .horizontal
 //        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
         getFetchAppReviewCountInfo(appId)
+        entryData
+            .bind(to: collectionView.rx.items(cellIdentifier: "AppReviewCollectionViewCell", cellType: AppReviewCollectionViewCell.self)) { (index, item, cell) in
+                cell.setData(item)
+        }
+        .disposed(by: rx.disposeBag)
+        
+        collectionView
+            .rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
+        
+        
+        
+        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AppReviewCollectionViewCell", for: indexPath) as? AppReviewCollectionViewCell
-        let data = self.data[indexPath.row]
-        cell?.setData(data)
-        return cell!
-    }
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)

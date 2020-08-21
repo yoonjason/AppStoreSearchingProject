@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     var entry : [Entry] = [Entry]()
     var entryData : BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
     var didSelect: (String) -> Void = { _ in }
-//    var dataOb : Observable<AppData> = Observable.of(datum)
+//    var dataOb : Observable<AppData> = Observable<AppData>()
     
     @IBOutlet weak var tableView: UITableView!
     

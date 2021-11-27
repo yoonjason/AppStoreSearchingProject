@@ -2,8 +2,8 @@
 //  AppStoreModel.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/07.
-//  Copyright © 2020 yoon. All rights reserved.
+//  Created by yoon on 2021/11/28.
+//  Copyright © 2021 yoon. All rights reserved.
 //
 
 import Foundation
@@ -122,6 +122,7 @@ struct AppData : Codable {
         case version = "version"
         case wrapperType = "wrapperType"
     }
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         advisories = try values.decodeIfPresent([String].self, forKey: .advisories)
@@ -169,21 +170,19 @@ struct AppData : Codable {
         version = try values.decodeIfPresent(String.self, forKey: .version)
         wrapperType = try values.decodeIfPresent(String.self, forKey: .wrapperType)
     }
-
-
 }
 
 
 
-struct Review: Decodable {
+struct Review: Codable {
   let feed: ReviewFeed
 }
 
-struct ReviewFeed: Decodable {
+struct ReviewFeed: Codable {
   let entry: [Entry]
 }
 
-struct Entry: Decodable {
+struct Entry: Codable {
   let author: Author
   let title: Label
   let content: Label
@@ -197,112 +196,11 @@ struct Entry: Decodable {
   }
 }
 
-struct Author: Decodable {
+struct Author: Codable {
   let name: Label
 }
 
-struct Label: Decodable {
+struct Label: Codable {
   let label: String
 }
 
-//struct Im_contentType : Codable{
-//
-//    let attributes : Attribute?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case attributes
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        attributes = try Attribute(from: decoder)
-//    }
-//
-//
-//}
-//
-//struct Content : Codable {
-//
-//    let attributes : Attribute?
-//    let label : String?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case attributes
-//        case label = "label"
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        attributes = try Attribute(from: decoder)
-//        label = try values.decodeIfPresent(String.self, forKey: .label)
-//    }
-//
-//
-//}
-//
-//struct Attribute : Codable {
-//
-//    let type : String?
-//    let label : String?
-//    let term : String?
-//    let href : String?
-//    let rel : String?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case type = "type"
-//        case label = "label"
-//        case term = "term"
-//        case href = "href"
-//        case rel = "rel"
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        type = try values.decodeIfPresent(String.self, forKey: .type)
-//        label = try values.decodeIfPresent(String.self, forKey: .label)
-//        term = try values.decodeIfPresent(String.self, forKey: .term)
-//        href = try values.decodeIfPresent(String.self, forKey: .href)
-//        rel = try values.decodeIfPresent(String.self, forKey: .rel)
-//    }
-//
-//
-//}
-//
-//struct Author : Codable {
-//
-//    let name : Name?
-//    let uri : Name?
-//    let label : String?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case name
-//        case uri
-//        case label = "label"
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        name = try Name(from: decoder)
-//        uri = try Name(from: decoder)
-//        label = try values.decodeIfPresent(String.self, forKey: .label)
-//    }
-//
-//
-//}
-//
-//
-//struct Name : Codable {
-//
-//    let label : String?
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case label = "label"
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        label = try values.decodeIfPresent(String.self, forKey: .label)
-//    }
-//
-//
-//}

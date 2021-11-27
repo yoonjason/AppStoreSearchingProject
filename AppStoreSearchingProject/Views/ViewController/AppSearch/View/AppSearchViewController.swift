@@ -17,13 +17,15 @@ class SearchResultViewModel {
 //    let appsData = BehaviorSubject<Apps>(value: Apps(from: <#T##Decoder#>))
 }
 
-class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
+class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
     
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var notSearchedLabel: UILabel!
     @IBOutlet weak var suggestTableView: UITableView!
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
+    
+    var coodinator: AppSearchCoordinator?
     
     let searchedResultItems : BehaviorSubject<[AppData]> = BehaviorSubject<[AppData]>(value: [])
     let recentSearchItems : BehaviorSubject<[Words]> = BehaviorSubject<[Words]>(value: [])
@@ -34,7 +36,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     var appList = [AppData]()
     var searchedTerm = String(){
         didSet {
-            
             currentWords = wordsSearch(prefix: searchedTerm)
             suggestTableView.reloadOnMainThread()
         }
@@ -102,9 +103,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
     
     func setView(){
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
-//        search.searchBar.autocapitalizationType = .none
         definesPresentationContext = true
         searchedTableView.isHidden = true
         searchedTableView.estimatedRowHeight = 349
@@ -241,7 +239,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     
 }
 
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
+extension AppSearchViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentWords.count
     }

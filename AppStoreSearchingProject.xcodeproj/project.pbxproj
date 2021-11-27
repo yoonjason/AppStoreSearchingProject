@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,10 @@
 		0685811D24DE8ABB00130E0B /* AppStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685811C24DE8ABB00130E0B /* AppStoreModel.swift */; };
 		0685811F24DEAD6900130E0B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685811E24DEAD6900130E0B /* Extensions.swift */; };
 		068617D224E007D200971037 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068617D124E007D200971037 /* DetailViewController.swift */; };
+		1C152EBB2751D71900D181AB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBA2751D71900D181AB /* RxCocoa */; };
+		1C152EBD2751D71900D181AB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBC2751D71900D181AB /* RxSwift */; };
+		1C152EC02751D72700D181AB /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */; };
+		1C152EC42751DBD100D181AB /* NSObject-Rx in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EC32751DBD100D181AB /* NSObject-Rx */; };
 		4C31AF06C1BB613B72F88F75 /* Pods_AppStoreSearchingProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */; };
 		671BAF8B24E12F5F001F1BC8 /* ScreenShotDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671BAF8A24E12F5F001F1BC8 /* ScreenShotDetailViewController.swift */; };
 		6755BB2624DD26C8004BAAB9 /* Words+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */; };
@@ -57,7 +61,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C152EBD2751D71900D181AB /* RxSwift in Frameworks */,
+				1C152EC02751D72700D181AB /* IQKeyboardManagerSwift in Frameworks */,
+				1C152EBB2751D71900D181AB /* RxCocoa in Frameworks */,
 				4C31AF06C1BB613B72F88F75 /* Pods_AppStoreSearchingProject.framework in Frameworks */,
+				1C152EC42751DBD100D181AB /* NSObject-Rx in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +222,12 @@
 			dependencies = (
 			);
 			name = AppStoreSearchingProject;
+			packageProductDependencies = (
+				1C152EBA2751D71900D181AB /* RxCocoa */,
+				1C152EBC2751D71900D181AB /* RxSwift */,
+				1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */,
+				1C152EC32751DBD100D181AB /* NSObject-Rx */,
+			);
 			productName = AppStoreSearchingProject;
 			productReference = 0642834024DADE5C004BA0E1 /* AppStoreSearchingProject.app */;
 			productType = "com.apple.product-type.application";
@@ -242,6 +256,11 @@
 				Base,
 			);
 			mainGroup = 0642833724DADE5C004BA0E1;
+			packageReferences = (
+				1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */,
+				1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */,
+			);
 			productRefGroup = 0642834124DADE5C004BA0E1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -526,6 +545,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = exactVersion;
+				version = 6.2.0;
+			};
+		};
+		1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.9;
+			};
+		};
+		1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/NSObject-Rx";
+			requirement = {
+				kind = exactVersion;
+				version = 5.2.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C152EBA2751D71900D181AB /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		1C152EBC2751D71900D181AB /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		1C152EC32751DBD100D181AB /* NSObject-Rx */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */;
+			productName = "NSObject-Rx";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6755BB2A24DD3A48004BAAB9 /* AppStoreSearchingProject.xcdatamodeld */ = {

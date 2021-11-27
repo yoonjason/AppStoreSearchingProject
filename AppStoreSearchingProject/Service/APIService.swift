@@ -13,6 +13,7 @@ import NSObject_Rx
 class APIService {
     static let shared = APIService()
     
+    
     func fetchAppsSearch(searchWord: String, completion: @escaping (Apps?, Error?) -> ()) {
       let urlString = "https://itunes.apple.com/search?term=\(searchWord)&country=kr&media=software&entity=software"
       fetchGenericJSONData(urlString: urlString, completion: completion)

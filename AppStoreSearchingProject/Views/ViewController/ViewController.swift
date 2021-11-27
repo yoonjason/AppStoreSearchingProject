@@ -82,7 +82,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
             .bind{ [weak self] (index, item) in
                 self?.fetchSearchList(searchWord: item.word!)
                 self?.searchController.searchBar.text = item.word
-                self?.navigationItem.hidesSearchBarWhenScrolling = true
+                self?.navigationItem.hidesSearchBarWhenScrolling = false
         }
         .disposed(by: rx.disposeBag)
         
@@ -127,16 +127,17 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
     func setSearchController(){
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "App Store"
+        searchController.searchBar.placeholder = "게임, 앱, 스토리 등"
         searchController.searchBar.delegate = self
         searchController.isActive = true
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.hidesSearchBarWhenScrolling = false
+//        navigationItem.hidesSearchBarWhenScrolling = true
     }
     func setCoreData() {
         requestGetAllWords()
@@ -146,7 +147,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         let words : [Words] = WordDataManager.shared.getWords()
         recentSearchItems.onNext(words)
        
-        
         self.words = words
         let wordName :[String] = words.map{$0.word!}
         searchWords = words.map{$0.word!}
@@ -195,7 +195,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate
         searchedResultItems.onNext([])
         APIService.shared.fetchfile(searchWord)
             .map{ ($0?.results)! }
-            .observeOn(MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext : { searchedData in
                 if searchedData.count > 0 {
                     self.saveNewWords(id: 1, word: searchWord)
@@ -271,4 +271,5 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
 
 
 }
+
 

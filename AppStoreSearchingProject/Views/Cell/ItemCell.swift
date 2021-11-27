@@ -322,8 +322,10 @@ class PreViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     
     func setData(_ data: AppData) {
         print("#@#@#@# =======11111")
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        if collectionView.delegate == nil {
+            collectionView.delegate = self
+            collectionView.dataSource = self
+        }
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         collectionView.isPagingEnabled = true

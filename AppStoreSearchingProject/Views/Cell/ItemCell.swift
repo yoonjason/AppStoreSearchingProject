@@ -27,7 +27,7 @@ class RecentSearchTableViewCell: UITableViewCell {
 
 }
 
-class SearchResultCell: UITableViewCell {
+class SearchResultCell2: UITableViewCell {
 
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

@@ -13,22 +13,22 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 
-class RecentSearchTableViewCell : UITableViewCell {
+class RecentSearchTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
-    
+
     override func prepareForReuse() {
         titleLabel.text = nil
     }
-    
-    func setData(_ title : String) {
+
+    func setData(_ title: String) {
         titleLabel.text = title
     }
-    
-    
+
+
 }
- 
-class SearchResultCell : UITableViewCell {
-    
+
+class SearchResultCell: UITableViewCell {
+
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
@@ -38,23 +38,23 @@ class SearchResultCell : UITableViewCell {
     @IBOutlet weak var imageStackView: UIStackView!
     @IBAction func onActionGet(_ sender: Any) {
     }
-    
+
     var screenShotImageViews: [UIImageView] {
         return imageStackView.arrangedSubviews as! [UIImageView]
     }
-    
+
     override func prepareForReuse() {
         appImageView.image = nil
         titleLabel.text = nil
         descLabel.text = nil
         userCountingLabel.text = nil
-        screenShotImageViews.forEach{ imageView in
+        screenShotImageViews.forEach { imageView in
             imageView.image = nil
         }
     }
-    
-    func setData(appData : AppData) {
-        
+
+    func setData(appData: AppData) {
+
         let url = URL(string: appData.artworkUrl60!)
 
         DispatchQueue.global().async {
@@ -76,7 +76,7 @@ class SearchResultCell : UITableViewCell {
         if let userCounting = appData.userRatingCountForCurrentVersion {
             userCountingLabel.text = changeUserCount(count: userCounting) + " ( \(userCounting.toDecimalFormat!) )"
         }
-        
+
         if let screenShots = appData.screenshotUrls?.enumerated() {
             for (index, screenshot) in screenShots {
                 if index > 2 {
@@ -88,26 +88,26 @@ class SearchResultCell : UITableViewCell {
                     DispatchQueue.main.async {
                         self.screenShotImageViews[index].image = image
                     }
-                    
+
                 }
             }
         }
-        
+
     }
-    
-    
-    
-    func changeUserCount(count : Int) -> String {
+
+
+
+    func changeUserCount(count: Int) -> String {
         var returnValue = String(count)
         if returnValue.count == 4 {
             let range = NSMakeRange(0, 1)
             returnValue = (NSString(string: returnValue)).substring(with: range) + "천"
-            
-        }else if returnValue.count == 5 {
+
+        } else if returnValue.count == 5 {
             let range1 = NSMakeRange(0, 1)
             let range2 = NSMakeRange(1, 1)
             returnValue = (NSString(string: returnValue)).substring(with: range1) + "." + (NSString(string: returnValue)).substring(with: range2) + "만"
-        }else if returnValue.count == 6 {
+        } else if returnValue.count == 6 {
             let range1 = NSMakeRange(0, 1)
             let range2 = NSMakeRange(1, 1)
             let range3 = NSMakeRange(2, 1)
@@ -121,7 +121,7 @@ class SearchResultCell : UITableViewCell {
         }
         return returnValue
     }
-    
+
 }
 
 
@@ -131,8 +131,8 @@ class SuggestedTableViewCell: UITableViewCell {
 
     func set(term: String, searchedTerm: String) {
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 21),
-            .foregroundColor: UIColor(white: 0.56, alpha: 1.0)
+                .font: UIFont.systemFont(ofSize: 21),
+                .foregroundColor: UIColor(white: 0.56, alpha: 1.0)
         ]
         let attributedString = NSAttributedString(
             string: term.lowercased(),
@@ -147,8 +147,8 @@ class SuggestedTableViewCell: UITableViewCell {
 }
 
 
-class AppDetailTopInfoCell : UITableViewCell {
-    
+class AppDetailTopInfoCell: UITableViewCell {
+
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
@@ -161,8 +161,8 @@ class AppDetailTopInfoCell : UITableViewCell {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var chartLabel: UILabel!
     @IBOutlet weak var downloadTopConstant: NSLayoutConstraint!
-    
-    func setView(data : AppData){
+
+    func setView(data: AppData) {
         //artworkUrl100
         let url = URL(string: data.artworkUrl512!)
         DispatchQueue.global().async {
@@ -174,19 +174,19 @@ class AppDetailTopInfoCell : UITableViewCell {
         if let title = data.trackName, let subTitle = data.artistName {
             titleLabel.text = title
             subTitleLabel.text = subTitle
-            let width = (data.trackName! as NSString).size(withAttributes: [NSAttributedString.Key.font : titleLabel.font]).width
+            let width = (data.trackName! as NSString).size(withAttributes: [NSAttributedString.Key.font: titleLabel.font]).width
             if width > 230 {
                 downloadTopConstant.constant = 0
             }
-            
-            
+
+
         }
         if let rating = data.averageUserRating {
             rateView.rating = rating
             averageCountLabel.text = "\(round(rating))"
         }
-        
-        
+
+
         if let age = data.trackContentRating {
             ageLabel.text = age
         }
@@ -194,23 +194,23 @@ class AppDetailTopInfoCell : UITableViewCell {
             genreLabel.text = genres[0]
         }
         if let userCounting = data.userRatingCountForCurrentVersion {
-            userReviewCountLabel.text =  changeUserCount(count: userCounting) + " 개의 평가 " + " ( \(userCounting.toDecimalFormat!) )"
+            userReviewCountLabel.text = changeUserCount(count: userCounting) + " 개의 평가 " + " ( \(userCounting.toDecimalFormat!) )"
         }
-        
-        
+
+
     }
 
-    func changeUserCount(count : Int) -> String {
+    func changeUserCount(count: Int) -> String {
         var returnValue = String(count)
         if returnValue.count == 4 {
             let range = NSMakeRange(0, 1)
             returnValue = (NSString(string: returnValue)).substring(with: range) + "천"
-            
-        }else if returnValue.count == 5 {
+
+        } else if returnValue.count == 5 {
             let range1 = NSMakeRange(0, 1)
             let range2 = NSMakeRange(1, 1)
             returnValue = (NSString(string: returnValue)).substring(with: range1) + "." + (NSString(string: returnValue)).substring(with: range2) + "만"
-        }else if returnValue.count == 6 {
+        } else if returnValue.count == 6 {
             let range1 = NSMakeRange(0, 1)
             let range2 = NSMakeRange(1, 1)
             let range3 = NSMakeRange(2, 1)
@@ -226,8 +226,8 @@ class AppDetailTopInfoCell : UITableViewCell {
     }
 }
 
-class NewFeatureInfoCell :  UITableViewCell {
-    
+class NewFeatureInfoCell: UITableViewCell {
+
     var isShow = false
     @IBOutlet weak var versionHistoryBtn: UIButton!
     @IBOutlet weak var newFeatureLabel: UILabel!
@@ -235,10 +235,10 @@ class NewFeatureInfoCell :  UITableViewCell {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var moreBtn: UIButton!
     @IBOutlet weak var descLabel: UILabel!
-    var delegate : TableCellProtocol?
-    
-    
-    func setData(_ data : AppData) {
+    var delegate: TableCellProtocol?
+
+
+    func setData(_ data: AppData) {
         if let releaseNotes = data.releaseNotes, let date = data.currentVersionReleaseDate, let version = data.version {
 //            updateDateLabel.text = date
 
@@ -249,47 +249,47 @@ class NewFeatureInfoCell :  UITableViewCell {
                 moreBtn.isHidden = true
             }
         }
-        
+
     }
-    
+
     override func prepareForReuse() {
-       
+
     }
-   
-    
+
+
     func subString(orgString: String, startIndex: Int, endIndex: Int) -> String {
-        let end                                            = (endIndex - orgString.count) + 1
-        let indexStartOfText                               = orgString.index(orgString.startIndex, offsetBy: startIndex)
-        let indexEndOfText                                 = orgString.index(orgString.endIndex, offsetBy: end)
-        let substring                                      = orgString[indexStartOfText..<indexEndOfText]
+        let end = (endIndex - orgString.count) + 1
+        let indexStartOfText = orgString.index(orgString.startIndex, offsetBy: startIndex)
+        let indexEndOfText = orgString.index(orgString.endIndex, offsetBy: end)
+        let substring = orgString[indexStartOfText..<indexEndOfText]
         return String(substring)
     }
-    
+
     func getNow() -> Date {
-        let now                                            = Date()
-        let dateFormatter                                  = DateFormatter()
-        dateFormatter.locale                               = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone                             = TimeZone(abbreviation: "KST+9:00")
-        dateFormatter.dateFormat                           = "yyyy-MM-dd HH:mm:ss"
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST+9:00")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.string(from: now)
-        
+
         return now
     }
-    
-    func updateTime(_ date : String) {
-        let formatter  = ISO8601DateFormatter()
+
+    func updateTime(_ date: String) {
+        let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate,
-                                   .withTime,
-                                   .withDashSeparatorInDate,
-                                   .withColonSeparatorInTime
+                                       .withTime,
+                                       .withDashSeparatorInDate,
+                                       .withColonSeparatorInTime
         ]
-        
+
         let date2 = formatter.date(from: date)
-        let dateFormatter                                  = DateFormatter()
+        let dateFormatter = DateFormatter()
         // Locale
-        dateFormatter.locale                               = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone                             = TimeZone(abbreviation: "KST+9:00")
-        dateFormatter.dateFormat                           = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST+9:00")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let endDate1 = dateFormatter.string(from: date2!)
         let endDate = dateFormatter.date(from: endDate1)
         let calendar = Calendar.current
@@ -301,28 +301,27 @@ class NewFeatureInfoCell :  UITableViewCell {
         let minGap = dateGap.minute
 
         if yearGap! > 0 {
-           self.updateDateLabel.text = "\(yearGap ?? 0)년 전"
-        }else if monthGap! > 0 {
-             self.updateDateLabel.text = "\(monthGap ?? 0)개월 전"
+            self.updateDateLabel.text = "\(yearGap ?? 0)년 전"
+        } else if monthGap! > 0 {
+            self.updateDateLabel.text = "\(monthGap ?? 0)개월 전"
         }
         else if dayGap! > 0 {
             self.updateDateLabel.text = "\(dayGap ?? 0)일 전"
-        }else if (dayGap == 0 && hourGap == 0) {
+        } else if (dayGap == 0 && hourGap == 0) {
             self.updateDateLabel.text = "\(minGap ?? 0)분 전"
-        }else if (dayGap == 0){
+        } else if (dayGap == 0) {
             self.updateDateLabel.text = "\(hourGap ?? 0)시간 전"
         }
     }
 }
 
-class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+class PreViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     var imageUrlStrings = [String]()
-    
-
-    
     @IBOutlet weak var collectionView: UICollectionView!
-    var delegate : TableCellProtocol?
-    func setData(_ data : AppData) {
+    var delegate: TableCellProtocol?
+    
+    func setData(_ data: AppData) {
+        print("#@#@#@# =======11111")
         collectionView.delegate = self
         collectionView.dataSource = self
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -333,152 +332,31 @@ class PreViewTableViewCell : UITableViewCell, UICollectionViewDelegate, UICollec
         if let imageUrlStrings = data.screenshotUrls {
             self.imageUrlStrings = imageUrlStrings
         }
+        print("#@#@#@# =======22222")
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.imageUrlStrings.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IPhoneScreenShotCell", for: indexPath) as? IPhoneScreenShotCell
         let urlString = imageUrlStrings[indexPath.row]
         cell?.setView(urlString)
         return cell!
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        if let delegate = delegate {            
+        if let delegate = delegate {
             delegate.pageMove()
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 225, height: 449)
     }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
-        {
-            
-            let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-            let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-            
-            var offset = targetContentOffset.pointee
-            let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-    
-            var roundedIndex = round(index)
 
-            if scrollView.contentOffset.x > targetContentOffset.pointee.x {
-                roundedIndex = floor(index)
-            } else {
-                roundedIndex = ceil(index)
-            }
-
-            offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
-            targetContentOffset.pointee = offset
-        }
-}
-
-class IPhoneScreenShotCell : UICollectionViewCell {
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
-    override func prepareForReuse() {
-        imageView.image = nil
-    }
-    
-    func setView(_ imageUrl:String){
-        let url = URL(string: imageUrl)
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data!)
-            }
-        }
-    }
-}
-
-class AppDescriptionCell : UITableViewCell {
-    
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var moreBtn: UIButton!
-    @IBOutlet weak var developerBtn: UIButton!
-    @IBOutlet weak var developerLabel: UILabel!
-    
-    func setData(_ data: AppData) {
-        if let group = data.sellerName {
-            developerBtn.setTitle(group, for: .normal)
-        }
-        if let description = data.descriptionField {
-            descriptionLabel.text = description
-        }
-    }
-}
-
-class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
-    var data = [Entry]()
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var emptyLabel: UILabel!
-    var entryData : BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
-    
-    
-    func getFetchAppReviewCountInfo(_ appId : Int){
-
-        APIService.shared.fetchReviews(appId)
-            .subscribe(onNext:{ [weak self] data in
-                if let entry = data?.feed.entry {
-                    if entry.count > 0 {
-                        self?.entryData.onNext(entry)
-                    }else {
-                        self?.entryData.onNext([])
-                    }
-                }
-                }, onError: { error in
-                    print("errorerror", error)
-                    self.entryData.onNext([Entry(author: Author(name: Label(label: "")), title: Label(label: ""), content: Label(label: ""), rating: Label(label: ""))])
-            })
-            .disposed(by: rx.disposeBag)
-    }
-    
-    
-    func setData(_ appId :Int) {
-        
-        let cellWidth = collectionView.frame.width - 40
-        let cellHeight = collectionView.frame.height
-        let insetX = (collectionView.bounds.width - cellWidth) / 2
-        let insetY = (collectionView.bounds.height - cellHeight) / 2
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 10
-        layout.scrollDirection = .horizontal
-//        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
-        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        
-        getFetchAppReviewCountInfo(appId)
-        entryData
-            .bind(to: collectionView.rx.items(cellIdentifier: "AppReviewCollectionViewCell", cellType: AppReviewCollectionViewCell.self)) { (index, item, cell) in
-                cell.setData(item)
-        }
-        .disposed(by: rx.disposeBag)
-        
-        collectionView
-            .rx
-            .setDelegate(self)
-            .disposed(by: rx.disposeBag)
-        
-        
-        
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 40, height: collectionView.frame.height)
-    }
-    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
     {
 
@@ -499,10 +377,132 @@ class AppReviewCell : UITableViewCell, UICollectionViewDelegate, UICollectionVie
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }
-    
-    
+}
 
-    
+class IPhoneScreenShotCell: UICollectionViewCell {
+
+    @IBOutlet weak var imageView: UIImageView!
+
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
+
+    func setView(_ imageUrl: String) {
+        let url = URL(string: imageUrl)
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: url!)
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data!)
+            }
+        }
+    }
+}
+
+class AppDescriptionCell: UITableViewCell {
+
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var moreBtn: UIButton!
+    @IBOutlet weak var developerBtn: UIButton!
+    @IBOutlet weak var developerLabel: UILabel!
+
+    func setData(_ data: AppData) {
+        if let group = data.sellerName {
+            developerBtn.setTitle(group, for: .normal)
+        }
+        if let description = data.descriptionField {
+            descriptionLabel.text = description
+        }
+    }
+}
+
+class AppReviewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    var data = [Entry]()
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var emptyLabel: UILabel!
+    var entryData: BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
+
+
+    func getFetchAppReviewCountInfo(_ appId: Int) {
+
+        APIService.shared.fetchReviews(appId)
+            .subscribe(onNext: { [weak self] data in
+            if let entry = data?.feed.entry {
+                if entry.count > 0 {
+                    self?.entryData.onNext(entry)
+                } else {
+                    self?.entryData.onNext([])
+                }
+            }
+        }, onError: { error in
+            print("errorerror", error)
+            self.entryData.onNext([Entry(author: Author(name: Label(label: "")), title: Label(label: ""), content: Label(label: ""), rating: Label(label: ""))])
+        })
+            .disposed(by: rx.disposeBag)
+    }
+
+
+    func setData(_ appId: Int) {
+
+        let cellWidth = collectionView.frame.width - 40
+        let cellHeight = collectionView.frame.height
+        let insetX = (collectionView.bounds.width - cellWidth) / 2
+        let insetY = (collectionView.bounds.height - cellHeight) / 2
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        layout.minimumLineSpacing = 10
+        layout.scrollDirection = .horizontal
+//        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+
+        getFetchAppReviewCountInfo(appId)
+        entryData
+            .bind(to: collectionView.rx.items(cellIdentifier: "AppReviewCollectionViewCell", cellType: AppReviewCollectionViewCell.self)) { (index, item, cell) in
+            cell.setData(item)
+        }
+            .disposed(by: rx.disposeBag)
+
+        collectionView
+            .rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
+
+
+
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 40, height: collectionView.frame.height)
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+    {
+
+        let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+
+        var roundedIndex = round(index)
+
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else {
+            roundedIndex = ceil(index)
+        }
+
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+    }
+
+
+
+
 }
 
 class AppReviewCollectionViewCell: UICollectionViewCell {
@@ -510,9 +510,9 @@ class AppReviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var rateView: CosmosView!
     @IBOutlet weak var nameLabel: UILabel!
-    
-    
-    func setData(_ data : Entry) {
+
+
+    func setData(_ data: Entry) {
         reviewDescriptionLabel.text = data.content.label
         reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
 //        self.widthAnchor.constraint(equalToConstant: self.frame.size.width - 40).isActive = true
@@ -520,32 +520,32 @@ class AppReviewCollectionViewCell: UICollectionViewCell {
         nameLabel.text = data.author.name.label
         rateView.rating = Double(Int(data.rating.label)!)
     }
-    
+
     override func prepareForReuse() {
         reviewDescriptionLabel.text = nil
         titleLabel.text = nil
         nameLabel.text = nil
 //        reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
     }
-    
-    
+
+
 }
 
-class AppInfomationCell : UITableViewCell {
-   
+class AppInfomationCell: UITableViewCell {
+
     @IBOutlet weak var sellerLabel: UILabel!
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var minimalVersion: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
-    var appData : AppData?
-        
-    func setData(_ data : AppData) {
+    var appData: AppData?
+
+    func setData(_ data: AppData) {
         appData = data
         if let sellerName = data.sellerName, let size = data.fileSizeBytes, let category = data.genres, let version = data.minimumOsVersion, let age = data.trackContentRating, let languages = data.languageCodesISO2A {
             sellerLabel.text = sellerName
-           let bcf = ByteCountFormatter()
+            let bcf = ByteCountFormatter()
             bcf.allowedUnits = [.useMB]
             self.sizeLabel.text = bcf.string(fromByteCount: Int64(size)!)
             categoryLabel.text = category[0]
@@ -557,19 +557,19 @@ class AppInfomationCell : UITableViewCell {
         }
 
     }
-    
-    
+
+
 }
 
-class ScreenShotDetailCell : UICollectionViewCell {
-    
+class ScreenShotDetailCell: UICollectionViewCell {
+
     @IBOutlet weak var imageView: UIImageView!
-    
+
     override func prepareForReuse() {
         imageView.image = nil
     }
-    
-    func setView(_ imageUrl:String){
+
+    func setView(_ imageUrl: String) {
         let url = URL(string: imageUrl)
         DispatchQueue.global().async {
             let data = try? Data(contentsOf: url!)

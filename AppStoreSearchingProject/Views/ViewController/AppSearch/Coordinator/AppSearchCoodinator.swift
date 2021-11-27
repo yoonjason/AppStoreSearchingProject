@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol AppSearchCoordinator: AnyObject {
-
+    func showDetailInfo(with appData: AppData)
 }
 
 class AppSearchCoordinatorImp: Coordinator {
@@ -27,16 +27,17 @@ class AppSearchCoordinatorImp: Coordinator {
         }
 
         self.tabBarController = tabBarController
-        
+
     }
 
     func start() {
         guard let vc = new(name: "AppSearch", storyboard: "Main") as? AppSearchViewController else {
             return
         }
-        vc.coodinator = self
+        vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationItem.largeTitleDisplayMode = .always
         navigationController.tabBarItem = TabBarItem.search.item
     }
 
@@ -47,7 +48,7 @@ class AppSearchCoordinatorImp: Coordinator {
         let firstItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)
 
         let firstViewCoordinator = AppSearchViewController()
-        firstViewCoordinator.coodinator = self
+        firstViewCoordinator.coordinator = self
         firstViewCoordinator.tabBarItem = firstItem
 
         tabBarController.viewControllers = [firstViewCoordinator]
@@ -57,6 +58,10 @@ class AppSearchCoordinatorImp: Coordinator {
 }
 
 extension AppSearchCoordinatorImp: AppSearchCoordinator {
-
+    
+    func showDetailInfo(with appData: AppData) {
+        let coordinator = DetailCoordinatorImp(navigationController: navigationController, data: appData, appId: appData.trackId ?? 0)
+        coordinate(to: coordinator)
+    }
 }
 

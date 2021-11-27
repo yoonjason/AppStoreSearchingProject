@@ -384,7 +384,6 @@
                         <outlet property="recentTableView" destination="RcV-We-tw0" id="lNA-8i-bql"/>
                         <outlet property="searchedTableView" destination="GrV-Kr-SAg" id="yBf-Yf-aNc"/>
                         <outlet property="suggestTableView" destination="SGf-cx-D8m" id="uRT-AQ-gDD"/>
-                        <segue destination="Cw4-oE-8Np" kind="show" identifier="FromMainToDetail" id="HoA-uL-K4O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -467,13 +466,13 @@
         <!--Detail View Controller-->
         <scene sceneID="g9P-sp-P02">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cw4-oE-8Np" customClass="DetailViewController" customModule="AppStoreSearchingProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cw4-oE-8Np" customClass="DetailViewController" customModule="AppStoreSearchingProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D96-CN-tBp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ccn-cQ-FYC">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AppDetailTopInfoCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AppDetailTopInfoCell" rowHeight="226" id="0mb-dg-4hg" customClass="AppDetailTopInfoCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
@@ -1343,20 +1342,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ITv-3q-1mr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3676.811594202899" y="97.767857142857139"/>
+            <point key="canvasLocation" x="3429" y="74"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="GEZ-5b-TzZ">
-            <size key="intrinsicContentSize" width="85" height="17"/>
-        </designable>
-        <designable name="cEE-Nq-vRF">
-            <size key="intrinsicContentSize" width="65" height="13"/>
-        </designable>
-        <designable name="vn7-dO-zN6">
-            <size key="intrinsicContentSize" width="65" height="13"/>
-        </designable>
-    </designables>
     <resources>
         <image name="detail_download" width="30" height="30"/>
         <image name="detail_more" width="30" height="30"/>

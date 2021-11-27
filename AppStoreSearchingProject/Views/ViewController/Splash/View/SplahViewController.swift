@@ -16,9 +16,9 @@ class SplahViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self]
-            self.indicator.stopAnimating()
-            self.coordinator.moveToMain(with: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.indicator.stopAnimating()
+            self?.coordinator.moveToMain(with: nil)
         }
         
     }

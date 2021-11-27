@@ -25,7 +25,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     @IBOutlet weak var searchedTableView: UITableView!
     @IBOutlet weak var recentTableView: UITableView!
     
-    var coodinator: AppSearchCoordinator?
+    var coordinator: AppSearchCoordinator?
     
     let searchedResultItems : BehaviorSubject<[AppData]> = BehaviorSubject<[AppData]>(value: [])
     let recentSearchItems : BehaviorSubject<[Words]> = BehaviorSubject<[Words]>(value: [])
@@ -62,7 +62,8 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         Observable
             .zip(searchedTableView.rx.itemSelected, searchedTableView.rx.modelSelected(AppData.self))
             .bind{ [weak self] (indexPath, item)  in
-                self?.performSegue(withIdentifier: "FromMainToDetail", sender: item)
+//                self?.performSegue(withIdentifier: "FromMainToDetail", sender: item)
+                self?.coordinator?.showDetailInfo(with: item)
         }
         .disposed(by: rx.disposeBag)
         

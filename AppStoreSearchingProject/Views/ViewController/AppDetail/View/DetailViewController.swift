@@ -27,6 +27,7 @@ extension DetailViewController : TableCellProtocol {
 
 class DetailViewController: UIViewController, UIScrollViewDelegate {
     
+    var coordinator: DetailCoordinator?
     var data : AppData?
     var expandedIdxSet : IndexSet = []
     var appId : Int = 0

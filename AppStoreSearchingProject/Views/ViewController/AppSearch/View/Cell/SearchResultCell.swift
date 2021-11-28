@@ -10,8 +10,8 @@ import UIKit
 import Cosmos
 
 class SearchResultCell: UITableViewCell {
-    
-    var tapped : () -> Void = {}
+
+    var tapped: () -> Void = { }
 
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,17 +24,15 @@ class SearchResultCell: UITableViewCell {
         tapped()
     }
 
-    var screenShotImageViews: [UIImageView] {
-        return imageStackView.arrangedSubviews as! [UIImageView]
-    }
-
     override func prepareForReuse() {
         appImageView.image = nil
         titleLabel.text = nil
         descLabel.text = nil
         userCountingLabel.text = nil
-        screenShotImageViews.forEach { imageView in
-            imageView.image = nil
+
+
+        for view in imageStackView.subviews {
+            view.removeFromSuperview()
         }
     }
 
@@ -59,53 +57,43 @@ class SearchResultCell: UITableViewCell {
             rateView.rating = rating
         }
         if let userCounting = appData.userRatingCountForCurrentVersion {
-            userCountingLabel.text = changeUserCount(count: userCounting) + " ( \(userCounting.toDecimalFormat!) )"
+            userCountingLabel.changeUserCount(count: userCounting, detail: false)
         }
 
         if let screenShots = appData.screenshotUrls?.enumerated() {
-            for (index, screenshot) in screenShots {
-                if index > 2 {
-                    return
+            if let gerneName = appData.primaryGenreName, gerneName == "Games" {
+                let imageView = UIImageView()
+                imageView.roundCorners(8)
+                imageView.borderColor(.lightGray)
+                imageView.borderWidth(0.84)
+                imageStackView.addArrangedSubview(imageView)
+                guard let singleImage = appData.screenshotUrls?[0] else { return }
+                guard let imageData = try? Data(contentsOf: URL(string: singleImage)!) else { return }
+                DispatchQueue.main.async {
+                    imageView.image = UIImage(data: imageData)
                 }
-                DispatchQueue.global().async {
-                    guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }
-                    let image = UIImage(data: imageData)
-                    DispatchQueue.main.async {
-                        self.screenShotImageViews[index].image = image
-                    }
+                } else {
+                    for (index, screenshot) in screenShots {
+                        if index > 2 {
+                            return
+                        }
+                        let imageView = UIImageView()
+                        imageStackView.addArrangedSubview(imageView)
+                        imageView.roundCorners(8)
+                        imageView.borderColor(.lightGray)
+                        imageView.borderWidth(0.84)
+                        DispatchQueue.global().async {
+                            guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }
+                            let image = UIImage(data: imageData)
+                            DispatchQueue.main.async {
+                                imageView.image = image
+                            }
 
+                        }
+                    }
                 }
             }
+
         }
-
-    }
-
-
-
-    func changeUserCount(count: Int) -> String {
-        var returnValue = String(count)
-        if returnValue.count == 4 {
-            let range = NSMakeRange(0, 1)
-            returnValue = (NSString(string: returnValue)).substring(with: range) + "천"
-
-        } else if returnValue.count == 5 {
-            let range1 = NSMakeRange(0, 1)
-            let range2 = NSMakeRange(1, 1)
-            returnValue = (NSString(string: returnValue)).substring(with: range1) + "." + (NSString(string: returnValue)).substring(with: range2) + "만"
-        } else if returnValue.count == 6 {
-            let range1 = NSMakeRange(0, 1)
-            let range2 = NSMakeRange(1, 1)
-            let range3 = NSMakeRange(2, 1)
-            returnValue = (NSString(string: returnValue)).substring(with: range1) + (NSString(string: returnValue)).substring(with: range2) + "." + (NSString(string: returnValue)).substring(with: range3) + "만"
-        }
-        else if returnValue.count == 7 {
-            let range1 = NSMakeRange(0, 1)
-            let range2 = NSMakeRange(1, 1)
-            let range3 = NSMakeRange(2, 1)
-            returnValue = (NSString(string: returnValue)).substring(with: range1) + (NSString(string: returnValue)).substring(with: range2) + (NSString(string: returnValue)).substring(with: range3) + "만"
-        }
-        return returnValue
-    }
-
     
-}
+    }

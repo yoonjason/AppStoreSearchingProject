@@ -41,9 +41,10 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         self.view.backgroundColor = .white
 
         requestGetAllWords()
+        setView()
         registerCell()
         setSearchController()
-
+        
     }
 
 
@@ -60,14 +61,13 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         tableView.dataSource = self
         tableView.estimatedRowHeight = 349
         tableView.rowHeight = UITableView.automaticDimension
-        
         if #available(iOS 13.0, *) {
             UIApplication.shared.statusBarStyle = .darkContent
         } else {
             UIApplication.shared.statusBarStyle = .default
         }
         setNeedsStatusBarAppearanceUpdate()
-
+        
     }
 
     func setSearchController() {
@@ -100,6 +100,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
                         self.tableView.reloadData()
                         let indexPath = NSIndexPath(row: NSNotFound, section: 0)
                         self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
+                        
                     }
                 }
                 else {
@@ -108,9 +109,11 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
                         self.currentInputAppName = self.searchController.searchBar.text ?? ""
                         self.tableView.reloadData()
                     }
-                    
+
                 }
             }
+            
+
         } failure: { error in
             print(error)
         }
@@ -161,7 +164,6 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
             customCell.tapped = {
                 print("getget")
             }
-
             cell = customCell
         case .emptyResult:
             let customCell = self.tableView.dequeueCell(withType: EmptyCell.self) as! EmptyCell
@@ -195,6 +197,8 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
         case .recentSearchWords:
             self.searchApp(words[indexPath.row].word!)
             searchController.searchBar.text = words[indexPath.row].word!
+        case .resultWords:
+            coordinator?.showDetailInfo(with: searchResultItems[indexPath.row])
         default:
             print(indexPath.row)
         }
@@ -253,7 +257,6 @@ extension AppSearchViewController {
         let words: [Words] = WordDataManager.shared.getWords()
         self.words = words
         searchWords = words.map { $0.word! }
-        self.setView()
         self.tableView.reloadData()
     }
 

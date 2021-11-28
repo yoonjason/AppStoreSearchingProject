@@ -23,17 +23,19 @@
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="검색 결과 없음" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCz-ym-nhS">
-                        <rect key="frame" x="139" y="356" width="97" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색 결과 없음" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCz-ym-nhS">
+                        <rect key="frame" x="139" y="369" width="97" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bCz-ym-nhS" firstAttribute="top" secondItem="zZm-NS-2E9" secondAttribute="bottom" constant="7.5" id="6S0-z9-uH6"/>
+                    <constraint firstItem="zZm-NS-2E9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="318.5" id="BgO-Tk-yF9"/>
                     <constraint firstItem="zZm-NS-2E9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Zel-ml-Cug"/>
+                    <constraint firstItem="bCz-ym-nhS" firstAttribute="top" secondItem="zZm-NS-2E9" secondAttribute="bottom" constant="20.5" id="sUf-td-QMP"/>
                     <constraint firstItem="zZm-NS-2E9" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xzf-x3-7iJ"/>
+                    <constraint firstItem="bCz-ym-nhS" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="yhb-lF-BnG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

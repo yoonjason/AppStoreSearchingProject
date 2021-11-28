@@ -13,3 +13,7 @@ func new(name: String, storyboard: String = "") -> UIViewController {
     let storybordName = !storyboard.isEmpty ? storyboard : name
     return UIStoryboard(name: "\(storybordName)", bundle: nil).instantiateViewController(withIdentifier: name)
 }
+
+let screenHeight = UIScreen.main.bounds.size.height
+let screenWidth = UIScreen.main.bounds.size.width
+let statusBarHeight = UIApplication.shared.statusBarFrame.height

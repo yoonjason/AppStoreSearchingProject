@@ -47,7 +47,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kga-9p-GFd">
-                        <rect key="frame" x="83" y="37" width="176" height="14"/>
+                        <rect key="frame" x="83" y="37" width="172" height="14"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="cUx-rQ-j5c"/>
@@ -57,7 +57,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nz8-qx-9H4">
-                        <rect key="frame" x="275" y="28" width="80" height="32"/>
+                        <rect key="frame" x="271" y="28" width="80" height="32"/>
                         <color key="backgroundColor" red="0.91470736269999997" green="0.91471123700000001" blue="0.92183667420000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="ktW-9S-I1B"/>
@@ -112,8 +112,8 @@
                         <color key="textColor" white="0.63849350739999999" alpha="0.87631100169999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QFf-0J-PNn">
-                        <rect key="frame" x="11" y="96" width="354" height="232"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="QFf-0J-PNn">
+                        <rect key="frame" x="11" y="96" width="350" height="232"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QIe-l5-TXK">
                                 <rect key="frame" x="0.0" y="0.0" width="108" height="232"/>
@@ -133,7 +133,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mni-Rg-OlD">
-                                <rect key="frame" x="123" y="0.0" width="108" height="232"/>
+                                <rect key="frame" x="121" y="0.0" width="108" height="232"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -147,7 +147,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sjp-2X-Rkj">
-                                <rect key="frame" x="246" y="0.0" width="108" height="232"/>
+                                <rect key="frame" x="242" y="0.0" width="108" height="232"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -165,6 +165,7 @@
                         <constraints>
                             <constraint firstItem="QIe-l5-TXK" firstAttribute="top" secondItem="mni-Rg-OlD" secondAttribute="top" id="8OV-TN-zYW"/>
                             <constraint firstItem="mni-Rg-OlD" firstAttribute="centerX" secondItem="QFf-0J-PNn" secondAttribute="centerX" id="fLA-JJ-5Lt"/>
+                            <constraint firstAttribute="height" constant="232" id="u9a-YG-DaR"/>
                             <constraint firstItem="QIe-l5-TXK" firstAttribute="top" secondItem="QFf-0J-PNn" secondAttribute="top" id="yYt-P9-7cM"/>
                             <constraint firstItem="mni-Rg-OlD" firstAttribute="top" secondItem="sjp-2X-Rkj" secondAttribute="top" id="ygf-9n-zTX"/>
                         </constraints>
@@ -205,4 +206,9 @@
             <point key="canvasLocation" x="318.11594202898556" y="190.51339285714286"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="2mK-uN-uTG">
+            <size key="intrinsicContentSize" width="65" height="13"/>
+        </designable>
+    </designables>
 </document>

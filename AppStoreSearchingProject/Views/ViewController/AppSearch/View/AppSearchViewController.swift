@@ -12,10 +12,10 @@ import CoreData
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import RxDataSources
 
 class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
 
-    @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var notSearchedLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
@@ -28,6 +28,8 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     let suggestItems: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
     let searchWords2: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
     let currentWords2: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
+
+    var searchResultItems = [AppData]()
 
     let searchController = UISearchController(searchResultsController: nil)
     var appList = [AppData]()
@@ -42,6 +44,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     private var searchWords = [String]()
     private var recentSearchedWords = [String]()
     private var words: [Words] = WordDataManager.shared.getWords()
+    var currentInputAppName: String = ""
 
 
     override func viewDidLoad() {
@@ -51,6 +54,21 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         requestGetAllWords()
         registerCell()
         setSearchController()
+
+//        NetworkManager.shared.get(urlString: "search?", word: "카카오") { result in
+//            print(result)
+//            if let data = try? JSONDecoder().decode(Apps.self, from: result) {
+//                print(data.results?.count)
+//                print(data.resultCount)
+//            }
+//
+//        } failure: { error in
+//            print(error)
+//        }
+
+
+
+
 
 //        tableView
 //            .rx
@@ -80,7 +98,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
 //            cell.selectionStyle = .none
 //        }
 //            .disposed(by: rx.disposeBag)
-        
+
 //        suggestItems
 //            .bind(to: tableView.rx.items(cellIdentifier: "SearchWordCell", cellType: SearchWordCell.self)) { (index, item, cell) in
 //                cell.set(term: item, searchedTerm: self.searchedTerm )
@@ -105,6 +123,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     func registerCell() {
         self.tableView.registerCell(type: SearchWordCell.self)
         self.tableView.registerCell(type: SearchResultCell.self)
+        self.tableView.registerCell(type: EmptyCell.self)
     }
 
 
@@ -112,10 +131,9 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         definesPresentationContext = true
         tableView.delegate = self
         tableView.dataSource = self
-//        searchedTableView.isHidden = true
-//        searchedTableView.estimatedRowHeight = 349
-//        searchedTableView.rowHeight = UITableView.automaticDimension
-        emptyView.isHidden = true
+        tableView.estimatedRowHeight = 349
+        tableView.rowHeight = UITableView.automaticDimension
+        
         if #available(iOS 13.0, *) {
             UIApplication.shared.statusBarStyle = .darkContent
         } else {
@@ -142,8 +160,6 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     }
 
     func fetchSearchList(searchWord: String) {
-        self.emptyView.isHidden = true
-
         searchedResultItems.onNext([])
         APIService.shared.fetchfile(searchWord)
             .map { ($0?.results)! }
@@ -155,15 +171,10 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
                 let indexPath = NSIndexPath(row: NSNotFound, section: 0)
                 self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
                 self.searchTypeModel = .resultWords
-                self.emptyView.isHidden = true
-                self.tableView.isHidden = false
                 self.requestGetAllWords()
             } else {
                 self.searchedResultItems.onNext([])
-                self.notSearchedLabel.text = "`\(self.searchController.searchBar.text ?? "")`"
-                self.emptyView.isHidden = false
-                self.tableView.isHidden = true
-
+//                self.notSearchedLabel.text = "`\(self.searchController.searchBar.text ?? "")`"
                 self.searchTypeModel = .emptyResult
             }
         }, onError: { error in
@@ -172,6 +183,37 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
             .disposed(by: rx.disposeBag)
     }
 
+    func searchApp(_ searchWord: String) {
+        let quertyItem = URLQueryItem(name: "term", value: searchWord)
+        NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { result in
+            if let resultData = try? JSONDecoder().decode(Apps.self, from: result) {
+                guard let appsData = resultData.results else { return }
+                print(resultData.resultCount)
+                if let count = resultData.resultCount, count > 0 {
+
+                    self.searchResultItems = appsData
+                    self.saveNewWords(id: 1, word: searchWord)
+                    self.searchTypeModel = .resultWords
+                    DispatchQueue.main.async {
+                        self.requestGetAllWords()
+                        self.tableView.reloadData()
+                        let indexPath = NSIndexPath(row: NSNotFound, section: 0)
+                        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
+                    }
+                }
+                else {
+                    self.searchTypeModel = .emptyResult
+                    DispatchQueue.main.async {
+                        self.currentInputAppName = self.searchController.searchBar.text ?? ""
+                        self.tableView.reloadData()
+                    }
+                    
+                }
+            }
+        } failure: { error in
+            print(error)
+        }
+    }
 
 }
 
@@ -180,12 +222,13 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         switch searchTypeModel {
-        case .segguestWords:
+        case .suggestWords:
             return recentSearchedWords.count
         case .recentSearchWords:
             return words.count
         case .resultWords:
-            return 1
+            print("searchResultItems === \(searchResultItems.count)")
+            return searchResultItems.count
         case .emptyResult:
             return 1
         }
@@ -197,7 +240,7 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
         var cell: UITableViewCell = UITableViewCell()
 
         switch searchTypeModel {
-        case .segguestWords:
+        case .suggestWords:
             let customCell = self.tableView.dequeueCell(withType: SearchWordCell.self) as! SearchWordCell
             customCell.set(term: recentSearchedWords[indexPath.row], searchedTerm: searchedTerm)
             customCell.isSuggestEnabled = true
@@ -212,12 +255,16 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell = customCell
         case .resultWords:
             let customCell = self.tableView.dequeueCell(withType: SearchResultCell.self) as! SearchResultCell
+            let resultData = searchResultItems
+            customCell.setData(appData: resultData[indexPath.row])
             customCell.tapped = {
-                
+                print("getget")
             }
+
             cell = customCell
         case .emptyResult:
-            let customCell = UITableViewCell()
+            let customCell = self.tableView.dequeueCell(withType: EmptyCell.self) as! EmptyCell
+            customCell.titleLabel.text = currentInputAppName
             cell = customCell
         }
         cell.selectionStyle = .none
@@ -227,17 +274,27 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return UITableView.automaticDimension
+        switch searchTypeModel {
+        case .resultWords:
+            return 350
+        case .emptyResult:
+            return self.tableView.frame.size.height
+        default:
+            return UITableView.automaticDimension
+        }
     }
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         switch searchTypeModel {
-        case .segguestWords:
+        case .suggestWords:
             self.fetchSearchList(searchWord: recentSearchedWords[indexPath.row])
+            self.searchApp(recentSearchedWords[indexPath.row])
             searchController.searchBar.text = recentSearchedWords[indexPath.row]
+        case .recentSearchWords:
+            self.searchApp(words[indexPath.row].word!)
+            searchController.searchBar.text = words[indexPath.row].word!
         default:
             print(indexPath.row)
         }
@@ -251,33 +308,42 @@ extension AppSearchViewController {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         fetchSearchList(searchWord: searchBar.text!)
+        if let word = searchBar.text {
+            searchApp(word)
+        }
         searchBar.resignFirstResponder()
         searchTypeModel = .resultWords
-        tableView.reloadData()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         //캔슬 버튼을 눌렀을 때
-        emptyView.isHidden = true
         searchBar.resignFirstResponder()
         searchTypeModel = .recentSearchWords
         tableView.reloadData()
         print("Cancel")
     }
 
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print(#function)
+    }
+
+    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
+        print(#function)
+    }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //타이핑을 하고 있을 때
-        emptyView.isHidden = true
 
         if !recentSearchedWords.isEmpty {
-            searchTypeModel = .segguestWords
+            searchTypeModel = .suggestWords
             tableView.reloadData()
         }
-        
+
         if let text = searchBar.text, text.isEmpty {
             searchTypeModel = .recentSearchWords
             tableView.reloadData()
         }
+        print(#function)
     }
 }
 
@@ -287,13 +353,10 @@ extension AppSearchViewController {
     fileprivate func requestGetAllWords() {
         let words: [Words] = WordDataManager.shared.getWords()
         recentSearchItems.onNext(words)
-
         self.words = words
 //            let wordName: [String] = words.map { $0.word! }
         searchWords = words.map { $0.word! }
 //            searchWords2.onNext(words.map { $0.word! })
-
-//        print("All Searching words...\(wordName)")
         print(self.words.count)
         self.setView()
         self.tableView.reloadData()
@@ -332,9 +395,9 @@ extension AppSearchViewController {
     }
     func wordsSearch2(prefix: String) {
         suggestItems.onNext(words
-                .map { $0.word! }
-                .filter { $0.hasCaseInsensitivePrefix(prefix) }
-                .sorted { $0 > $1 }
-                .map { $0 })
+            .map { $0.word! }
+            .filter { $0.hasCaseInsensitivePrefix(prefix) }
+            .sorted { $0 > $1 }
+            .map { $0 })
     }
 }

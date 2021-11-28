@@ -21,30 +21,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0D-tK-GMj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="634"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cH3-AI-ycl">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="634"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="결과 없음" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBz-wm-unL">
-                                                <rect key="frame" x="141.5" y="302" width="92.5" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색 결과 없음" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnO-Io-RDo">
-                                                <rect key="frame" x="139" y="339.5" width="97" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="RnO-Io-RDo" firstAttribute="top" secondItem="pBz-wm-unL" secondAttribute="bottom" constant="7.5" id="2un-CQ-L9B"/>
-                                            <constraint firstItem="pBz-wm-unL" firstAttribute="centerX" secondItem="cH3-AI-ycl" secondAttribute="centerX" id="Bvf-Ja-iGU"/>
-                                            <constraint firstItem="RnO-Io-RDo" firstAttribute="centerX" secondItem="cH3-AI-ycl" secondAttribute="centerX" id="aWu-de-0Z1"/>
-                                            <constraint firstItem="pBz-wm-unL" firstAttribute="centerY" secondItem="cH3-AI-ycl" secondAttribute="centerY" id="nuB-16-50D"/>
-                                        </constraints>
-                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GrV-Kr-SAg">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="634"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,13 +29,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="GrV-Kr-SAg" secondAttribute="trailing" id="0Ri-FL-wzk"/>
-                                    <constraint firstItem="cH3-AI-ycl" firstAttribute="top" secondItem="L0D-tK-GMj" secondAttribute="top" id="8NU-FF-m0g"/>
                                     <constraint firstAttribute="bottom" secondItem="GrV-Kr-SAg" secondAttribute="bottom" id="GZA-kw-yWl"/>
-                                    <constraint firstAttribute="bottom" secondItem="cH3-AI-ycl" secondAttribute="bottom" id="H4p-eq-Smf"/>
-                                    <constraint firstItem="cH3-AI-ycl" firstAttribute="leading" secondItem="L0D-tK-GMj" secondAttribute="leading" id="HU5-J0-IgE"/>
                                     <constraint firstItem="GrV-Kr-SAg" firstAttribute="leading" secondItem="L0D-tK-GMj" secondAttribute="leading" id="WPl-tK-d1n"/>
                                     <constraint firstItem="GrV-Kr-SAg" firstAttribute="top" secondItem="L0D-tK-GMj" secondAttribute="top" id="o1W-Qg-Q9e"/>
-                                    <constraint firstAttribute="trailing" secondItem="cH3-AI-ycl" secondAttribute="trailing" id="rla-6Q-bAR"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -74,8 +46,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="검색" id="DE2-CZ-hGR"/>
                     <connections>
-                        <outlet property="emptyView" destination="cH3-AI-ycl" id="ggX-gB-w4r"/>
-                        <outlet property="notSearchedLabel" destination="RnO-Io-RDo" id="T5v-ne-kuC"/>
                         <outlet property="tableView" destination="GrV-Kr-SAg" id="YG4-f2-KWN"/>
                     </connections>
                 </viewController>
@@ -154,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JFc-xZ-Xwl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3677" y="-580"/>
+            <point key="canvasLocation" x="4105" y="73"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="g9P-sp-P02">

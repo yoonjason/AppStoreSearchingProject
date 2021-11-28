@@ -32,7 +32,6 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     var expandedIdxSet: IndexSet = []
     var appId: Int = 0
     var entry: [Entry] = [Entry]()
-    var entryData: BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
     var didSelect: (String) -> Void = { _ in }
 
     var detailModel: [DetailTypeModels] = [DetailTypeModels]()
@@ -48,99 +47,6 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         detailModel.append(.newFeature)
         detailModel.append(.preview)
         detailModel.append(.description)
-
-//
-//        entryData.bind(to: tableView.rx.items) { (tableView, row, item) -> UITableViewCell in
-//            if row == 0 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "AppDetailTopInfoCell", for: IndexPath.init(row: row, section: 0)) as! AppDetailTopInfoCell
-//                cell.setView(data: self.data!)
-//                cell.selectionStyle = .none
-//                return cell
-//            } else if row == 1 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "NewFeatureInfoCell", for: IndexPath.init(row: row, section: 0)) as! NewFeatureInfoCell
-//                cell.setData(self.data!)
-//                cell.delegate = self
-//                if self.expandedIdxSet.contains(1) {
-//                    cell.descLabel.numberOfLines = 0
-//                } else {
-//                    cell.descLabel.numberOfLines = 2
-//                }
-//                return cell
-//            } else if row == 2 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "PreViewTableViewCell", for: IndexPath.init(row: row, section: 0)) as! PreViewTableViewCell
-//                cell.setData(self.data!)
-//                cell.delegate = self
-//                cell.selectionStyle = .none
-//                return cell
-//            } else if row == 3 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "AppDescriptionCell", for: IndexPath.init(row: row, section: 0)) as! AppDescriptionCell
-//                cell.setData(self.data!)
-//                if self.expandedIdxSet.contains(3) {
-//                    cell.descriptionLabel.numberOfLines = 0
-//                } else {
-//                    cell.descriptionLabel.numberOfLines = 2
-//                }
-//                cell.selectionStyle = .none
-//                return cell
-//            } else if row == 4 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "AppReviewCell", for: IndexPath.init(row: row, section: 0)) as! AppReviewCell
-//
-////                cell.setData(self.appId)
-////                cell.selectionStyle = .none
-////                _ = self.entryData
-////                    .map{ entry in
-////                        if entry.count < 1 {
-////                            cell.isHidden = true
-////                        }
-////                }
-//
-//
-//                return cell
-//            } else if row == 5 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "AppInfomationCell", for: IndexPath.init(row: row, section: 0)) as! AppInfomationCell
-//                cell.setData(self.data!)
-//                cell.selectionStyle = .none
-//                return cell
-//            }
-//            return UITableViewCell()
-//        }
-//            .disposed(by: rx.disposeBag)
-
-
-//        tableView
-//            .rx
-//            .itemSelected
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] (indexPath) in
-//
-//            if indexPath.row == 1 {
-//                self?.tableView.deselectRow(at: indexPath, animated: false)
-//
-//                if(self!.expandedIdxSet.contains(indexPath.row)) {
-//                    self!.expandedIdxSet.remove(indexPath.row)
-//                } else {
-//                    self!.expandedIdxSet.insert(indexPath.row)
-//                }
-//
-//                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            }
-//            else if indexPath.row == 2 {
-//                print("SELECT")
-//                self?.performSegue(withIdentifier: "FromMainToScreenShotDetail", sender: nil)
-//            }
-//            else if indexPath.row == 3 {
-//                self?.tableView.deselectRow(at: indexPath, animated: false)
-//
-//                if(self!.expandedIdxSet.contains(indexPath.row)) {
-//                    self!.expandedIdxSet.remove(indexPath.row)
-//                } else {
-//                    self!.expandedIdxSet.insert(indexPath.row)
-//                }
-//
-//                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            }
-//        })
-//            .disposed(by: rx.disposeBag)
 
     }
 
@@ -159,33 +65,6 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         tableView.registerCell(type: DeatilDescriptionCell.self)
         tableView.registerCell(type: DetailInfoCell.self)
     }
-
-//    func getFetchAppReviewCountInfo(){
-//        let urlString = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
-//        APIService.shared.fetchGenericJSONData(urlString: urlString) { [weak self] (reviews: Review?, error) in
-//            if let error = error {
-//                print("Failed to fetch reviews: ", error)
-//                return
-//            }
-//            if let entry = reviews?.feed.entry {
-//                self?.entry = entry
-//            }
-//        }
-//        APIService.shared.fetchReviews(appId)
-//            .subscribe(onNext:{ [weak self] data in
-//                if let entry = data?.feed.entry {
-//                    if entry.count > 0 {
-//                        self?.entryData.onNext(entry)
-//                    }else {
-//                        self?.entryData.onNext([])
-//                    }
-//                }
-//                }, onError: { error in
-//                    print("errorerror", error)
-//                    self.entryData.onNext([Entry(author: Author(name: Label(label: "")), title: Label(label: ""), content: Label(label: ""), rating: Label(label: ""))])
-//            })
-//            .disposed(by: rx.disposeBag)
-//    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FromMainToScreenShotDetail" {

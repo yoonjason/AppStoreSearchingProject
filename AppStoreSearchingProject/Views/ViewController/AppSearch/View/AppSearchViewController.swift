@@ -16,35 +16,24 @@ import RxDataSources
 
 class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
 
-    @IBOutlet weak var notSearchedLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
     var coordinator: AppSearchCoordinator?
 
-    var searchTypeModel: SearchTypeModels = .recentSearchWords
-
-    let searchedResultItems: BehaviorSubject<[AppData]> = BehaviorSubject<[AppData]>(value: [])
-    let recentSearchItems: BehaviorSubject<[Words]> = BehaviorSubject<[Words]>(value: [])
-    let suggestItems: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
-    let searchWords2: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
-    let currentWords2: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
-
-    var searchResultItems = [AppData]()
-
+    private var searchTypeModel: SearchTypeModels = .recentSearchWords
+    private var searchResultItems = [AppData]()
     let searchController = UISearchController(searchResultsController: nil)
-    var appList = [AppData]()
-    var searchedTerm = String() {
-        didSet {
-            recentSearchedWords = wordsSearch(prefix: searchedTerm)
-            wordsSearch2(prefix: searchedTerm)
-            tableView.reloadOnMainThread()
-        }
-    }
-
+    private var appList = [AppData]()
     private var searchWords = [String]()
     private var recentSearchedWords = [String]()
     private var words: [Words] = WordDataManager.shared.getWords()
-    var currentInputAppName: String = ""
+    private var currentInputAppName: String = ""
+    private var searchedTerm = String() {
+        didSet {
+            recentSearchedWords = wordsSearch(prefix: searchedTerm)
+            tableView.reloadOnMainThread()
+        }
+    }
 
 
     override func viewDidLoad() {
@@ -54,68 +43,6 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         requestGetAllWords()
         registerCell()
         setSearchController()
-
-//        NetworkManager.shared.get(urlString: "search?", word: "카카오") { result in
-//            print(result)
-//            if let data = try? JSONDecoder().decode(Apps.self, from: result) {
-//                print(data.results?.count)
-//                print(data.resultCount)
-//            }
-//
-//        } failure: { error in
-//            print(error)
-//        }
-
-
-
-
-
-//        tableView
-//            .rx
-//            .setDelegate(self)
-//            .disposed(by: rx.disposeBag)
-////
-//        searchedResultItems
-//            .bind(to: tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: SearchResultCell.self)) { [weak self] index, item, cell in
-//
-////            cell.setData(appData: item)
-//            cell.selectionStyle = .none
-//        }
-//            .disposed(by: rx.disposeBag)
-////
-//        Observable
-//            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(AppData.self))
-//            .bind { [weak self] (indexPath, item) in
-//            self?.coordinator?.showDetailInfo(with: item)
-//        }
-//            .disposed(by: rx.disposeBag)
-//
-//
-//        recentSearchItems
-//            .bind(to: tableView.rx.items(cellIdentifier: "SearchWordCell", cellType: SearchWordCell.self)) { [weak self] (index, item, cell) in
-//            cell.setData(item.word!)
-//
-//            cell.selectionStyle = .none
-//        }
-//            .disposed(by: rx.disposeBag)
-
-//        suggestItems
-//            .bind(to: tableView.rx.items(cellIdentifier: "SearchWordCell", cellType: SearchWordCell.self)) { (index, item, cell) in
-//                cell.set(term: item, searchedTerm: self.searchedTerm )
-//
-//            cell.selectionStyle = .none
-//        }
-//            .disposed(by: rx.disposeBag)
-//
-//        Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Words.self))
-//            .bind { [weak self] (index, item) in
-//            self?.fetchSearchList(searchWord: item.word!)
-//            self?.searchController.searchBar.text = item.word
-//            self?.navigationItem.hidesSearchBarWhenScrolling = false
-//        }
-//            .disposed(by: rx.disposeBag)
-
-
 
     }
 
@@ -159,38 +86,12 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
 //        navigationItem.hidesSearchBarWhenScrolling = true
     }
 
-    func fetchSearchList(searchWord: String) {
-        searchedResultItems.onNext([])
-        APIService.shared.fetchfile(searchWord)
-            .map { ($0?.results)! }
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { searchedData in
-            if searchedData.count > 0 {
-                self.saveNewWords(id: 1, word: searchWord)
-                self.searchedResultItems.onNext(searchedData)
-                let indexPath = NSIndexPath(row: NSNotFound, section: 0)
-                self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
-                self.searchTypeModel = .resultWords
-                self.requestGetAllWords()
-            } else {
-                self.searchedResultItems.onNext([])
-//                self.notSearchedLabel.text = "`\(self.searchController.searchBar.text ?? "")`"
-                self.searchTypeModel = .emptyResult
-            }
-        }, onError: { error in
-            print(error)
-        })
-            .disposed(by: rx.disposeBag)
-    }
-
     func searchApp(_ searchWord: String) {
         let quertyItem = URLQueryItem(name: "term", value: searchWord)
         NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { result in
             if let resultData = try? JSONDecoder().decode(Apps.self, from: result) {
                 guard let appsData = resultData.results else { return }
-                print(resultData.resultCount)
                 if let count = resultData.resultCount, count > 0 {
-
                     self.searchResultItems = appsData
                     self.saveNewWords(id: 1, word: searchWord)
                     self.searchTypeModel = .resultWords
@@ -289,7 +190,6 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch searchTypeModel {
         case .suggestWords:
-            self.fetchSearchList(searchWord: recentSearchedWords[indexPath.row])
             self.searchApp(recentSearchedWords[indexPath.row])
             searchController.searchBar.text = recentSearchedWords[indexPath.row]
         case .recentSearchWords:
@@ -307,7 +207,6 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension AppSearchViewController {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        fetchSearchList(searchWord: searchBar.text!)
         if let word = searchBar.text {
             searchApp(word)
         }
@@ -352,12 +251,8 @@ extension AppSearchViewController {
 
     fileprivate func requestGetAllWords() {
         let words: [Words] = WordDataManager.shared.getWords()
-        recentSearchItems.onNext(words)
         self.words = words
-//            let wordName: [String] = words.map { $0.word! }
         searchWords = words.map { $0.word! }
-//            searchWords2.onNext(words.map { $0.word! })
-        print(self.words.count)
         self.setView()
         self.tableView.reloadData()
     }
@@ -380,24 +275,10 @@ extension AppSearchViewController {
     }
 
     func wordsSearch(prefix: String) -> [String] {
-//        recentSearchItems.onNext()
-//        var tt = words
-//            .map { $0.word! }
-//            .filter { $0.hasCaseInsensitivePrefix(prefix) }
-//            .sorted { $0 > $1 }
-//            .map { $0 }
-//        suggestItems.onNext(tt)
         return words
             .map { $0.word! }
             .filter { $0.hasCaseInsensitivePrefix(prefix) }
             .sorted { $0 > $1 }
             .map { $0 }
-    }
-    func wordsSearch2(prefix: String) {
-        suggestItems.onNext(words
-            .map { $0.word! }
-            .filter { $0.hasCaseInsensitivePrefix(prefix) }
-            .sorted { $0 > $1 }
-            .map { $0 })
     }
 }

@@ -14,6 +14,7 @@ enum DetailTypeModels: EnumConvertable {
     case preview
     case description
     case infomation
+    case review
 
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum DetailTypeModels: EnumConvertable {
         case .description:
             return ""
         case .infomation:
+            return ""
+        case .review:
             return ""
         }
     }

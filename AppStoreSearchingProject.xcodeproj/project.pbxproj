@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		062652BD27537AEF00AEB1BF /* DetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652BB27537AEF00AEB1BF /* DetailInfoCell.swift */; };
 		062652BE27537AEF00AEB1BF /* DetailInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652BC27537AEF00AEB1BF /* DetailInfoCell.xib */; };
+		062652C12753801200AEB1BF /* DetailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652BF2753801200AEB1BF /* DetailRowView.swift */; };
+		062652C22753801200AEB1BF /* DetailRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652C02753801200AEB1BF /* DetailRowView.xib */; };
+		062652C42753810C00AEB1BF /* UINib+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652C32753810C00AEB1BF /* UINib+.swift */; };
+		062652C72753847600AEB1BF /* DetailReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652C52753847600AEB1BF /* DetailReviewCell.swift */; };
+		062652C82753847600AEB1BF /* DetailReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652C62753847600AEB1BF /* DetailReviewCell.xib */; };
+		062652CA2753865200AEB1BF /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652C92753865200AEB1BF /* StackView+.swift */; };
+		062652CC27538B8900AEB1BF /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CB27538B8900AEB1BF /* UICollectionView+.swift */; };
+		062652D027538BC200AEB1BF /* IPhoneImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */; };
+		062652D127538BC200AEB1BF /* IPhoneImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */; };
 		062E449D275322070053192A /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 062E449C275322070053192A /* RxDataSources */; };
 		062E44A02753380D0053192A /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E449E2753380D0053192A /* EmptyCell.swift */; };
 		062E44A12753380D0053192A /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062E449F2753380D0053192A /* EmptyCell.xib */; };
@@ -79,6 +88,15 @@
 /* Begin PBXFileReference section */
 		062652BB27537AEF00AEB1BF /* DetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoCell.swift; sourceTree = "<group>"; };
 		062652BC27537AEF00AEB1BF /* DetailInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailInfoCell.xib; sourceTree = "<group>"; };
+		062652BF2753801200AEB1BF /* DetailRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailRowView.swift; sourceTree = "<group>"; };
+		062652C02753801200AEB1BF /* DetailRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailRowView.xib; sourceTree = "<group>"; };
+		062652C32753810C00AEB1BF /* UINib+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINib+.swift"; sourceTree = "<group>"; };
+		062652C52753847600AEB1BF /* DetailReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReviewCell.swift; sourceTree = "<group>"; };
+		062652C62753847600AEB1BF /* DetailReviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailReviewCell.xib; sourceTree = "<group>"; };
+		062652C92753865200AEB1BF /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
+		062652CB27538B8900AEB1BF /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
+		062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPhoneImageCell.swift; sourceTree = "<group>"; };
+		062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IPhoneImageCell.xib; sourceTree = "<group>"; };
 		062E449E2753380D0053192A /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		062E449F2753380D0053192A /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		062E44A2275355410053192A /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -162,9 +180,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		062652CD27538BAB00AEB1BF /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */,
+				062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		062E44A4275357BD0053192A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				062652CD27538BAB00AEB1BF /* Image */,
 				062E44A5275358C60053192A /* DetailAppInfoCell.swift */,
 				062E44A6275358C60053192A /* DetailAppInfoCell.xib */,
 				062E44A927535FBA0053192A /* DetailNewFeatureCell.swift */,
@@ -175,6 +203,8 @@
 				062E44BC275368410053192A /* DeatilDescriptionCell.xib */,
 				062652BB27537AEF00AEB1BF /* DetailInfoCell.swift */,
 				062652BC27537AEF00AEB1BF /* DetailInfoCell.xib */,
+				062652C52753847600AEB1BF /* DetailReviewCell.swift */,
+				062652C62753847600AEB1BF /* DetailReviewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -240,10 +270,13 @@
 				063659702751DE350097658C /* Int+.swift */,
 				063659722751DE560097658C /* UIView+.swift */,
 				063659742751DE770097658C /* NSMutableAttributedString+.swift */,
+				062652CB27538B8900AEB1BF /* UICollectionView+.swift */,
 				063659762751DF080097658C /* UITableViewCell+.swift */,
 				063659912751F4180097658C /* UIDevice+.swift */,
 				063659B0275217DB0097658C /* URLRquest+.swift */,
 				062E44A2275355410053192A /* UILabel+.swift */,
+				062652C32753810C00AEB1BF /* UINib+.swift */,
+				062652C92753865200AEB1BF /* StackView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -345,6 +378,8 @@
 		063659A0275203610097658C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				062652BF2753801200AEB1BF /* DetailRowView.swift */,
+				062652C02753801200AEB1BF /* DetailRowView.xib */,
 				062E44AD275363B60053192A /* HeaderView */,
 				062E44A4275357BD0053192A /* Cell */,
 				068617D124E007D200971037 /* DetailViewController.swift */,
@@ -629,6 +664,9 @@
 				0642834B24DADE5C004BA0E1 /* Main.storyboard in Resources */,
 				063659C027522C370097658C /* SearchResultCell.xib in Resources */,
 				062E44BE275368410053192A /* DeatilDescriptionCell.xib in Resources */,
+				062652D127538BC200AEB1BF /* IPhoneImageCell.xib in Resources */,
+				062652C82753847600AEB1BF /* DetailReviewCell.xib in Resources */,
+				062652C22753801200AEB1BF /* DetailRowView.xib in Resources */,
 				062652BE27537AEF00AEB1BF /* DetailInfoCell.xib in Resources */,
 				062E44A8275358C60053192A /* DetailAppInfoCell.xib in Resources */,
 				062E44AC27535FBA0053192A /* DetailNewFeatureCell.xib in Resources */,
@@ -684,6 +722,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				062652D027538BC200AEB1BF /* IPhoneImageCell.swift in Sources */,
 				063659902751F3B40097658C /* TabBar.swift in Sources */,
 				0636599D2751FEE40097658C /* TabBarItem.swift in Sources */,
 				0636597C2751E2B00097658C /* AppCoordinator.swift in Sources */,
@@ -691,15 +730,19 @@
 				063659BF27522C370097658C /* SearchResultCell.swift in Sources */,
 				063659712751DE350097658C /* Int+.swift in Sources */,
 				0636597F2751E6F80097658C /* AppSearchCoodinator.swift in Sources */,
+				062652CA2753865200AEB1BF /* StackView+.swift in Sources */,
 				063659B4275227120097658C /* SearchWordCell.swift in Sources */,
 				063659832751F0090097658C /* SplahViewController.swift in Sources */,
 				063659AF275212780097658C /* ServerPhaseManager.swift in Sources */,
 				063659752751DE770097658C /* NSMutableAttributedString+.swift in Sources */,
+				062652C42753810C00AEB1BF /* UINib+.swift in Sources */,
 				068617D224E007D200971037 /* DetailViewController.swift in Sources */,
+				062652C12753801200AEB1BF /* DetailRowView.swift in Sources */,
 				0636598D2751F3270097658C /* TabBarCoordinator.swift in Sources */,
 				0636599A2751FC950097658C /* Global.swift in Sources */,
 				6755BB2E24DD4EB6004BAAB9 /* ItemCell.swift in Sources */,
 				6755BB2924DD2BAD004BAAB9 /* WordDataManager.swift in Sources */,
+				062652CC27538B8900AEB1BF /* UICollectionView+.swift in Sources */,
 				062E44A7275358C60053192A /* DetailAppInfoCell.swift in Sources */,
 				062E44BD275368410053192A /* DeatilDescriptionCell.swift in Sources */,
 				062E44A3275355410053192A /* UILabel+.swift in Sources */,
@@ -707,6 +750,7 @@
 				062E44B2275364D00053192A /* DetailPreviewCell.swift in Sources */,
 				6755BB2724DD26C8004BAAB9 /* Words+CoreDataProperties.swift in Sources */,
 				063659AA27520BBF0097658C /* SearchTypeModels.swift in Sources */,
+				062652C72753847600AEB1BF /* DetailReviewCell.swift in Sources */,
 				062E44BA275367380053192A /* DeatilTypeModel.swift in Sources */,
 				063659A22752036D0097658C /* DetailCoordinator.swift in Sources */,
 				063659872751F0500097658C /* SplashCoordinator.swift in Sources */,

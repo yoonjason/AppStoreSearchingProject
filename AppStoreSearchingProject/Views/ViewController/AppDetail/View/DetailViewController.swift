@@ -47,6 +47,8 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         detailModel.append(.newFeature)
         detailModel.append(.preview)
         detailModel.append(.description)
+        detailModel.append(.review)
+        detailModel.append(.infomation)
 
     }
 
@@ -64,6 +66,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         tableView.registerCell(type: DetailPreviewCell.self)
         tableView.registerCell(type: DeatilDescriptionCell.self)
         tableView.registerCell(type: DetailInfoCell.self)
+        tableView.registerCell(type: DetailReviewCell.self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,12 +83,12 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    
+
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return detailModel.count
     }
-    
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell = UITableViewCell()
@@ -102,13 +105,16 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             if expandedIdxSet.contains(indexPath.row) {
                 customCell.descriptionLabel.numberOfLines = 0
                 customCell.moreLabel.isHidden = true
-            }else {
+            } else {
                 customCell.descriptionLabel.numberOfLines = 2
             }
             cell = customCell
         case .preview:
             let customCell = self.tableView.dequeueCell(withType: DetailPreviewCell.self) as! DetailPreviewCell
-            
+            if let screenUrls = data.screenshotUrls {
+                customCell.iphoneImageUrls = screenUrls
+            }
+            customCell.collectionView.reloadData()
             cell = customCell
         case .description:
             let customCell = self.tableView.dequeueCell(withType: DeatilDescriptionCell.self) as! DeatilDescriptionCell
@@ -116,7 +122,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             if expandedIdxSet.contains(indexPath.row) {
                 customCell.descriptionLabel.numberOfLines = 0
                 customCell.moreLabel.isHidden = true
-            }else {
+            } else {
                 customCell.descriptionLabel.numberOfLines = 2
             }
             customCell.tapped = {
@@ -125,27 +131,56 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell = customCell
         case .infomation:
             let customCell = self.tableView.dequeueCell(withType: DetailInfoCell.self) as! DetailInfoCell
-            
+            var row: [[String: String]] = []
+            if let seller = data.sellerName {
+                row.append(["제공자": seller])
+            }
+            if let size = data.fileSizeBytes {
+                let bcf = ByteCountFormatter()
+                row.append(["크기": bcf.string(fromByteCount: Int64(size) ?? 0)])
+            }
+            if let categories = data.genres {
+                row.append(["카테고리": categories[0]])
+            }
+            if let version = data.minimumOsVersion {
+                row.append(["버전": version])
+            }
+            if let age = data.trackContentRating {
+                row.append(["연령 등급": age])
+            }
+            if let languages = data.languageCodesISO2A {
+                if languages.count == 0 {
+                    row.append(["언어": "한국어"])
+                } else {
+                    row.append(["언어": "한국어 외 \(languages.count - 1)개"])
+                }
+            }
+            customCell.row = row
+
+            cell = customCell
+        case .review:
+            let customCell = self.tableView.dequeueCell(withType: DetailReviewCell.self) as! DetailReviewCell
+
             cell = customCell
         }
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellType = detailModel[indexPath.row]
         switch cellType {
         case .info:
             return 230
-        case .preview :
-            return 500
+        case .preview:
+            return 534
         default:
             return UITableView.automaticDimension
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        
+
         let cellType = detailModel[indexPath.row]
         switch cellType {
         case .newFeature:

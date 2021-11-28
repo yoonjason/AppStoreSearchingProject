@@ -10,6 +10,17 @@ import Foundation
 import UIKit
 
 extension UILabel {
+    
+    func calculateMaxLines( widthLenth: CGFloat = 0 ) -> Int {
+        let width: CGFloat = widthLenth == 0 ? frame.size.width : widthLenth
+        let maxSize = CGSize(width: width, height: CGFloat(Float.infinity))
+        let charSize = font.lineHeight
+        let text = (self.text ?? "") as NSString
+        let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font!], context: nil)
+        let linesRoundedDown = Int(floor(textSize.height/charSize))
+        return linesRoundedDown
+    }
+
 
     func changeUserCount(count: Int, detail: Bool) {
         var returnValue = String(count)

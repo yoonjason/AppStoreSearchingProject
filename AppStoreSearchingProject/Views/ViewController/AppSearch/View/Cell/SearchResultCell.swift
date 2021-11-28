@@ -29,11 +29,7 @@ class SearchResultCell: UITableViewCell {
         titleLabel.text = nil
         descLabel.text = nil
         userCountingLabel.text = nil
-
-
-        for view in imageStackView.subviews {
-            view.removeFromSuperview()
-        }
+        imageStackView.removeAllArrangedSubviews()
     }
 
     func setData(appData: AppData) {

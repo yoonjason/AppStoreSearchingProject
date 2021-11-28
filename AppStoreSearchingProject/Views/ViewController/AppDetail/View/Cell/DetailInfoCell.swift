@@ -11,9 +11,33 @@ import UIKit
 class DetailInfoCell: UITableViewCell {
     @IBOutlet weak var stackView: UIStackView!
     
+    var row: [[String:String]] = [] {
+        willSet(newVal) {
+            let padding: CGFloat = 50.0
+            
+            for item in newVal {
+                let rowView = DetailRowView()
+                rowView.rowTitle = item.keys.first!
+                rowView.rowValue = item.values.first!
+                self.stackView.addArrangedSubview(rowView)
+                
+                rowView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    rowView.heightAnchor.constraint(equalToConstant: 40),
+                    rowView.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
+                    rowView.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor)
+                ])
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        stackView.removeAllArrangedSubviews()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupViews()
+        
         // Initialization code
     }
 
@@ -23,21 +47,8 @@ class DetailInfoCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupViews(){
-        for (key, value) in dataSource.enumerated() {
-            print(key, value)
-        }
+    override func layoutSubviews() {
+        
     }
-    
+  
 }
-
-fileprivate let dataSource: [(String,String)] = [
-    ("Seller", "Hangzhou NetEase Leihuo Technology Co., Ltd."),
-    ("Size", "2.5GB"),
-    ("Category", "Games: Strategy"),
-    ("Compatibility", "Works on this iphone"),
-    ("Languages", "Simplified Chinese"),
-    ("Age Rating", "9+"),
-    ("In-App Purchases", "Yes"),
-    ("Copyright", "©1997-2019 网易公司版权所有")
-]

@@ -62,6 +62,23 @@
                             <constraint firstAttribute="width" constant="90" id="R4i-XY-J75"/>
                             <constraint firstAttribute="height" constant="15" id="efW-4c-h98"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                <color key="value" red="0.67451441290000003" green="0.67450147869999999" blue="0.67451030020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                <color key="value" red="0.67451441290000003" green="0.67450147869999999" blue="0.67451030020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                <color key="value" red="0.67451441290000003" green="0.67450147869999999" blue="0.67451030020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                <real key="value" value="-4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.0, 250rateings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-FD-zEO">
                         <rect key="frame" x="20" y="198" width="95.5" height="14"/>
@@ -172,11 +189,6 @@
             <point key="canvasLocation" x="423.91304347826087" y="9.375"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="unm-9l-F18">
-            <size key="intrinsicContentSize" width="120" height="20"/>
-        </designable>
-    </designables>
     <resources>
         <image name="detail_download" width="30" height="30"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>

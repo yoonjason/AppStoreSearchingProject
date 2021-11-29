@@ -15,6 +15,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         moveToViewContollers()
+        view.backgroundColor = .white
     }
     
     func moveToViewContollers() {

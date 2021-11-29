@@ -106,7 +106,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 customCell.descriptionLabel.numberOfLines = 0
                 customCell.moreLabel.isHidden = true
             } else {
-                customCell.descriptionLabel.numberOfLines = 2
+                customCell.descriptionLabel.numberOfLines = 4
             }
             cell = customCell
         case .preview:
@@ -123,7 +123,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 customCell.descriptionLabel.numberOfLines = 0
                 customCell.moreLabel.isHidden = true
             } else {
-                customCell.descriptionLabel.numberOfLines = 2
+                customCell.descriptionLabel.numberOfLines = 4
             }
             customCell.tapped = {
                 print("developer")

@@ -12,7 +12,7 @@ typealias NetworkResult = ((Result<Data, Error>) -> Void)
 
 enum NetworkURLEndpoint: String {
     case search = "search?&country=kr&media=software&entity=software&"
-    case review = "rss/customerreviews/page=1/id"
+    case review = "rss/customerreviews/page=1/id="
 }
 
 

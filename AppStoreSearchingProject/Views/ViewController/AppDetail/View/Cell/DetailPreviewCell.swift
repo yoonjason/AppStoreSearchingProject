@@ -14,6 +14,7 @@ class DetailPreviewCell: UITableViewCell {
     var iphoneImageUrls = [String]()
     let cellScale = 0.7
     var currentIndex: CGFloat = 0.0
+    var tapped: (Int) -> Void = { _ in }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,8 +36,8 @@ class DetailPreviewCell: UITableViewCell {
 
     func layout() {
         let screenSize = collectionView.bounds.size
-        let cellWidth = screenSize.width * cellScale
-        let cellHeight = screenSize.height
+        let cellWidth = floor(screenSize.width * cellScale)
+        let cellHeight = floor(screenSize.height)
         let insetX = (collectionView.bounds.width - cellWidth) / 2.0
         let insetY = (collectionView.bounds.height - cellHeight) / 2.0
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -45,9 +46,8 @@ class DetailPreviewCell: UITableViewCell {
         layout.minimumLineSpacing = -30
         collectionView.collectionViewLayout = layout
         collectionView.decelerationRate = .fast
-        
+
         collectionView.isPagingEnabled = false
-        print("#@#==== screensize :\(screenSize), cellWidth :\(cellWidth). cellHeight : \(cellHeight), insetX: \(insetX), insetY: \(insetY)")
     }
 
     func registerCell() {
@@ -68,6 +68,10 @@ extension DetailPreviewCell: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.imageView.borderColor(.lightGray)
         cell.imageView.borderWidth(0.5)
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tapped(indexPath.row)
     }
 
 }

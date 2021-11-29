@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol DetailCoordinator: AnyObject {
-    
+    func imagePreivew(_ imageUrls: [String], currentIndex: Int)
 }
 
 class DetailCoordinatorImp: Coordinator {
@@ -41,6 +41,11 @@ class DetailCoordinatorImp: Coordinator {
 }
 
 extension DetailCoordinatorImp: DetailCoordinator {
-
+    
+    func imagePreivew(_ imageUrls: [String], currentIndex: Int) {
+        let coordinator = ImagePreviewCoordinatorImp(navigationController: navigationController, imageUrls: imageUrls, currentIndex: currentIndex)
+        coordinate(to: coordinator)
+    }
+    
     
 }

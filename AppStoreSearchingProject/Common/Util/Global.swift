@@ -16,4 +16,5 @@ func new(name: String, storyboard: String = "") -> UIViewController {
 
 let screenHeight = UIScreen.main.bounds.size.height
 let screenWidth = UIScreen.main.bounds.size.width
+let screenSize = UIScreen.main.bounds.size
 let statusBarHeight = UIApplication.shared.statusBarFrame.height

@@ -73,7 +73,7 @@
                                 <color key="value" red="0.67451441290000003" green="0.67450147869999999" blue="0.67451030020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
-                                <real key="value" value="-4"/>
+                                <real key="value" value="-3"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
                                 <integer key="value" value="0"/>
@@ -189,6 +189,11 @@
             <point key="canvasLocation" x="423.91304347826087" y="9.375"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="unm-9l-F18">
+            <size key="intrinsicContentSize" width="88" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <image name="detail_download" width="30" height="30"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>

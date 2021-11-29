@@ -69,17 +69,6 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         tableView.registerCell(type: DetailReviewCell.self)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "FromMainToScreenShotDetail" {
-            if let destinationVC = segue.destination as? ScreenShotDetailViewController {
-                destinationVC.data = data
-                if let imageUrls = data?.screenshotUrls {
-                    destinationVC.imagesUrl = imageUrls
-                }
-            }
-        }
-    }
-
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -113,6 +102,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let customCell = self.tableView.dequeueCell(withType: DetailPreviewCell.self) as! DetailPreviewCell
             if let screenUrls = data.screenshotUrls {
                 customCell.iphoneImageUrls = screenUrls
+            }
+            customCell.tapped = { index in
+                guard let screenUrls = data.screenshotUrls else { return }
+                self.coordinator?.imagePreivew(screenUrls, currentIndex: index)
             }
             customCell.collectionView.reloadData()
             cell = customCell
@@ -196,8 +189,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 expandedIdxSet.insert(indexPath.row)
             }
-
             tableView.reloadRows(at: [indexPath], with: .automatic)
+//        case .preview:
+            
         default:
             break
         }

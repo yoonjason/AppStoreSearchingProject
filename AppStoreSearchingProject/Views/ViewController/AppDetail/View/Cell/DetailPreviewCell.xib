@@ -51,7 +51,7 @@
             <connections>
                 <outlet property="collectionView" destination="GP4-z5-dfz" id="VTQ-xH-3CD"/>
             </connections>
-            <point key="canvasLocation" x="131.15942028985509" y="274.55357142857139"/>
+            <point key="canvasLocation" x="131.15942028985509" y="273.88392857142856"/>
         </tableViewCell>
     </objects>
     <resources>

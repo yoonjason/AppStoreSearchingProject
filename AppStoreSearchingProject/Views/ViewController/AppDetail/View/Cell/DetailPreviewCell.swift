@@ -18,7 +18,7 @@ class DetailPreviewCell: UITableViewCell {
         super.awakeFromNib()
         setupViews()
         registerCell()
-        print("ASDFASDFASDFAS?")
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,14 +30,16 @@ class DetailPreviewCell: UITableViewCell {
     func setupViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
+//        self.translatesAutoresizingMaskIntoConstraints = false
         layout()
     }
 
     func layout() {
-        let cellScale = 0.8
-        let screenSize = UIScreen.main.bounds.size
+        let cellScale = 0.75
+//        let screenSize = UIScreen.main.bounds.size
+        let screenSize = collectionView.bounds.size
         let cellWidth = screenSize.width * cellScale
-        let cellHeight = screenSize.height * cellScale
+        let cellHeight = screenSize.height
         let insetX = (collectionView.bounds.width - cellWidth) / 2.0
         let insetY = (collectionView.bounds.height - cellHeight) / 2.0
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -45,6 +47,7 @@ class DetailPreviewCell: UITableViewCell {
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight )
         collectionView.collectionViewLayout = layout
         collectionView.isPagingEnabled = true
+        print("#@#==== screensize :\(screenSize), cellWidth :\(cellWidth). cellHeight : \(cellHeight), insetX: \(insetX), insetY: \(insetY)")
         collectionView.contentInset = UIEdgeInsets(top: insetY, left: 0, bottom: insetY, right: 0)
     }
 
@@ -72,6 +75,31 @@ extension DetailPreviewCell: UICollectionViewDelegate, UICollectionViewDataSourc
 //    }
 
 }
+
+extension DetailPreviewCell {
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        let cellWidth = self.collectionView.bounds.size.width * 0.5
+//
+//        var offset = targetContentOffset.pointee
+//        let idx = round((offset.x + collectionView.contentInset.left) / cellWidth)
+//
+//        var index = CGFloat(0)
+//        if idx > index {
+//            index += 1
+//
+//        } else if idx < index {
+//            if index != 0 {
+//                index -= 1
+//            }
+//        }
+//
+//        offset = CGPoint(x: index * cellWidth - self.collectionView.contentInset.left, y: 0)
+//        targetContentOffset.pointee = offset
+//
+//        print("@#@#@#")
+//    }
+}
+
 
 //extension DetailPreviewCell: UICollectionViewFlowLayout{
 //    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {

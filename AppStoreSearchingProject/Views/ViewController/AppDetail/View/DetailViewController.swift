@@ -57,7 +57,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         tableView.dataSource = self
         navigationItem.largeTitleDisplayMode = .never
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 280.0
+        tableView.estimatedRowHeight = 510
     }
 
     func registerCell() {
@@ -166,17 +166,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cellType = detailModel[indexPath.row]
-        switch cellType {
-        case .info:
-            return 230
-        case .preview:
-            return 534
-        default:
-            return UITableView.automaticDimension
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let cellType = detailModel[indexPath.row]
+//        switch cellType {
+//        case .info:
+//            return 230
+//        default:
+//            return UITableView.automaticDimension
+//        }
+//    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)

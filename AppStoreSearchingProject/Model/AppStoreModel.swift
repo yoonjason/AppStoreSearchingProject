@@ -175,18 +175,27 @@ struct AppData : Codable {
 
 
 struct Review: Codable {
-  let feed: ReviewFeed
+  let feed: Feed?
 }
 
-struct ReviewFeed: Codable {
-  let entry: [Entry]
+struct Feed: Codable {
+  let entry: [Entry]?
+    
+    enum CodingKeys: String, CodingKey {
+        case entry = "entry"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        entry = try values.decodeIfPresent([Entry].self, forKey: .entry)
+    }
 }
 
 struct Entry: Codable {
-  let author: Author
-  let title: Label
-  let content: Label
-  let rating: Label
+  let author: Author?
+  let title: Label?
+  let content: Label?
+  let rating: Label?
   
   private enum CodingKeys: String, CodingKey {
     case author

@@ -16,22 +16,13 @@ protocol TableCellProtocol: class {
     func showCell(index: Int) -> Void
 }
 
-extension DetailViewController: TableCellProtocol {
-    func pageMove() {
-        performSegue(withIdentifier: "FromMainToScreenShotDetail", sender: data)
-    }
-    func showCell(index: Int) {
-        print(index)
-    }
-}
-
 class DetailViewController: UIViewController, UIScrollViewDelegate {
 
     var coordinator: DetailCoordinator?
     var data: AppData?
     var expandedIdxSet: IndexSet = []
     var appId: Int = 0
-    var entry: [Entry] = [Entry]()
+    var entriesModel: [Entry] = [Entry]()
     var didSelect: (String) -> Void = { _ in }
 
     var detailModel: [DetailTypeModels] = [DetailTypeModels]()
@@ -45,8 +36,8 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         setModel()
         requestReviewInfo()
     }
-    
-    func setModel(){
+
+    func setModel() {
         detailModel.append(.info)
         detailModel.append(.newFeature)
         detailModel.append(.preview)
@@ -71,17 +62,19 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         tableView.registerCell(type: DetailInfoCell.self)
         tableView.registerCell(type: DetailReviewCell.self)
     }
-    
-    func requestReviewInfo(){
-        NetworkManager.shared.requestAppReview(NetworkURLEndpoint.review.rawValue, appId: appId) { resultData in
-            print(resultData)
-            
+
+    func requestReviewInfo() {
+        NetworkManager.shared.requestAppReview(NetworkURLEndpoint.review.rawValue, appId: appId) { response in
+            if let resultData = try? JSONDecoder().decode(Review.self, from: response), let entries = resultData.feed?.entry {
+                self.entriesModel = entries
+            }
         } failure: { error in
-            
+            print(error)
+            print("error #@# === \(error)")
         }
 
     }
-    
+
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -166,7 +159,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell = customCell
         case .review:
             let customCell = self.tableView.dequeueCell(withType: DetailReviewCell.self) as! DetailReviewCell
-
+            customCell.setEntries(self.entriesModel)
+            customCell.tapped = { index in
+                print(index)
+            }
             cell = customCell
         }
         return cell
@@ -194,7 +190,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             }
             tableView.reloadRows(at: [indexPath], with: .automatic)
 //        case .preview:
-            
+
         default:
             break
         }

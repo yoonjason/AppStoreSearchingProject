@@ -83,8 +83,8 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
 
     func searchApp(_ searchWord: String) {
         let quertyItem = URLQueryItem(name: "term", value: searchWord)
-        NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { result in
-            if let resultData = try? JSONDecoder().decode(Apps.self, from: result) {
+        NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { responseData in
+            if let resultData = try? JSONDecoder().decode(Apps.self, from: responseData) {
                 guard let appsData = resultData.results else { return }
                 if let count = resultData.resultCount, count > 0 {
                     self.searchResultItems = appsData

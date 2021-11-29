@@ -31,6 +31,9 @@
 		062E44BA275367380053192A /* DeatilTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E44B9275367380053192A /* DeatilTypeModel.swift */; };
 		062E44BD275368410053192A /* DeatilDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E44BB275368410053192A /* DeatilDescriptionCell.swift */; };
 		062E44BE275368410053192A /* DeatilDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062E44BC275368410053192A /* DeatilDescriptionCell.xib */; };
+		062FBFA22754B8280044AE83 /* ReviewDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062FBFA02754B8280044AE83 /* ReviewDetailCell.swift */; };
+		062FBFA32754B8280044AE83 /* ReviewDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062FBFA12754B8280044AE83 /* ReviewDetailCell.xib */; };
+		062FBFA52754FF690044AE83 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062FBFA42754FF690044AE83 /* UIColor+.swift */; };
 		063659682750F9390097658C /* AppTitleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063659662750F9390097658C /* AppTitleInfoCell.swift */; };
 		063659692750F9390097658C /* AppTitleInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063659672750F9390097658C /* AppTitleInfoCell.xib */; };
 		0636596B2751DDD80097658C /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0636596A2751DDD80097658C /* String+.swift */; };
@@ -109,6 +112,9 @@
 		062E44B9275367380053192A /* DeatilTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeatilTypeModel.swift; sourceTree = "<group>"; };
 		062E44BB275368410053192A /* DeatilDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeatilDescriptionCell.swift; sourceTree = "<group>"; };
 		062E44BC275368410053192A /* DeatilDescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeatilDescriptionCell.xib; sourceTree = "<group>"; };
+		062FBFA02754B8280044AE83 /* ReviewDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailCell.swift; sourceTree = "<group>"; };
+		062FBFA12754B8280044AE83 /* ReviewDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewDetailCell.xib; sourceTree = "<group>"; };
+		062FBFA42754FF690044AE83 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		063659662750F9390097658C /* AppTitleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleInfoCell.swift; sourceTree = "<group>"; };
 		063659672750F9390097658C /* AppTitleInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTitleInfoCell.xib; sourceTree = "<group>"; };
 		0636596A2751DDD80097658C /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -192,6 +198,7 @@
 		062E44A4275357BD0053192A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				062FBF9B2754B7360044AE83 /* ReviewDetailCell */,
 				062652CD27538BAB00AEB1BF /* Image */,
 				062E44A5275358C60053192A /* DetailAppInfoCell.swift */,
 				062E44A6275358C60053192A /* DetailAppInfoCell.xib */,
@@ -224,6 +231,15 @@
 				062E44B9275367380053192A /* DeatilTypeModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		062FBF9B2754B7360044AE83 /* ReviewDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				062FBFA02754B8280044AE83 /* ReviewDetailCell.swift */,
+				062FBFA12754B8280044AE83 /* ReviewDetailCell.xib */,
+			);
+			path = ReviewDetailCell;
 			sourceTree = "<group>";
 		};
 		063659782751DF3C0097658C /* Coordinator */ = {
@@ -278,6 +294,7 @@
 				062E44A2275355410053192A /* UILabel+.swift */,
 				062652C32753810C00AEB1BF /* UINib+.swift */,
 				062652C92753865200AEB1BF /* StackView+.swift */,
+				062FBFA42754FF690044AE83 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -670,6 +687,7 @@
 				0642835024DADE5D004BA0E1 /* Assets.xcassets in Resources */,
 				1C152EC92754958B00D181AB /* ImagePreviewCell.xib in Resources */,
 				062E44A12753380D0053192A /* EmptyCell.xib in Resources */,
+				062FBFA32754B8280044AE83 /* ReviewDetailCell.xib in Resources */,
 				0642834B24DADE5C004BA0E1 /* Main.storyboard in Resources */,
 				063659C027522C370097658C /* SearchResultCell.xib in Resources */,
 				062E44BE275368410053192A /* DeatilDescriptionCell.xib in Resources */,
@@ -735,6 +753,7 @@
 				063659902751F3B40097658C /* TabBar.swift in Sources */,
 				0636599D2751FEE40097658C /* TabBarItem.swift in Sources */,
 				0636597C2751E2B00097658C /* AppCoordinator.swift in Sources */,
+				062FBFA52754FF690044AE83 /* UIColor+.swift in Sources */,
 				063659B1275217DB0097658C /* URLRquest+.swift in Sources */,
 				063659BF27522C370097658C /* SearchResultCell.swift in Sources */,
 				063659712751DE350097658C /* Int+.swift in Sources */,
@@ -767,6 +786,7 @@
 				0685811D24DE8ABB00130E0B /* AppStoreModel.swift in Sources */,
 				063659AD275212040097658C /* NetworkManager.swift in Sources */,
 				063659732751DE560097658C /* UIView+.swift in Sources */,
+				062FBFA22754B8280044AE83 /* ReviewDetailCell.swift in Sources */,
 				671BAF8B24E12F5F001F1BC8 /* ImagePreviewViewController.swift in Sources */,
 				062E44A02753380D0053192A /* EmptyCell.swift in Sources */,
 				063659A7275203BD0097658C /* ImagePreviewCoordinator.swift in Sources */,

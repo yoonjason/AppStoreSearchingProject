@@ -33,8 +33,8 @@ class ImagePreviewCoordinatorImp: Coordinator {
             return
         }
         vc.coordinator = self
-        vc.imageUrls = imageUrls ?? []
-        vc.currentIndex = currentIndex ?? -1
+        vc.imageUrls = imageUrls
+        vc.currentImageIndex = currentIndex ?? -1
         navigationController.present(vc, animated: true, completion: nil)
     }
 

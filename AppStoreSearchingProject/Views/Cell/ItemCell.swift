@@ -190,7 +190,6 @@ class PreViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     var delegate: TableCellProtocol?
     
     func setData(_ data: AppData) {
-        print("#@#@#@# =======11111")
         if collectionView.delegate == nil {
             collectionView.delegate = self
             collectionView.dataSource = self
@@ -203,7 +202,6 @@ class PreViewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
         if let imageUrlStrings = data.screenshotUrls {
             self.imageUrlStrings = imageUrlStrings
         }
-        print("#@#@#@# =======22222")
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -287,10 +285,10 @@ class AppDescriptionCell: UITableViewCell {
 }
 
 class AppReviewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
-    var data = [Entry]()
+//    var data = [Entry]()
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var emptyLabel: UILabel!
-    var entryData: BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
+//    var entryData: BehaviorSubject<[Entry]> = BehaviorSubject<[Entry]>(value: [])
 
 
 //    func getFetchAppReviewCountInfo(_ appId: Int) {
@@ -326,16 +324,16 @@ class AppReviewCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
 
 //        getFetchAppReviewCountInfo(appId)
-        entryData
-            .bind(to: collectionView.rx.items(cellIdentifier: "AppReviewCollectionViewCell", cellType: AppReviewCollectionViewCell.self)) { (index, item, cell) in
-            cell.setData(item)
-        }
-            .disposed(by: rx.disposeBag)
-
-        collectionView
-            .rx
-            .setDelegate(self)
-            .disposed(by: rx.disposeBag)
+//        entryData
+//            .bind(to: collectionView.rx.items(cellIdentifier: "AppReviewCollectionViewCell", cellType: AppReviewCollectionViewCell.self)) { (index, item, cell) in
+//            cell.setData(item)
+//        }
+//            .disposed(by: rx.disposeBag)
+//
+//        collectionView
+//            .rx
+//            .setDelegate(self)
+//            .disposed(by: rx.disposeBag)
 
 
 
@@ -383,14 +381,14 @@ class AppReviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
 
 
-    func setData(_ data: Entry) {
-        reviewDescriptionLabel.text = data.content.label
-        reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
-//        self.widthAnchor.constraint(equalToConstant: self.frame.size.width - 40).isActive = true
-        titleLabel.text = data.title.label
-        nameLabel.text = data.author.name.label
-        rateView.rating = Double(Int(data.rating.label)!)
-    }
+//    func setData(_ data: Entry) {
+//        reviewDescriptionLabel.text = data.content.label
+//        reviewDescriptionLabel.widthAnchor.constraint(equalToConstant: reviewDescriptionLabel.frame.size.width - 40).isActive = true
+////        self.widthAnchor.constraint(equalToConstant: self.frame.size.width - 40).isActive = true
+//        titleLabel.text = data.title.label
+//        nameLabel.text = data.author.name.label
+//        rateView.rating = Double(Int(data.rating.label)!)
+//    }
 
     override func prepareForReuse() {
         reviewDescriptionLabel.text = nil

@@ -61,8 +61,10 @@ extension NetworkManager {
         print(urlcomponents?.url)
         guard let requestURL = urlcomponents?.url else { return }
         get(requestURL) { result in
+            print("#@# === success")
             success(result)
         } failure: { error in
+            print("#@# === error")
             failure(error)
         }
     }

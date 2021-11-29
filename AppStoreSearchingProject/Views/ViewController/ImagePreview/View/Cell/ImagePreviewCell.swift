@@ -15,10 +15,20 @@ class ImagePreviewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.imageView.roundCorners(20)
-        self.imageView.clipsToBounds = true
-        self.imageView.roundBorderColor()
-        self.imageView.borderWidth(0.84)
+    }
+    
+    override func prepareForReuse() {
+        self.imageView.image = nil
+    }
+    
+    func setImage(_ imageUrl: String) {
+        DispatchQueue.main.async {
+            guard let imageData = try? Data(contentsOf: URL(string: imageUrl)!) else { return }
+            let image = UIImage(data: imageData)
+            self.imageView.image = image
+            self.imageView.roundCorners(20)
+            self.imageView.roundBorderColor()
+        }
     }
 
 }

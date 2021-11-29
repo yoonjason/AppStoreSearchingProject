@@ -15,35 +15,40 @@ class ImagePreviewViewController: UIViewController {
 
     var coordinator: ImagePreviewCoordinator?
     var imageUrls: [String]?
-    var currentIndex: Int?
+    var currentImageIndex: Int?
     var data: AppData?
     let cellScale: CGFloat = 0.8
+    var currentIndex: CGFloat = 0.0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         registerCell()
+
     }
 
     func setupViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
         let cellWidth = floor(screenSize.width * cellScale)
-        let cellHeight = floor(collectionView.bounds.size.height)
+        let cellHeight = floor(screenSize.height * cellScale)
         let insetX = (collectionView.bounds.width - cellWidth) / 2
         let insetY = (collectionView.bounds.height - cellHeight) / 2
+        print("insetX \(insetX)")
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 20
+        layout.minimumLineSpacing = 15
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         collectionView.collectionViewLayout = layout
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         collectionView.isPagingEnabled = false
-        print(screenSize, cellWidth, cellHeight)
-
-        collectionView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.collectionView.layoutIfNeeded()
+            self.collectionView.setContentOffset(CGPoint(x: CGFloat(self.currentImageIndex ?? 0) * (cellWidth + insetX/2), y: 0), animated: false)
+        }
     }
 
     func registerCell() {
@@ -62,33 +67,30 @@ extension ImagePreviewViewController: UICollectionViewDataSource, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(withType: ImagePreviewCell.self, for: indexPath) as! ImagePreviewCell
-        guard let image = imageUrls?[indexPath.row] else { return UICollectionViewCell() }
-        guard let imageData = try? Data(contentsOf: URL(string: image)!) else { return UICollectionViewCell() }
-        DispatchQueue.main.async {
-            cell.imageView.image = UIImage(data: imageData)
+        guard let imageUrl = imageUrls?[indexPath.row] else { return UICollectionViewCell() }
+        cell.setImage(imageUrl)
 
-        }
         return cell
     }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
-    {
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
 
-        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        var offset = targetContentOffset.pointee
+        let idx = round((offset.x + collectionView.contentInset.left) / cellWidth)
 
-        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-
-        let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
-        let index: Int
-        if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex))
-        } else if velocity.x < 0 {
-            index = Int(floor(estimatedIndex))
-        } else {
-            index = Int(round(estimatedIndex))
+        if idx > currentIndex {
+            currentIndex += 1
+        } else if idx < currentIndex {
+            if currentIndex != 0 {
+                currentIndex -= 1
+            }
         }
 
-        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
-    }
+        offset = CGPoint(x: currentIndex * cellWidth + collectionView.contentInset.left, y: 0)
 
+        targetContentOffset.pointee = offset
+    }
 }

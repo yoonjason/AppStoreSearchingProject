@@ -56,7 +56,8 @@ extension UIView {
         self.layer.borderWidth = width
     }
 
-    func borderColor(_ color: UIColor = .lightGray) {
+    func roundBorderColor() {
+        let color = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1.0)
         self.layer.borderColor = color.cgColor
     }
 }

@@ -17,7 +17,7 @@ class ImagePreviewCell: UICollectionViewCell {
         
         self.imageView.roundCorners(20)
         self.imageView.clipsToBounds = true
-        self.imageView.borderColor(.lightGray)
+        self.imageView.roundBorderColor()
         self.imageView.borderWidth(0.84)
     }
 

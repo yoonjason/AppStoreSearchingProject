@@ -65,7 +65,7 @@ extension DetailPreviewCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let imageUrl = iphoneImageUrls[indexPath.row]
         cell.setImage(imageUrl)
         cell.imageView.roundCorners(10)
-        cell.imageView.borderColor(.lightGray)
+        cell.imageView.roundBorderColor()
         cell.imageView.borderWidth(0.5)
         return cell
     }

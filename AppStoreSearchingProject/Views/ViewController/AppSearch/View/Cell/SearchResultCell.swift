@@ -60,7 +60,7 @@ class SearchResultCell: UITableViewCell {
             if let gerneName = appData.primaryGenreName, gerneName == "Games" {
                 let imageView = UIImageView()
                 imageView.roundCorners(8)
-                imageView.borderColor(.lightGray)
+                imageView.roundBorderColor()
                 imageView.borderWidth(0.84)
                 imageStackView.addArrangedSubview(imageView)
                 guard let singleImage = appData.screenshotUrls?[0] else { return }
@@ -76,7 +76,7 @@ class SearchResultCell: UITableViewCell {
                         let imageView = UIImageView()
                         imageStackView.addArrangedSubview(imageView)
                         imageView.roundCorners(8)
-                        imageView.borderColor(.lightGray)
+                        imageView.roundBorderColor()
                         imageView.borderWidth(0.84)
                         DispatchQueue.global().async {
                             guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }

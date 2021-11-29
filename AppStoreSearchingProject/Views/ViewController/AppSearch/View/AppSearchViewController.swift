@@ -81,11 +81,6 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        navigationItem.hidesSearchBarWhenScrolling = true
-    }
-
     func searchApp(_ searchWord: String) {
         let quertyItem = URLQueryItem(name: "term", value: searchWord)
         NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { result in
@@ -131,15 +126,12 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
         case .recentSearchWords:
             return words.count
         case .resultWords:
-            print("searchResultItems === \(searchResultItems.count)")
             return searchResultItems.count
         case .emptyResult:
             return 1
         }
     }
 
-
-//
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell = UITableViewCell()
 
@@ -223,7 +215,6 @@ extension AppSearchViewController {
         searchBar.resignFirstResponder()
         searchTypeModel = .recentSearchWords
         tableView.reloadData()
-        print("Cancel")
     }
 
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {

@@ -13,6 +13,7 @@ import UIKit
 protocol AppDetailCoordinator: AnyObject {
     func imagePreivew(_ imageUrls: [String], currentIndex: Int)
     func reviewDetail(_ entries: [Entry])
+    func developer(_ compnayName: String)
 }
 
 class AppDetailCoordinatorImp: Coordinator {
@@ -50,6 +51,11 @@ extension AppDetailCoordinatorImp: AppDetailCoordinator {
     
     func reviewDetail(_ entries: [Entry]) {
         let coordinator = ReviewDetailCoordinatorImp(navigationController: navigationController, entries: entries)
+        coordinate(to: coordinator)
+    }
+    
+    func developer(_ compnayName: String) {
+        let coordinator = DeveloperCoordinatorImp(navigationController: navigationController, title: compnayName)
         coordinate(to: coordinator)
     }
 }

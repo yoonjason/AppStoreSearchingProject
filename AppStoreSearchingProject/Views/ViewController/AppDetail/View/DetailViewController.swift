@@ -115,7 +115,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 customCell.descriptionLabel.numberOfLines = 4
             }
             customCell.tapped = {
-                print("developer")
+                print(indexPath.row)
+                guard let developer = data.sellerName else { return }
+                self.coordinator?.developer(developer)
             }
             cell = customCell
         case .infomation:

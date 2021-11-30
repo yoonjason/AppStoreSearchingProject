@@ -142,20 +142,35 @@
             </objects>
             <point key="canvasLocation" x="4808.8000000000002" y="71.514242878560722"/>
         </scene>
-        <!--View Controller-->
+        <!--Developer View Controller-->
         <scene sceneID="hOH-sT-vPa">
             <objects>
-                <viewController id="XCj-CJ-TO8" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Developer" id="XCj-CJ-TO8" customClass="DeveloperViewController" customModule="AppStoreSearchingProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mi3-ef-s9I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAb-g2-wa0">
+                                <rect key="frame" x="166.5" y="323" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="zxT-5O-nhs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HAb-g2-wa0" firstAttribute="centerX" secondItem="zxT-5O-nhs" secondAttribute="centerX" id="5zh-V2-jvl"/>
+                            <constraint firstItem="HAb-g2-wa0" firstAttribute="centerY" secondItem="zxT-5O-nhs" secondAttribute="centerY" id="QgV-MS-7AC"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="developerLabel" destination="HAb-g2-wa0" id="7Ng-ct-c5z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vDe-AG-mFz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5501" y="136"/>
+            <point key="canvasLocation" x="5518" y="73"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="g9P-sp-P02">

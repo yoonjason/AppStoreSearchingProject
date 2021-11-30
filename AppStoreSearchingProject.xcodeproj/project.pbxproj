@@ -37,6 +37,8 @@
 		063408FA2756388400BB7E54 /* SearchResultImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063408F82756388400BB7E54 /* SearchResultImageCell.xib */; };
 		0634091F275648F400BB7E54 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0634091E275648F400BB7E54 /* ImageViewModel.swift */; };
 		0634092127564AB200BB7E54 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0634092027564AB200BB7E54 /* UIImageView+.swift */; };
+		0634092827567DAA00BB7E54 /* DeveloperCoorninator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0634092727567DAA00BB7E54 /* DeveloperCoorninator.swift */; };
+		0634092A27567E3F00BB7E54 /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0634092927567E3F00BB7E54 /* DeveloperViewController.swift */; };
 		0636596B2751DDD80097658C /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0636596A2751DDD80097658C /* String+.swift */; };
 		0636596D2751DE030097658C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0636596C2751DE030097658C /* Date+.swift */; };
 		0636596F2751DE140097658C /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0636596E2751DE140097658C /* UITableView+.swift */; };
@@ -117,6 +119,8 @@
 		063408F82756388400BB7E54 /* SearchResultImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultImageCell.xib; sourceTree = "<group>"; };
 		0634091E275648F400BB7E54 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		0634092027564AB200BB7E54 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		0634092727567DAA00BB7E54 /* DeveloperCoorninator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperCoorninator.swift; sourceTree = "<group>"; };
+		0634092927567E3F00BB7E54 /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
 		0636596A2751DDD80097658C /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		0636596C2751DE030097658C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		0636596E2751DE140097658C /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 		0634092327567A7D00BB7E54 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				0634092727567DAA00BB7E54 /* DeveloperCoorninator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 		0634092427567A8500BB7E54 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0634092927567E3F00BB7E54 /* DeveloperViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -829,6 +835,7 @@
 				062FBFA22754B8280044AE83 /* ReviewDetailCell.swift in Sources */,
 				1C1A87042755D056004B84C0 /* ReviewDetailViewController.swift in Sources */,
 				671BAF8B24E12F5F001F1BC8 /* ImagePreviewViewController.swift in Sources */,
+				0634092A27567E3F00BB7E54 /* DeveloperViewController.swift in Sources */,
 				062E44A02753380D0053192A /* EmptyCell.swift in Sources */,
 				1C1A87002755CA85004B84C0 /* ReviewDetailCoordinator.swift in Sources */,
 				063659A7275203BD0097658C /* ImagePreviewCoordinator.swift in Sources */,
@@ -839,6 +846,7 @@
 				063659772751DF080097658C /* UITableViewCell+.swift in Sources */,
 				0642834424DADE5C004BA0E1 /* AppDelegate.swift in Sources */,
 				063659942751F46E0097658C /* TabBarController.swift in Sources */,
+				0634092827567DAA00BB7E54 /* DeveloperCoorninator.swift in Sources */,
 				6755BB2624DD26C8004BAAB9 /* Words+CoreDataClass.swift in Sources */,
 				0636596D2751DE030097658C /* Date+.swift in Sources */,
 				0636596B2751DDD80097658C /* String+.swift in Sources */,

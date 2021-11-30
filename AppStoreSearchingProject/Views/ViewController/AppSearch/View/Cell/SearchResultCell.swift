@@ -41,7 +41,8 @@ class SearchResultCell: UITableViewCell {
         descLabel.text = nil
         userCountingLabel.text = nil
     }
-
+    
+    
     func setupViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -58,7 +59,6 @@ class SearchResultCell: UITableViewCell {
         section.orthogonalScrollingBehavior = .groupPaging
         let layout = UICollectionViewCompositionalLayout(section: section)
         collectionView.collectionViewLayout = layout
-        
     }
 
     func registerCell() {
@@ -91,7 +91,9 @@ class SearchResultCell: UITableViewCell {
         }
         setupViews()
     }
-
+    
+    
+    
 }
 
 extension SearchResultCell: UICollectionViewDelegate, UICollectionViewDataSource {

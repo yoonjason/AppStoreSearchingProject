@@ -25,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.coodinator = AppCoordinator(window: window!)
         self.coodinator?.start()
+        
+        if #available(iOS 13.0, *) {
+            self.window?.overrideUserInterfaceStyle = .light
+        } else {
+            UIApplication.shared.statusBarStyle = .default
+        }
 
         return true
     }

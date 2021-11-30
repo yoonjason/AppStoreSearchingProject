@@ -13,7 +13,6 @@ class DetailInfoCell: UITableViewCell {
     
     var row: [[String:String]] = [] {
         willSet(newVal) {
-            let padding: CGFloat = 50.0
             
             for item in newVal {
                 let rowView = DetailRowView()

@@ -22,13 +22,7 @@ class ImagePreviewCell: UICollectionViewCell {
     }
     
     func setImage(_ imageUrl: String) {
-        DispatchQueue.main.async {
-            guard let imageData = try? Data(contentsOf: URL(string: imageUrl)!) else { return }
-            let image = UIImage(data: imageData)
-            self.imageView.image = image
-            self.imageView.roundCorners(20)
-            self.imageView.roundBorderColor()
-        }
+        imageView.setImage(imageUrl)
     }
 
 }

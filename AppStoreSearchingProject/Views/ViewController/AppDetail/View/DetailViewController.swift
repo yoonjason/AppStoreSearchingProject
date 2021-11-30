@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol TableCellProtocol: class {
-    func pageMove() -> Void
-    func showCell(index: Int) -> Void
-}
-
 class DetailViewController: UIViewController, UIScrollViewDelegate {
 
     var coordinator: AppDetailCoordinator?

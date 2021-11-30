@@ -45,7 +45,6 @@ extension NetworkManager {
         
         var urlcomponents = URLComponents(string: encodedUrl!)
         urlcomponents?.queryItems = queryItems
-        print(urlcomponents?.url)
         guard let requestURL = urlcomponents?.url else { return }
         get(requestURL) { result in
             success(result)
@@ -58,7 +57,6 @@ extension NetworkManager {
         let urlString = baseURL + endPoint + "\(appId)/sortby=mostrecent/json?l=ko&cc=kr"
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let urlcomponents = URLComponents(string: encodedUrl!)
-        print(urlcomponents?.url)
         guard let requestURL = urlcomponents?.url else { return }
         get(requestURL) { result in
             print("#@# === success")

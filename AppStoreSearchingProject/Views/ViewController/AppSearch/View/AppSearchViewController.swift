@@ -58,14 +58,11 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         tableView.dataSource = self
         tableView.estimatedRowHeight = 349
         tableView.rowHeight = UITableView.automaticDimension
-        if #available(iOS 13.0, *) {
-            UIApplication.shared.statusBarStyle = .darkContent
-        } else {
-            UIApplication.shared.statusBarStyle = .default
-        }
+
         setNeedsStatusBarAppearanceUpdate()
         
     }
+    
 
     func setSearchController() {
         searchController.searchResultsUpdater = self
@@ -153,6 +150,7 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
             customCell.tapped = {
                 print("getget")
             }
+            print(customCell.collectionView.collectionViewLayout.collectionViewContentSize.height)
             cell = customCell
         case .emptyResult:
             let customCell = self.tableView.dequeueCell(withType: EmptyCell.self) as! EmptyCell
@@ -165,16 +163,16 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch searchTypeModel {
-        case .resultWords:
-            return 350
-        case .emptyResult:
-            return self.tableView.frame.size.height
-        default:
-            return UITableView.automaticDimension
-        }
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        switch searchTypeModel {
+//        case .resultWords:
+//            return 350
+//        case .emptyResult:
+//            return self.tableView.frame.size.height
+//        default:
+//            return UITableView.automaticDimension
+//        }
+//    }
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

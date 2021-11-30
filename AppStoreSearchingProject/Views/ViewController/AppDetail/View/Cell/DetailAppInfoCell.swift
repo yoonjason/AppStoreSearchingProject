@@ -24,22 +24,15 @@ class DetailAppInfoCell: UITableViewCell {
     @IBOutlet weak var chartLabel: UILabel!
 
     func setView(data: AppData) {
-        //artworkUrl100
-        let url = URL(string: data.artworkUrl512!)
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
-            DispatchQueue.main.async {
-                self.appImageView.image = UIImage(data: data!)
-            }
+        if let imageUrl = data.artworkUrl100 {
+            appImageView.setImage(imageUrl)
         }
+        
         if let title = data.trackName, let subTitle = data.artistName {
             titleLabel.text = title
             subTitleLabel.text = subTitle
-            let width = (data.trackName! as NSString).size(withAttributes: [NSAttributedString.Key.font: titleLabel.font]).width
-            if width > 230 {
-
-            }
         }
+        
         if let rating = data.averageUserRating {
             rateView.rating = rating
             averageCountLabel.text = "\(round(rating * 10) / 10)"

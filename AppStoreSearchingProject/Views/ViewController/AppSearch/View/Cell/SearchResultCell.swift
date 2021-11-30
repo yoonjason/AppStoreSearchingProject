@@ -12,6 +12,8 @@ import Cosmos
 class SearchResultCell: UITableViewCell {
 
     var tapped: () -> Void = { }
+    var imageUrls: [String]?
+    var genreName: String = ""
 
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,9 +21,18 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var rateView: CosmosView!
     @IBOutlet weak var userCountingLabel: UILabel!
     @IBOutlet weak var getBtn: UIButton!
-    @IBOutlet weak var imageStackView: UIStackView!
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    
     @IBAction func onActionGet(_ sender: Any) {
         tapped()
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        registerCell()
     }
 
     override func prepareForReuse() {
@@ -29,19 +40,34 @@ class SearchResultCell: UITableViewCell {
         titleLabel.text = nil
         descLabel.text = nil
         userCountingLabel.text = nil
-        imageStackView.removeAllArrangedSubviews()
+    }
+
+    func setupViews() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
+        let estimatedHeight = CGFloat(self.collectionView.frame.size.height)
+        let estimatedWidth = CGFloat(screenWidth / 3.3)
+
+        let layoutSize = NSCollectionLayoutSize(widthDimension: .estimated(estimatedWidth), heightDimension: .estimated(estimatedHeight))
+        let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: 1)
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.interGroupSpacing = 5
+        section.orthogonalScrollingBehavior = .groupPaging
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        collectionView.collectionViewLayout = layout
+        
+    }
+
+    func registerCell() {
+        collectionView.registerCell(type: SearchResultImageCell.self)
     }
 
     func setData(appData: AppData) {
 
-        let url = URL(string: appData.artworkUrl60!)
-
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
-            DispatchQueue.main.async {
-                self.appImageView.image = UIImage(data: data!)
-            }
-        }
+        self.appImageView.setImage(appData.artworkUrl100!)
         if let title = appData.trackName {
             titleLabel.text = title
         }
@@ -56,40 +82,34 @@ class SearchResultCell: UITableViewCell {
             userCountingLabel.changeUserCount(count: userCounting, detail: false)
         }
 
-        if let screenShots = appData.screenshotUrls?.enumerated() {
-            if let gerneName = appData.primaryGenreName, gerneName == "Games" {
-                let imageView = UIImageView()
-                imageView.roundCorners(20)
-                imageView.roundBorderColor()
-                imageView.borderWidth(0.84)
-                imageStackView.addArrangedSubview(imageView)
-                guard let singleImage = appData.screenshotUrls?[0] else { return }
-                guard let imageData = try? Data(contentsOf: URL(string: singleImage)!) else { return }
-                DispatchQueue.main.async {
-                    imageView.image = UIImage(data: imageData)
-                }
-            } else {
-                for (index, screenshot) in screenShots {
-                    if index > 2 {
-                        return
-                    }
-                    let imageView = UIImageView()
-                    imageStackView.addArrangedSubview(imageView)
-                    imageView.roundCorners(20)
-                    imageView.roundBorderColor()
-                    imageView.borderWidth(0.84)
-                    DispatchQueue.global().async {
-                        guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }
-                        let image = UIImage(data: imageData)
-                        DispatchQueue.main.async {
-                            imageView.image = image
-                        }
-
-                    }
-                }
-            }
+        if let imageUrls = appData.screenshotUrls {
+            self.imageUrls = imageUrls
+            collectionView.reloadData()
         }
-
+        if let genrename = appData.primaryGenreName {
+            self.genreName = genrename
+        }
+        setupViews()
     }
+
+}
+
+extension SearchResultCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if genreName.hasPrefix("Game") {
+            return 1
+        }
+        return 3
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        let cell = collectionView.dequeueCell(withType: SearchResultImageCell.self, for: indexPath) as! SearchResultImageCell
+
+        guard let imageUrl = self.imageUrls?[indexPath.row] else { return UICollectionViewCell() }
+        cell.setImage(imageUrl)
+        return cell
+    }
+
 
 }

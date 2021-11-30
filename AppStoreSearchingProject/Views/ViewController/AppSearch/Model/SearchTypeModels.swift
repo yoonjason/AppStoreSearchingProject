@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RxDataSources
 
 protocol EnumConvertable {
     var title: String { get }

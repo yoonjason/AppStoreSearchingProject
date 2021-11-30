@@ -18,7 +18,6 @@
 		062652CC27538B8900AEB1BF /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CB27538B8900AEB1BF /* UICollectionView+.swift */; };
 		062652D027538BC200AEB1BF /* IPhoneImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */; };
 		062652D127538BC200AEB1BF /* IPhoneImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */; };
-		062E449D275322070053192A /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 062E449C275322070053192A /* RxDataSources */; };
 		062E44A02753380D0053192A /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E449E2753380D0053192A /* EmptyCell.swift */; };
 		062E44A12753380D0053192A /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062E449F2753380D0053192A /* EmptyCell.xib */; };
 		062E44A3275355410053192A /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E44A2275355410053192A /* UILabel+.swift */; };
@@ -65,7 +64,6 @@
 		063659B5275227120097658C /* SearchWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063659B3275227120097658C /* SearchWordCell.xib */; };
 		063659BF27522C370097658C /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063659BD27522C370097658C /* SearchResultCell.swift */; };
 		063659C027522C370097658C /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063659BE27522C370097658C /* SearchResultCell.xib */; };
-		063659C3275244540097658C /* AppSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063659C2275244540097658C /* AppSearchViewModel.swift */; };
 		0642834424DADE5C004BA0E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0642834324DADE5C004BA0E1 /* AppDelegate.swift */; };
 		0642834824DADE5C004BA0E1 /* AppSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0642834724DADE5C004BA0E1 /* AppSearchViewController.swift */; };
 		0642834B24DADE5C004BA0E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0642834924DADE5C004BA0E1 /* Main.storyboard */; };
@@ -73,12 +71,11 @@
 		0642835324DADE5D004BA0E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0642835124DADE5D004BA0E1 /* LaunchScreen.storyboard */; };
 		0685811D24DE8ABB00130E0B /* AppStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685811C24DE8ABB00130E0B /* AppStoreModel.swift */; };
 		068617D224E007D200971037 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068617D124E007D200971037 /* DetailViewController.swift */; };
-		1C152EBB2751D71900D181AB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBA2751D71900D181AB /* RxCocoa */; };
-		1C152EBD2751D71900D181AB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBC2751D71900D181AB /* RxSwift */; };
 		1C152EC02751D72700D181AB /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */; };
-		1C152EC42751DBD100D181AB /* NSObject-Rx in Frameworks */ = {isa = PBXBuildFile; productRef = 1C152EC32751DBD100D181AB /* NSObject-Rx */; };
 		1C152EC82754958B00D181AB /* ImagePreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C152EC62754958B00D181AB /* ImagePreviewCell.swift */; };
 		1C152EC92754958B00D181AB /* ImagePreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C152EC72754958B00D181AB /* ImagePreviewCell.xib */; };
+		1C1A87002755CA85004B84C0 /* ReviewDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1A86FF2755CA85004B84C0 /* ReviewDetailCoordinator.swift */; };
+		1C1A87042755D056004B84C0 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1A87032755D056004B84C0 /* ReviewDetailViewController.swift */; };
 		4C31AF06C1BB613B72F88F75 /* Pods_AppStoreSearchingProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */; };
 		671BAF8B24E12F5F001F1BC8 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671BAF8A24E12F5F001F1BC8 /* ImagePreviewViewController.swift */; };
 		6755BB2624DD26C8004BAAB9 /* Words+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */; };
@@ -146,7 +143,6 @@
 		063659B3275227120097658C /* SearchWordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchWordCell.xib; sourceTree = "<group>"; };
 		063659BD27522C370097658C /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		063659BE27522C370097658C /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
-		063659C2275244540097658C /* AppSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchViewModel.swift; sourceTree = "<group>"; };
 		0642834024DADE5C004BA0E1 /* AppStoreSearchingProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppStoreSearchingProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0642834324DADE5C004BA0E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0642834724DADE5C004BA0E1 /* AppSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +155,8 @@
 		06E6FE1F82A7780B2FED5B43 /* Pods-AppStoreSearchingProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreSearchingProject.release.xcconfig"; path = "Target Support Files/Pods-AppStoreSearchingProject/Pods-AppStoreSearchingProject.release.xcconfig"; sourceTree = "<group>"; };
 		1C152EC62754958B00D181AB /* ImagePreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewCell.swift; sourceTree = "<group>"; };
 		1C152EC72754958B00D181AB /* ImagePreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePreviewCell.xib; sourceTree = "<group>"; };
+		1C1A86FF2755CA85004B84C0 /* ReviewDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailCoordinator.swift; sourceTree = "<group>"; };
+		1C1A87032755D056004B84C0 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
 		30BAB892CB6095318364EFF6 /* Pods_AppStoreSearchingProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreSearchingProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		671BAF8A24E12F5F001F1BC8 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		6755BB2424DD26C8004BAAB9 /* Words+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Words+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -174,12 +172,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C152EBD2751D71900D181AB /* RxSwift in Frameworks */,
 				1C152EC02751D72700D181AB /* IQKeyboardManagerSwift in Frameworks */,
-				1C152EBB2751D71900D181AB /* RxCocoa in Frameworks */,
-				062E449D275322070053192A /* RxDataSources in Frameworks */,
 				4C31AF06C1BB613B72F88F75 /* Pods_AppStoreSearchingProject.framework in Frameworks */,
-				1C152EC42751DBD100D181AB /* NSObject-Rx in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +247,6 @@
 		0636597D2751E6E40097658C /* AppSearch */ = {
 			isa = PBXGroup;
 			children = (
-				063659C12752443F0097658C /* ViewModel */,
 				063659A827520BB40097658C /* Model */,
 				063659962751F74D0097658C /* View */,
 				063659952751F7460097658C /* Coordinator */,
@@ -459,14 +452,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		063659C12752443F0097658C /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				063659C2275244540097658C /* AppSearchViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		0642833724DADE5C004BA0E1 = {
 			isa = PBXGroup;
 			children = (
@@ -559,6 +544,39 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		1C1A86FE2755CA68004B84C0 /* ReviewDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1C1A87022755CA92004B84C0 /* View */,
+				1C1A87012755CA89004B84C0 /* Coordinator */,
+			);
+			path = ReviewDetail;
+			sourceTree = "<group>";
+		};
+		1C1A87012755CA89004B84C0 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1C1A86FF2755CA85004B84C0 /* ReviewDetailCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		1C1A87022755CA92004B84C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1C1A87052755E8C3004B84C0 /* Cell */,
+				1C1A87032755D056004B84C0 /* ReviewDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1C1A87052755E8C3004B84C0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		3BD1166A6E8651471F6FEB8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,6 +600,7 @@
 				063659802751EFDC0097658C /* Splash */,
 				0636597D2751E6E40097658C /* AppSearch */,
 				063659A3275203980097658C /* ImagePreview */,
+				1C1A86FE2755CA68004B84C0 /* ReviewDetail */,
 				0636599E275203060097658C /* AppDetail */,
 			);
 			path = ViewController;
@@ -625,11 +644,7 @@
 			);
 			name = AppStoreSearchingProject;
 			packageProductDependencies = (
-				1C152EBA2751D71900D181AB /* RxCocoa */,
-				1C152EBC2751D71900D181AB /* RxSwift */,
 				1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */,
-				1C152EC32751DBD100D181AB /* NSObject-Rx */,
-				062E449C275322070053192A /* RxDataSources */,
 			);
 			productName = AppStoreSearchingProject;
 			productReference = 0642834024DADE5C004BA0E1 /* AppStoreSearchingProject.app */;
@@ -660,10 +675,7 @@
 			);
 			mainGroup = 0642833724DADE5C004BA0E1;
 			packageReferences = (
-				1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
-				1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */,
-				062E449B275322070053192A /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 0642834124DADE5C004BA0E1 /* Products */;
 			projectDirPath = "";
@@ -787,13 +799,14 @@
 				063659AD275212040097658C /* NetworkManager.swift in Sources */,
 				063659732751DE560097658C /* UIView+.swift in Sources */,
 				062FBFA22754B8280044AE83 /* ReviewDetailCell.swift in Sources */,
+				1C1A87042755D056004B84C0 /* ReviewDetailViewController.swift in Sources */,
 				671BAF8B24E12F5F001F1BC8 /* ImagePreviewViewController.swift in Sources */,
 				062E44A02753380D0053192A /* EmptyCell.swift in Sources */,
+				1C1A87002755CA85004B84C0 /* ReviewDetailCoordinator.swift in Sources */,
 				063659A7275203BD0097658C /* ImagePreviewCoordinator.swift in Sources */,
 				0642834824DADE5C004BA0E1 /* AppSearchViewController.swift in Sources */,
 				0636596F2751DE140097658C /* UITableView+.swift in Sources */,
 				063659922751F4180097658C /* UIDevice+.swift in Sources */,
-				063659C3275244540097658C /* AppSearchViewModel.swift in Sources */,
 				063659772751DF080097658C /* UITableViewCell+.swift in Sources */,
 				0642834424DADE5C004BA0E1 /* AppDelegate.swift in Sources */,
 				063659682750F9390097658C /* AppTitleInfoCell.swift in Sources */,
@@ -1007,22 +1020,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		062E449B275322070053192A /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
-			requirement = {
-				kind = exactVersion;
-				version = 5.0.2;
-			};
-		};
-		1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift";
-			requirement = {
-				kind = exactVersion;
-				version = 6.2.0;
-			};
-		};
 		1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
@@ -1031,41 +1028,13 @@
 				version = 6.5.9;
 			};
 		};
-		1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/NSObject-Rx";
-			requirement = {
-				kind = exactVersion;
-				version = 5.2.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		062E449C275322070053192A /* RxDataSources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 062E449B275322070053192A /* XCRemoteSwiftPackageReference "RxDataSources" */;
-			productName = RxDataSources;
-		};
-		1C152EBA2751D71900D181AB /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		1C152EBC2751D71900D181AB /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1C152EB92751D71900D181AB /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
 		1C152EBF2751D72700D181AB /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1C152EBE2751D72700D181AB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
-		};
-		1C152EC32751DBD100D181AB /* NSObject-Rx */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1C152EC22751DBD100D181AB /* XCRemoteSwiftPackageReference "NSObject-Rx" */;
-			productName = "NSObject-Rx";
 		};
 /* End XCSwiftPackageProductDependency section */
 

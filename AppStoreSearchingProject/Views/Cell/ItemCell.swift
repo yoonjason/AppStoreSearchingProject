@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 import Cosmos
-import RxSwift
-import RxCocoa
-import NSObject_Rx
-
-
-
 
 class AppDetailTopInfoCell: UITableViewCell {
 

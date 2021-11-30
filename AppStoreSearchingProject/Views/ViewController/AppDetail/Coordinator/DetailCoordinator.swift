@@ -10,11 +10,12 @@ import Foundation
 import UIKit
 
 
-protocol DetailCoordinator: AnyObject {
+protocol AppDetailCoordinator: AnyObject {
     func imagePreivew(_ imageUrls: [String], currentIndex: Int)
+    func reviewDetail(_ entries: [Entry])
 }
 
-class DetailCoordinatorImp: Coordinator {
+class AppDetailCoordinatorImp: Coordinator {
     
     unowned let navigationController: UINavigationController
     var data : AppData?
@@ -40,12 +41,15 @@ class DetailCoordinatorImp: Coordinator {
     }
 }
 
-extension DetailCoordinatorImp: DetailCoordinator {
+extension AppDetailCoordinatorImp: AppDetailCoordinator {
     
     func imagePreivew(_ imageUrls: [String], currentIndex: Int) {
         let coordinator = ImagePreviewCoordinatorImp(navigationController: navigationController, imageUrls: imageUrls, currentIndex: currentIndex)
         coordinate(to: coordinator)
     }
     
-    
+    func reviewDetail(_ entries: [Entry]) {
+        let coordinator = ReviewDetailCoordinatorImp(navigationController: navigationController, entries: entries)
+        coordinate(to: coordinator)
+    }
 }

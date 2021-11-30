@@ -60,7 +60,7 @@ class AppSearchCoordinatorImp: Coordinator {
 extension AppSearchCoordinatorImp: AppSearchCoordinator {
     
     func showDetailInfo(with appData: AppData) {
-        let coordinator = DetailCoordinatorImp(navigationController: navigationController, data: appData, appId: appData.trackId ?? 0)
+        let coordinator = AppDetailCoordinatorImp(navigationController: navigationController, data: appData, appId: appData.trackId ?? 0)
         coordinate(to: coordinator)
     }
 }

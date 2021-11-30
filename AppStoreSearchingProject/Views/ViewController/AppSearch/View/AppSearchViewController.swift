@@ -9,10 +9,7 @@
 import UIKit
 import Foundation
 import CoreData
-import RxSwift
-import RxCocoa
-import NSObject_Rx
-import RxDataSources
+
 
 class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFieldDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
 

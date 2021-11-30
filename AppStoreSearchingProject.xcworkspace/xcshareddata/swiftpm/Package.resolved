@@ -9,33 +9,6 @@
           "revision": "474f849accae40fe61b5302d9b057dd48ee073ba",
           "version": "6.5.9"
         }
-      },
-      {
-        "package": "NSObject-Rx",
-        "repositoryURL": "https://github.com/RxSwiftCommunity/NSObject-Rx",
-        "state": {
-          "branch": null,
-          "revision": "6134a640808db7390d3dfcb32ef5f0a12b7a644d",
-          "version": "5.2.2"
-        }
-      },
-      {
-        "package": "RxDataSources",
-        "repositoryURL": "https://github.com/RxSwiftCommunity/RxDataSources",
-        "state": {
-          "branch": null,
-          "revision": "90c29b48b628479097fe775ed1966d75ac374518",
-          "version": "5.0.2"
-        }
-      },
-      {
-        "package": "RxSwift",
-        "repositoryURL": "https://github.com/ReactiveX/RxSwift",
-        "state": {
-          "branch": null,
-          "revision": "7c17a6ccca06b5c107cfa4284e634562ddaf5951",
-          "version": "6.2.0"
-        }
       }
     ]
   },

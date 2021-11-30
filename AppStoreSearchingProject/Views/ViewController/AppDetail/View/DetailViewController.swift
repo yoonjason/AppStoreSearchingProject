@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import NSObject_Rx
 
 protocol TableCellProtocol: class {
     func pageMove() -> Void
@@ -18,13 +15,11 @@ protocol TableCellProtocol: class {
 
 class DetailViewController: UIViewController, UIScrollViewDelegate {
 
-    var coordinator: DetailCoordinator?
+    var coordinator: AppDetailCoordinator?
     var data: AppData?
     var expandedIdxSet: IndexSet = []
     var appId: Int = 0
     var entriesModel: [Entry] = [Entry]()
-    var didSelect: (String) -> Void = { _ in }
-
     var detailModel: [DetailTypeModels] = [DetailTypeModels]()
 
     @IBOutlet weak var tableView: UITableView!
@@ -161,7 +156,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let customCell = self.tableView.dequeueCell(withType: DetailReviewCell.self) as! DetailReviewCell
             customCell.setEntries(self.entriesModel)
             customCell.tapped = { index in
-                print(index)
+                let entry = self.entriesModel[index]
+                self.coordinator?.reviewDetail([entry])
             }
             cell = customCell
         }
@@ -174,8 +170,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         let cellType = detailModel[indexPath.row]
         switch cellType {
         case .newFeature:
-            tableView.deselectRow(at: indexPath, animated: false)
-
             if(expandedIdxSet.contains(indexPath.row)) {
                 expandedIdxSet.remove(indexPath.row)
             } else {
@@ -189,8 +183,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 expandedIdxSet.insert(indexPath.row)
             }
             tableView.reloadRows(at: [indexPath], with: .automatic)
-//        case .preview:
-
+        case .review:
+            self.coordinator?.reviewDetail(self.entriesModel)
         default:
             break
         }

@@ -82,10 +82,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7a-gX-aRb">
-                        <rect key="frame" x="13" y="70" width="325" height="100"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="100" id="s8R-g4-cuZ"/>
-                        </constraints>
+                        <rect key="frame" x="13" y="70" width="325" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -121,7 +118,7 @@
                 <outlet property="ratingView" destination="ArF-h3-lgq" id="cpo-1D-FZ5"/>
                 <outlet property="titleLabel" destination="7eS-6X-iGk" id="5yS-Vs-LBB"/>
             </connections>
-            <point key="canvasLocation" x="-373.1884057971015" y="153.01339285714286"/>
+            <point key="canvasLocation" x="-167" y="154"/>
         </collectionViewCell>
     </objects>
     <designables>

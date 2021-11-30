@@ -17,7 +17,7 @@ class ReviewDetailCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,16 +26,17 @@ class ReviewDetailCell: UICollectionViewCell {
         bgView.borderWidth(1)
         bgView.backgroundColor = UIColor.whiteGray
     }
-    
+
     func setData(_ entry: Entry) {
         if let content = entry.content?.label,
-           let title = entry.title?.label,
-           let nickname = entry.author?.name.label
+            let title = entry.title?.label,
+            let nickname = entry.author?.name.label,
+            let rating = entry.rating?.label
         {
             contentLabel.text = content
             titleLabel.text = title
             nicknameLabel.text = nickname
-            ratingView.rating = Double(entry.rating?.label ?? "") ?? 0.0
+            ratingView.rating = Double(rating) ?? 0.0
         }
     }
 

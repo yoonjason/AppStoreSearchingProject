@@ -10,7 +10,7 @@ import UIKit
 import Cosmos
 
 class DetailAppInfoCell: UITableViewCell {
-    
+
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
@@ -22,7 +22,6 @@ class DetailAppInfoCell: UITableViewCell {
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var chartLabel: UILabel!
-    @IBOutlet weak var downloadTopConstant: NSLayoutConstraint!
 
     func setView(data: AppData) {
         //artworkUrl100
@@ -38,14 +37,12 @@ class DetailAppInfoCell: UITableViewCell {
             subTitleLabel.text = subTitle
             let width = (data.trackName! as NSString).size(withAttributes: [NSAttributedString.Key.font: titleLabel.font]).width
             if width > 230 {
-//                downloadTopConstant.constant = 0
+
             }
-
-
         }
         if let rating = data.averageUserRating {
             rateView.rating = rating
-            averageCountLabel.text = "\(round(rating))"
+            averageCountLabel.text = "\(round(rating * 10) / 10)"
         }
 
 
@@ -71,5 +68,5 @@ class DetailAppInfoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

@@ -31,20 +31,13 @@ class ReviewDetailViewController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: 1)
 
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
         section.interGroupSpacing = 10
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
-
         let layout = UICollectionViewCompositionalLayout(section: section)
-
         collectionView.collectionViewLayout = layout
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        collectionView.isPagingEnabled = true
-
     }
 
     func registerCell() {

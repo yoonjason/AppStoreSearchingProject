@@ -55,6 +55,15 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                     </collectionView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="모두 보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDT-B7-j6f">
+                        <rect key="frame" x="299" y="11" width="56" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="1A9-7G-gV6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" systemColor="tintColor"/>
+                        <color key="highlightedColor" systemColor="tintColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Eqc-Re-kje" firstAttribute="leading" secondItem="lt3-oL-RhP" secondAttribute="leading" id="4gG-dc-hXL"/>
@@ -63,9 +72,11 @@
                     <constraint firstItem="lt3-oL-RhP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Cll-4h-XaO"/>
                     <constraint firstItem="Eqc-Re-kje" firstAttribute="top" secondItem="lt3-oL-RhP" secondAttribute="bottom" constant="8.5" id="F6v-ot-BcT"/>
                     <constraint firstItem="1iX-6e-Xsx" firstAttribute="top" secondItem="Eqc-Re-kje" secondAttribute="bottom" constant="1" id="HoL-Ef-py6"/>
+                    <constraint firstAttribute="trailing" secondItem="EDT-B7-j6f" secondAttribute="trailing" constant="20" id="aFy-81-HGO"/>
                     <constraint firstItem="1iX-6e-Xsx" firstAttribute="leading" secondItem="Eqc-Re-kje" secondAttribute="leading" id="bL8-Gm-dg6"/>
                     <constraint firstItem="n3a-aG-nDg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cC8-os-6DG"/>
                     <constraint firstItem="n3a-aG-nDg" firstAttribute="top" secondItem="1iX-6e-Xsx" secondAttribute="bottom" constant="11" id="hBd-Ko-dHA"/>
+                    <constraint firstItem="EDT-B7-j6f" firstAttribute="top" secondItem="lt3-oL-RhP" secondAttribute="top" id="itG-Qw-KZk"/>
                     <constraint firstAttribute="bottom" secondItem="n3a-aG-nDg" secondAttribute="bottom" constant="11" id="t0d-ct-5kE"/>
                 </constraints>
             </tableViewCellContentView>
@@ -80,6 +91,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

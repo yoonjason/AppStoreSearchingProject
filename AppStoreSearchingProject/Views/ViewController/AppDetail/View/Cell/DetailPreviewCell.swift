@@ -22,30 +22,28 @@ class DetailPreviewCell: UITableViewCell {
         registerCell()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
     func setupViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        let screenSize = collectionView.bounds.size
-        let cellWidth = floor(screenSize.width * cellScale)
-        let cellHeight = floor(screenSize.height)
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = -30
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                             heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7),
+                                               heightDimension: .fractionalHeight(0.94))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.interGroupSpacing = -31
+        let layout = UICollectionViewCompositionalLayout(section: section)
         collectionView.collectionViewLayout = layout
-        collectionView.decelerationRate = .fast
-        collectionView.isPagingEnabled = false
     }
 
 
     func registerCell() {
-        collectionView.registerCell(type: IPhoneImageCell.self)
+        collectionView.registerCell(type: DetailImageCell.self)
     }
 }
 
@@ -56,7 +54,7 @@ extension DetailPreviewCell: UICollectionViewDelegate, UICollectionViewDataSourc
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueCell(withType: IPhoneImageCell.self, for: indexPath) as! IPhoneImageCell
+        let cell = collectionView.dequeueCell(withType: DetailImageCell.self, for: indexPath) as! DetailImageCell
         let imageUrl = iphoneImageUrls[indexPath.row]
         cell.setImage(imageUrl)
         return cell
@@ -66,32 +64,5 @@ extension DetailPreviewCell: UICollectionViewDelegate, UICollectionViewDataSourc
         tapped(indexPath.row)
     }
 
-}
-
-extension DetailPreviewCell {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
-
-        var offset = targetContentOffset.pointee
-        let idx = round((offset.x + collectionView.contentInset.right) / cellWidth)
-
-        if idx > currentIndex {
-            currentIndex += 1
-        } else if idx < currentIndex {
-            if currentIndex != 0 {
-                currentIndex -= 1
-            }
-        }
-
-        offset = CGPoint(x: currentIndex * cellWidth - collectionView.contentInset.right, y: 0)
-
-        targetContentOffset.pointee = offset
-        
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
-            self.collectionView.setContentOffset(targetContentOffset.pointee, animated: true)
-        }, completion: nil)
-    }
 }
 

@@ -8,13 +8,13 @@
 
 import UIKit
 
-class IPhoneImageCell: UICollectionViewCell {
+class DetailImageCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     func setImage(_ imageUrl: String) {

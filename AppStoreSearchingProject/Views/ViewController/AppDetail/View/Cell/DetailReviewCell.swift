@@ -31,28 +31,32 @@ class DetailReviewCell: UITableViewCell {
     func setupViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        let cellWidth = floor(screenSize.width * cellScale)
-        let cellHeight = floor(collectionView.bounds.size.height)
-        let insetX = (collectionView.bounds.width - cellWidth) / 2
-        let insetY = (collectionView.bounds.height - cellHeight) / 2
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 10
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                             heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8),
+                                               heightDimension: .fractionalHeight(1.0))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
         collectionView.collectionViewLayout = layout
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        collectionView.isPagingEnabled = false
     }
 
     func registerCell() {
         collectionView.registerCell(type: ReviewDetailCell.self)
     }
 
-    func setEntries(_ entries: [Entry]) {
+    func setEntries(_ entries: [Entry], averageUserRating: Double?) {
         self.entries = entries
+        guard let rating = averageUserRating else { return }
+        self.averageLabel.text = "\(round(rating * 10) / 10)"
     }
 
 }

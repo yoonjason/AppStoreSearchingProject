@@ -28,10 +28,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GP4-z5-dfz">
-                        <rect key="frame" x="0.0" y="55" width="375" height="495"/>
+                        <rect key="frame" x="0.0" y="55" width="375" height="518"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="495" id="6FY-nO-f8H"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="518" id="twP-9R-RcW"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0zu-Ce-4n3">
                             <size key="itemSize" width="128" height="128"/>
@@ -45,8 +45,8 @@
                     <constraint firstItem="GP4-z5-dfz" firstAttribute="top" secondItem="Whv-5F-dKA" secondAttribute="bottom" constant="13" id="27e-8Z-9yH"/>
                     <constraint firstItem="Whv-5F-dKA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Gs3-gg-Zdm"/>
                     <constraint firstAttribute="trailing" secondItem="GP4-z5-dfz" secondAttribute="trailing" id="J49-UE-Ba1"/>
+                    <constraint firstAttribute="bottom" secondItem="GP4-z5-dfz" secondAttribute="bottom" id="KtR-xW-Ros"/>
                     <constraint firstItem="GP4-z5-dfz" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="P9j-1A-vZN"/>
-                    <constraint firstAttribute="bottom" secondItem="GP4-z5-dfz" secondAttribute="bottom" constant="23" id="PrL-Th-7B4"/>
                     <constraint firstItem="Whv-5F-dKA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="eOP-Z3-Qs2"/>
                     <constraint firstItem="GP4-z5-dfz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="zsy-nk-oMP"/>
                 </constraints>

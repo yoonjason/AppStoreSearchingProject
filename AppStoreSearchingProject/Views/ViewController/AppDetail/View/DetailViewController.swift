@@ -108,7 +108,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let screenUrls = data.screenshotUrls else { return }
                 self.coordinator?.imagePreivew(screenUrls, currentIndex: index)
             }
-            customCell.collectionView.reloadData()
+            customCell.collectionView.layoutIfNeeded()
             cell = customCell
         case .description:
             let customCell = self.tableView.dequeueCell(withType: DeatilDescriptionCell.self) as! DeatilDescriptionCell
@@ -154,13 +154,14 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell = customCell
         case .review:
             let customCell = self.tableView.dequeueCell(withType: DetailReviewCell.self) as! DetailReviewCell
-            customCell.setEntries(self.entriesModel)
+            customCell.setEntries(self.entriesModel, averageUserRating: data.averageUserRating)
             customCell.tapped = { index in
                 let entry = self.entriesModel[index]
                 self.coordinator?.reviewDetail([entry])
             }
             cell = customCell
         }
+        cell.selectionStyle = .none
         return cell
     }
 

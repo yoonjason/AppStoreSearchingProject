@@ -59,7 +59,7 @@ class SearchResultCell: UITableViewCell {
         if let screenShots = appData.screenshotUrls?.enumerated() {
             if let gerneName = appData.primaryGenreName, gerneName == "Games" {
                 let imageView = UIImageView()
-                imageView.roundCorners(8)
+                imageView.roundCorners(20)
                 imageView.roundBorderColor()
                 imageView.borderWidth(0.84)
                 imageStackView.addArrangedSubview(imageView)
@@ -68,28 +68,28 @@ class SearchResultCell: UITableViewCell {
                 DispatchQueue.main.async {
                     imageView.image = UIImage(data: imageData)
                 }
-                } else {
-                    for (index, screenshot) in screenShots {
-                        if index > 2 {
-                            return
+            } else {
+                for (index, screenshot) in screenShots {
+                    if index > 2 {
+                        return
+                    }
+                    let imageView = UIImageView()
+                    imageStackView.addArrangedSubview(imageView)
+                    imageView.roundCorners(20)
+                    imageView.roundBorderColor()
+                    imageView.borderWidth(0.84)
+                    DispatchQueue.global().async {
+                        guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }
+                        let image = UIImage(data: imageData)
+                        DispatchQueue.main.async {
+                            imageView.image = image
                         }
-                        let imageView = UIImageView()
-                        imageStackView.addArrangedSubview(imageView)
-                        imageView.roundCorners(8)
-                        imageView.roundBorderColor()
-                        imageView.borderWidth(0.84)
-                        DispatchQueue.global().async {
-                            guard let imageData = try? Data(contentsOf: URL(string: screenshot)!) else { return }
-                            let image = UIImage(data: imageData)
-                            DispatchQueue.main.async {
-                                imageView.image = image
-                            }
 
-                        }
                     }
                 }
             }
-
         }
-    
+
     }
+
+}

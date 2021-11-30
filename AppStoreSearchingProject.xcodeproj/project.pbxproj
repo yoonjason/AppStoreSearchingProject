@@ -16,8 +16,8 @@
 		062652C82753847600AEB1BF /* DetailReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652C62753847600AEB1BF /* DetailReviewCell.xib */; };
 		062652CA2753865200AEB1BF /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652C92753865200AEB1BF /* StackView+.swift */; };
 		062652CC27538B8900AEB1BF /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CB27538B8900AEB1BF /* UICollectionView+.swift */; };
-		062652D027538BC200AEB1BF /* IPhoneImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */; };
-		062652D127538BC200AEB1BF /* IPhoneImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */; };
+		062652D027538BC200AEB1BF /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062652CE27538BC200AEB1BF /* DetailImageCell.swift */; };
+		062652D127538BC200AEB1BF /* DetailImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062652CF27538BC200AEB1BF /* DetailImageCell.xib */; };
 		062E44A02753380D0053192A /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E449E2753380D0053192A /* EmptyCell.swift */; };
 		062E44A12753380D0053192A /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 062E449F2753380D0053192A /* EmptyCell.xib */; };
 		062E44A3275355410053192A /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062E44A2275355410053192A /* UILabel+.swift */; };
@@ -95,8 +95,8 @@
 		062652C62753847600AEB1BF /* DetailReviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailReviewCell.xib; sourceTree = "<group>"; };
 		062652C92753865200AEB1BF /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		062652CB27538B8900AEB1BF /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
-		062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPhoneImageCell.swift; sourceTree = "<group>"; };
-		062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IPhoneImageCell.xib; sourceTree = "<group>"; };
+		062652CE27538BC200AEB1BF /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		062652CF27538BC200AEB1BF /* DetailImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailImageCell.xib; sourceTree = "<group>"; };
 		062E449E2753380D0053192A /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		062E449F2753380D0053192A /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		062E44A2275355410053192A /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -183,8 +183,8 @@
 		062652CD27538BAB00AEB1BF /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				062652CE27538BC200AEB1BF /* IPhoneImageCell.swift */,
-				062652CF27538BC200AEB1BF /* IPhoneImageCell.xib */,
+				062652CE27538BC200AEB1BF /* DetailImageCell.swift */,
+				062652CF27538BC200AEB1BF /* DetailImageCell.xib */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -703,7 +703,7 @@
 				0642834B24DADE5C004BA0E1 /* Main.storyboard in Resources */,
 				063659C027522C370097658C /* SearchResultCell.xib in Resources */,
 				062E44BE275368410053192A /* DeatilDescriptionCell.xib in Resources */,
-				062652D127538BC200AEB1BF /* IPhoneImageCell.xib in Resources */,
+				062652D127538BC200AEB1BF /* DetailImageCell.xib in Resources */,
 				062652C82753847600AEB1BF /* DetailReviewCell.xib in Resources */,
 				062652C22753801200AEB1BF /* DetailRowView.xib in Resources */,
 				062652BE27537AEF00AEB1BF /* DetailInfoCell.xib in Resources */,
@@ -761,7 +761,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				062652D027538BC200AEB1BF /* IPhoneImageCell.swift in Sources */,
+				062652D027538BC200AEB1BF /* DetailImageCell.swift in Sources */,
 				063659902751F3B40097658C /* TabBar.swift in Sources */,
 				0636599D2751FEE40097658C /* TabBarItem.swift in Sources */,
 				0636597C2751E2B00097658C /* AppCoordinator.swift in Sources */,

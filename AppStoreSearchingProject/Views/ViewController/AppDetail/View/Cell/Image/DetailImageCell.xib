@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="IPhoneImageCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DetailImageCell" customModule="AppStoreSearchingProject" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="268" height="398"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -33,7 +33,7 @@
             <connections>
                 <outlet property="imageView" destination="RGX-HG-5M5" id="uc4-DT-522"/>
             </connections>
-            <point key="canvasLocation" x="53.623188405797109" y="266.51785714285711"/>
+            <point key="canvasLocation" x="-177" y="243"/>
         </collectionViewCell>
     </objects>
 </document>

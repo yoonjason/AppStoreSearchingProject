@@ -246,6 +246,29 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		0634092227567A6D00BB7E54 /* DeveloperDeatil */ = {
+			isa = PBXGroup;
+			children = (
+				0634092427567A8500BB7E54 /* View */,
+				0634092327567A7D00BB7E54 /* Coordinator */,
+			);
+			path = DeveloperDeatil;
+			sourceTree = "<group>";
+		};
+		0634092327567A7D00BB7E54 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		0634092427567A8500BB7E54 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		063659782751DF3C0097658C /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -600,6 +623,7 @@
 		67F1FE3B24E129A100A4B8D0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0634092227567A6D00BB7E54 /* DeveloperDeatil */,
 				063659802751EFDC0097658C /* Splash */,
 				0636597D2751E6E40097658C /* AppSearch */,
 				063659A3275203980097658C /* ImagePreview */,

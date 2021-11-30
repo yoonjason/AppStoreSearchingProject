@@ -150,7 +150,9 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
             customCell.tapped = {
                 print("getget")
             }
-            print(customCell.collectionView.collectionViewLayout.collectionViewContentSize.height)
+            customCell.tapped = {
+                self.coordinator?.showDetailInfo(with: self.searchResultItems[indexPath.row])
+            }
             cell = customCell
         case .emptyResult:
             let customCell = self.tableView.dequeueCell(withType: EmptyCell.self) as! EmptyCell

@@ -14,6 +14,7 @@ class SearchResultCell: UITableViewCell {
     var tapped: () -> Void = { }
     var imageUrls: [String]?
     var genreName: String = ""
+    var collectionViewCellTapped: () -> Void = { }
 
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -21,9 +22,7 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var rateView: CosmosView!
     @IBOutlet weak var userCountingLabel: UILabel!
     @IBOutlet weak var getBtn: UIButton!
-
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     
     @IBAction func onActionGet(_ sender: Any) {
         tapped()
@@ -111,6 +110,10 @@ extension SearchResultCell: UICollectionViewDelegate, UICollectionViewDataSource
         guard let imageUrl = self.imageUrls?[indexPath.row] else { return UICollectionViewCell() }
         cell.setImage(imageUrl)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tapped()
     }
 
 

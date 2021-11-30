@@ -35,8 +35,8 @@ class ImagePreviewViewController: UIViewController {
                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8),
-                                               heightDimension: .fractionalHeight(1.0))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.82),
+                                               heightDimension: .fractionalHeight(1))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)

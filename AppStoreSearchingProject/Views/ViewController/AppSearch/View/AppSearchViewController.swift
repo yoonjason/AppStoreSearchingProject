@@ -73,7 +73,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.isTranslucent = false
     }
 
     func searchApp(_ searchWord: String) {

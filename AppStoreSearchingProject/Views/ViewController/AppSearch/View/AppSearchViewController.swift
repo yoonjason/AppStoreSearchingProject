@@ -70,9 +70,10 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         searchController.searchBar.placeholder = "게임, 앱, 스토리 등"
         searchController.searchBar.delegate = self
         searchController.isActive = true
-
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.isTranslucent = false
     }
 
     func searchApp(_ searchWord: String) {
@@ -224,7 +225,7 @@ extension AppSearchViewController {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //타이핑을 하고 있을 때
-
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
         if !recentSearchedWords.isEmpty {
             searchTypeModel = .suggestWords
             tableView.reloadData()

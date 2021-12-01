@@ -89,6 +89,8 @@ class SearchResultCell: UITableViewCell {
             self.genreName = genrename
         }
         setupViews()
+        
+        print("#@#@ ==== ", genreName)
     }
     
     
@@ -97,7 +99,7 @@ class SearchResultCell: UITableViewCell {
 
 extension SearchResultCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if genreName.hasPrefix("Game") {
+        if genreName.hasPrefix("Games") {
             return 1
         }
         return 3

@@ -18,6 +18,10 @@ class SearchResultImageCell: UICollectionViewCell {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    override func prepareForReuse() {
+        self.imageView.image = nil
+    }
+    
     func setImage(_ imageUrl: String) {
         self.imageView.setImage(imageUrl)
         NSLayoutConstraint.activate([

@@ -35,8 +35,7 @@ class ReviewDetailCoordinatorImp: Coordinator {
         vc.coordinator = self
         vc.entries = entries
         vc.title = "평가 및 리뷰"
-        navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.navigationItem.largeTitleDisplayMode = .always
+        navigationController.navigationBar.topItem?.title = "뒤로"
         navigationController.pushViewController(vc, animated: true)
     }
 }

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/05.
+//  Created by yoon on 2021/11/26.
 //  Copyright © 2020 yoon. All rights reserved.
 //
 
@@ -25,6 +25,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
     private var recentSearchedWords = [String]()
     private var words: [Words] = WordDataManager.shared.getWords()
     private var currentInputAppName: String = ""
+    private var firstId: Int64 = 0
     private var searchedTerm = String() {
         didSet {
             recentSearchedWords = wordsSearch(prefix: searchedTerm)
@@ -41,10 +42,9 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         setView()
         registerCell()
         setSearchController()
-        
-//        NetworkManager.shared.f
+
     }
-    
+
     func fetechAppInfo(_ endPoint: NetworkURLEndpoint.RawValue, queryItem: URLQueryItem, word: String) async throws -> Apps {
         let urlString = NetworkManager.shared.baseURL + endPoint
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -57,7 +57,7 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         queryItems.append(queryItem)
         var urlcomponents = URLComponents(string: encodedUrl!)
         urlcomponents?.queryItems = queryItems
-        
+
 
         guard let url = URL(string: "") else { throw FetchError.invalidURL }
 
@@ -85,9 +85,9 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         tableView.rowHeight = UITableView.automaticDimension
 
         setNeedsStatusBarAppearanceUpdate()
-        
+
     }
-    
+
 
     func setSearchController() {
         searchController.searchResultsUpdater = self
@@ -100,27 +100,29 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         navigationItem.hidesSearchBarWhenScrolling = false
 //        navigationController?.navigationBar.isTranslucent = false
     }
-    
-    func searchAppInfo(_ title: String){
+
+    func searchAppInfo(_ title: String) {
+
         Task {
             do {
                 let queryItem = URLQueryItem(name: "term", value: title)
                 let apps = try await NetworkManager.shared.fetechAppInfo(NetworkURLEndpoint.search.rawValue, queryItem: queryItem)
+
                 if let count = apps.resultCount, count > 0 {
                     guard let appsData = apps.results else { return }
                     self.searchResultItems = appsData
-                    self.saveNewWords(id: 1, word: title)
+                    self.saveNewWords(id: firstId + 1 , word: title)
                     self.requestGetAllWords()
                     self.searchTypeModel = .resultWords
                     self.tableView.reloadData()
                     let indexPath = NSIndexPath(row: NSNotFound, section: 0)
                     self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
-                }else {
+                } else {
                     self.searchTypeModel = .emptyResult
                     self.currentInputAppName = self.searchController.searchBar.text ?? ""
                     self.tableView.reloadData()
                 }
-            }catch {
+            } catch {
                 print("Request feiled with error: \(error)")
             }
         }
@@ -165,7 +167,7 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
             let resultData = searchResultItems
             customCell.setData(appData: resultData[indexPath.row])
             customCell.tapped = {
-                print("getget")
+
             }
             customCell.tapped = {
                 self.coordinator?.showDetailInfo(with: self.searchResultItems[indexPath.row])
@@ -218,14 +220,6 @@ extension AppSearchViewController {
         tableView.reloadData()
     }
 
-    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-    }
-
-    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-    }
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //타이핑을 하고 있을 때
         self.navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -238,7 +232,6 @@ extension AppSearchViewController {
             searchTypeModel = .recentSearchWords
             tableView.reloadData()
         }
-        print(#function)
     }
 }
 
@@ -249,6 +242,11 @@ extension AppSearchViewController {
         let words: [Words] = WordDataManager.shared.getWords()
         self.words = words
         searchWords = words.map { $0.word! }
+        if words.isEmpty {
+            firstId = 0
+        } else {
+            firstId = words.first?.id ?? 0
+        }
         self.tableView.reloadData()
     }
 
@@ -258,6 +256,7 @@ extension AppSearchViewController {
         }
         WordDataManager.shared.saveWords(id: id, word: word, onSuccess: { (onSuccess) in
             print("Save Success ====== \(onSuccess)")
+            self.requestGetAllWords()
         })
     }
 

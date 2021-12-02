@@ -35,6 +35,7 @@ class DeveloperCoordinatorImp: Coordinator {
         vc.coordinator = self
         vc.title = title
         vc.developer = title
+        navigationController.navigationBar.topItem?.title = "뒤로"
         navigationController.pushViewController(vc, animated: true)
     }
 }

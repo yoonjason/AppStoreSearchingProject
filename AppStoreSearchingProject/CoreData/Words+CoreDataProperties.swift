@@ -2,7 +2,7 @@
 //  Words+CoreDataProperties.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/07.
+//  Created by yoon on 2021/11/26.
 //  Copyright © 2020 yoon. All rights reserved.
 //
 //
@@ -19,5 +19,6 @@ extension Words {
 
     @NSManaged public var id: Int64
     @NSManaged public var word: String?
+    @NSManaged public var regDate: Date?
 
 }

@@ -5,6 +5,7 @@ target 'AppStoreSearchingProject' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Cosmos', '~> 21.0'
+  pod 'IQKeyboardManagerSwift'
   # Pods for AppStoreSearchingProject
 
 end

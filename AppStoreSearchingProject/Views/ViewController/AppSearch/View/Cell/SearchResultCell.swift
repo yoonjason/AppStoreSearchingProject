@@ -89,8 +89,6 @@ class SearchResultCell: UITableViewCell {
             self.genreName = genrename
         }
         setupViews()
-        
-        print("#@#@ ==== ", genreName)
     }
     
     

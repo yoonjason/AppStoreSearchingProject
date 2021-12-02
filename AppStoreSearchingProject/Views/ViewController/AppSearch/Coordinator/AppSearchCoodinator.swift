@@ -37,7 +37,6 @@ class AppSearchCoordinatorImp: Coordinator {
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
-//        navigationController.navigationItem.largeTitleDisplayMode = .automatic
         navigationController.tabBarItem = TabBarItem.search.item
     }
 

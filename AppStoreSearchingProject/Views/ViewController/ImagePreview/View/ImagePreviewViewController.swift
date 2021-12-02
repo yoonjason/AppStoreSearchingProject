@@ -2,7 +2,7 @@
 //  ScreenShotDetailViewController.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/10.
+//  Created by yoon on 2021/11/26.
 //  Copyright © 2020 yoon. All rights reserved.
 //
 

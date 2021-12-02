@@ -2,7 +2,7 @@
 //  WordDataManager.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/07.
+//  Created by yoon on 2021/11/26.
 //  Copyright © 2020 yoon. All rights reserved.
 //
 
@@ -22,7 +22,7 @@ class WordDataManager {
         var models = [Words]()
         
         if let context = context {
-            let idSort : NSSortDescriptor = NSSortDescriptor(key: "id", ascending: ascending)
+            let idSort : NSSortDescriptor = NSSortDescriptor(key: "regDate", ascending: ascending)
             let fetchRequest : NSFetchRequest<NSManagedObject> = NSFetchRequest<NSManagedObject>(entityName: modelName)
             fetchRequest.sortDescriptors = [idSort]
             do {
@@ -32,7 +32,6 @@ class WordDataManager {
             }catch let error as NSError {
                 print("Not fetch : \(error), \(error.userInfo)")
             }
-            
         }
         return models
     }
@@ -42,7 +41,7 @@ class WordDataManager {
             if let words : Words = NSManagedObject(entity: entity, insertInto: context) as? Words {
                 words.id = id
                 words.word = word
-                
+                words.regDate = Date()
                 contextSave { success in
                     onSuccess(success)
                 }

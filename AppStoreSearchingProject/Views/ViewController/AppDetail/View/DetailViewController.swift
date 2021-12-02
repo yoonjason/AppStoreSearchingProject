@@ -2,7 +2,7 @@
 //  DetailViewController.swift
 //  AppStoreSearchingProject
 //
-//  Created by yoon on 2020/08/09.
+//  Created by yoon on 2021/11/26.
 //  Copyright © 2020 yoon. All rights reserved.
 //
 
@@ -17,11 +17,20 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     var entriesModel: [Entry] = [Entry]()
     var detailModel: [DetailTypeModels] = [DetailTypeModels]()
 
+    private lazy var appIconView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        guard let imageUrl = data?.artworkUrl100 else  { return UIImageView() }
+        imageView.setImage(imageUrl)
+        return imageView
+    }()
+    
+    private lazy var firstCell = tableView.subviews.first?.frame
+
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setView()
+        setupViews()
         registerCell()
         setModel()
         requestReviewInfo()
@@ -36,12 +45,15 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         detailModel.append(.infomation)
     }
 
-    func setView() {
+    func setupViews() {
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.largeTitleDisplayMode = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 510
+        navigationItem.titleView = appIconView
+        appIconView.roundCorners(10)
+        appIconView.isHidden = true
     }
 
     func registerCell() {
@@ -54,15 +66,15 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
     }
 
     func requestReviewInfo() {
-        NetworkManager.shared.requestAppReview(NetworkURLEndpoint.review.rawValue, appId: appId) { response in
-            if let resultData = try? JSONDecoder().decode(Review.self, from: response), let entries = resultData.feed?.entry {
+        Task {
+            do {
+                let review = try await NetworkManager.shared.fetchReview(with: NetworkURLEndpoint.review.rawValue, appId: appId)
+                guard let entries = review.feed?.entry else { return }
                 self.entriesModel = entries
+            } catch {
+                print("Request feiled with error: \(error)")
             }
-        } failure: { error in
-            print(error)
-            print("error #@# === \(error)")
         }
-
     }
 
 }
@@ -115,7 +127,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 customCell.descriptionLabel.numberOfLines = 4
             }
             customCell.tapped = {
-                print(indexPath.row)
                 guard let developer = data.sellerName else { return }
                 self.coordinator?.developer(developer)
             }
@@ -188,4 +199,22 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+}
+
+extension DetailViewController {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [self] in
+            if offsetY > firstCell?.size.height ?? 0.0 {
+                appIconView.isHidden = false
+            }else {
+                appIconView.isHidden = true
+            }
+            
+        } completion: { _ in
+            
+        }
+
+    }
 }

@@ -24,7 +24,7 @@ class DetailAppInfoCell: UITableViewCell {
     @IBOutlet weak var chartLabel: UILabel!
 
     func setView(data: AppData) {
-        if let imageUrl = data.artworkUrl100 {
+        if let imageUrl = data.artworkUrl512 {
             appImageView.setImage(imageUrl)
         }
         
@@ -48,7 +48,16 @@ class DetailAppInfoCell: UITableViewCell {
         if let userCounting = data.userRatingCountForCurrentVersion {
             userReviewCountLabel.changeUserCount(count: userCounting, detail: true)
         }
-
+    }
+    
+    override func prepareForReuse() {
+        appImageView.image = nil
+        titleLabel.text = nil
+        subTitleLabel.text = nil
+        averageCountLabel.text = nil
+        ageLabel.text = nil
+        genreLabel.text = nil
+        userReviewCountLabel.text = nil
     }
 
     override func awakeFromNib() {

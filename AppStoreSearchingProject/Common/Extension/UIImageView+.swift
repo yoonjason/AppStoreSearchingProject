@@ -12,11 +12,10 @@ import UIKit
 extension UIImageView {
 
     func setImage(_ imageString: String) {
-        let viewModel = ImageViewModel()
-
+        
         Task {
             do {
-                let image = try await viewModel.fetchImage(with: imageString)
+                let image = try await NetworkManager.shared.fetchImage(with: imageString)
                 self.image = image
                 self.roundCorners(20)
                 self.roundBorderColor()

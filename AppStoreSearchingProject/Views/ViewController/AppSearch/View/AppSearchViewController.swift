@@ -42,6 +42,31 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         registerCell()
         setSearchController()
         
+//        NetworkManager.shared.f
+    }
+    
+    func fetechAppInfo(_ endPoint: NetworkURLEndpoint.RawValue, queryItem: URLQueryItem, word: String) async throws -> Apps {
+        let urlString = NetworkManager.shared.baseURL + endPoint
+        let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        var queryItems = [
+            URLQueryItem(name: "term", value: word),
+            URLQueryItem(name: "country", value: "kr"),
+            URLQueryItem(name: "media", value: "software"),
+            URLQueryItem(name: "entity", value: "software")
+        ]
+        queryItems.append(queryItem)
+        var urlcomponents = URLComponents(string: encodedUrl!)
+        urlcomponents?.queryItems = queryItems
+        
+
+        guard let url = URL(string: "") else { throw FetchError.invalidURL }
+
+        let (data, _) = try await URLSession.shared.data(from: url)
+
+        let iTuensResult = try JSONDecoder().decode(Apps.self, from: data)
+
+        return iTuensResult
+
     }
 
 
@@ -75,40 +100,31 @@ class AppSearchViewController: UIViewController, UISearchBarDelegate, UITextFiel
         navigationItem.hidesSearchBarWhenScrolling = false
 //        navigationController?.navigationBar.isTranslucent = false
     }
-
-    func searchApp(_ searchWord: String) {
-        let quertyItem = URLQueryItem(name: "term", value: searchWord)
-        NetworkManager.shared.requestAppSearch(NetworkURLEndpoint.search.rawValue, queryItem: quertyItem) { responseData in
-            if let resultData = try? JSONDecoder().decode(Apps.self, from: responseData) {
-                guard let appsData = resultData.results else { return }
-                if let count = resultData.resultCount, count > 0 {
+    
+    func searchAppInfo(_ title: String){
+        Task {
+            do {
+                let queryItem = URLQueryItem(name: "term", value: title)
+                let apps = try await NetworkManager.shared.fetechAppInfo(NetworkURLEndpoint.search.rawValue, queryItem: queryItem)
+                if let count = apps.resultCount, count > 0 {
+                    guard let appsData = apps.results else { return }
                     self.searchResultItems = appsData
-                    self.saveNewWords(id: 1, word: searchWord)
+                    self.saveNewWords(id: 1, word: title)
+                    self.requestGetAllWords()
                     self.searchTypeModel = .resultWords
-                    DispatchQueue.main.async {
-                        self.requestGetAllWords()
-                        self.tableView.reloadData()
-                        let indexPath = NSIndexPath(row: NSNotFound, section: 0)
-                        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
-                        
-                    }
-                }
-                else {
+                    self.tableView.reloadData()
+                    let indexPath = NSIndexPath(row: NSNotFound, section: 0)
+                    self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: false)
+                }else {
                     self.searchTypeModel = .emptyResult
-                    DispatchQueue.main.async {
-                        self.currentInputAppName = self.searchController.searchBar.text ?? ""
-                        self.tableView.reloadData()
-                    }
-
+                    self.currentInputAppName = self.searchController.searchBar.text ?? ""
+                    self.tableView.reloadData()
                 }
+            }catch {
+                print("Request feiled with error: \(error)")
             }
-            
-
-        } failure: { error in
-            print(error)
         }
     }
-
 }
 
 //MARK: - UITableViewDelegate, DataSource
@@ -166,26 +182,14 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        switch searchTypeModel {
-//        case .resultWords:
-//            return 350
-//        case .emptyResult:
-//            return self.tableView.frame.size.height
-//        default:
-//            return UITableView.automaticDimension
-//        }
-//    }
-
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         switch searchTypeModel {
         case .suggestWords:
-            self.searchApp(recentSearchedWords[indexPath.row])
+            self.searchAppInfo(recentSearchedWords[indexPath.row])
             searchController.searchBar.text = recentSearchedWords[indexPath.row]
         case .recentSearchWords:
-            self.searchApp(words[indexPath.row].word!)
+            self.searchAppInfo(words[indexPath.row].word!)
             searchController.searchBar.text = words[indexPath.row].word!
         case .resultWords:
             coordinator?.showDetailInfo(with: searchResultItems[indexPath.row])
@@ -201,11 +205,10 @@ extension AppSearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension AppSearchViewController {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let word = searchBar.text {
-            searchApp(word)
+        if let title = searchBar.text {
+            searchAppInfo(title)
         }
         searchBar.resignFirstResponder()
-        searchTypeModel = .resultWords
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

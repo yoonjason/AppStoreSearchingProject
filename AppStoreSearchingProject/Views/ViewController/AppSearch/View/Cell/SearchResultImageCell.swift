@@ -11,11 +11,9 @@ import UIKit
 class SearchResultImageCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
-    let viewModel = ImageViewModel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func prepareForReuse() {
